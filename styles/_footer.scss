@@ -1,11 +1,24 @@
 .container {
   footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     background-color: #131a22;
     color: whitesmoke;
-    img {
-      width: 10rem;
+    .image {
+      display: flex;
+      justify-content: space-between;
+      img {
+        width: 10rem;
+      }
+    }
+  }
+
+  .containerOpen {
+    display: flex;
+
+    .open {
+      text-align: center;
     }
   }
 }
