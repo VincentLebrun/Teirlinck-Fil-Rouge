@@ -1,0 +1,11 @@
+.container {
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    background-color: #131a22;
+    color: whitesmoke;
+    img {
+      width: 10rem;
+    }
+  }
+}
