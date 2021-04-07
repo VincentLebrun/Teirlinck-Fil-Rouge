@@ -1,21 +1,32 @@
 .home-content {
+    margin-top: 178px;
     height: 50rem;
-    background-color: red;
-    display: flex;
-    align-items: center;
+    overflow: hidden;
+    position: relative;
+    img {
+        width: 100%;
+    }
 
     .slogan {
-        background-color: rgba(0, 0, 0, 0.5);
-        width: 400px;
-        border-radius: 15px;
-        margin: auto;
-        h1 {
-            color: white;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        .slogan-cart {
             margin: auto;
             text-align: center;
-        }
-        button {
-            margin: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 18px;
+
+            h1 {
+                font-size: 72px;
+                color: white;
+            }
         }
     }
 }
