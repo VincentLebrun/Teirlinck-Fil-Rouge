@@ -9,7 +9,7 @@ const Products = () => {
             <Header/>
             <Hero
                 title="Nos produits"
-                image="nosproduits.png"
+                image="ourproducts.webp"
             />
             <Footer/>
         </div>
