@@ -9,6 +9,7 @@ export default function Home() {
       <Head>
         <title>Teirlinck</title>
         <link rel="icon" href="/favicon.ico" />
+        <link href="/icons/uicons/css/uicons-regular-rounded.css" rel="stylesheet"></link>
       </Head>
       <Header />
 
