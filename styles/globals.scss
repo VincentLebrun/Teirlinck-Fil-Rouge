@@ -8,9 +8,13 @@
   font-display: swap;
 }
 
+@import "_variables";
+
 @import "_header";
 
 @import "_footer";
+
+@import "_hero";
 
 html,
 body {
