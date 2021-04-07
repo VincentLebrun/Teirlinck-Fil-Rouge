@@ -1,3 +1,13 @@
+@import "~antd/dist/antd.css";
+
+@font-face {
+  font-family: "Rockwell";
+  src: url("/fonts/Rockwell/Rockwell.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 @import "_header";
 
 @import "_footer";
