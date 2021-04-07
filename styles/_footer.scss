@@ -1,24 +1,18 @@
-.container {
-  footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #131a22;
-    color: whitesmoke;
-    .image {
-      display: flex;
-      justify-content: space-between;
-      img {
-        width: 10rem;
-      }
+footer {
+  
+  background-color: #131a22;
+  color: whitesmoke;
+  .image {
+    
+    img {
+      width: 100%;
     }
   }
-
-  .containerOpen {
-    display: flex;
-
-    .open {
-      text-align: center;
-    }
+  .calendar{
+    position: absolute;
+    top: -1.5rem;
+    left:-1.5rem;    
+    font-size: 2.3rem;
+    color: whitesmoke;
   }
 }
