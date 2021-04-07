@@ -1,0 +1,24 @@
+// MENU LATERAL GAUCHE DES CATEGORIES DE VIANDES
+.ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub {
+    color:$color-white;
+    background-color: $color-black;
+}
+
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #5d677434;
+}
+
+.ant-menu {
+    font-size:1.4rem;
+    .iconMenu {
+        font-size:10px;
+    }
+}
+
+// AFFICHAGE DES PRODUITS 
+
+.product {
+    background-color: $color-black;
+    padding: 8rem;
+}
+
