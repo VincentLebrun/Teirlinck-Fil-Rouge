@@ -1,10 +1,11 @@
 header {
     font-family: Rockwell;
+    z-index: 1;
     background-color: #131a22;
     color: white;
     padding-top: 2rem;
     padding-bottom: 2rem;
-    box-shadow: 0px 4px 21px 6px rgba(0,0,0,0.66);
+    box-shadow: 0px 4px 21px 6px rgba(0, 0, 0, 0.66);
     nav ul li {
         display: inline-block;
         margin-left: 15px;
@@ -13,12 +14,16 @@ header {
         border-radius: 8px;
 
         &:hover {
-            background-color: black;
+            background-color: rgb(19, 19, 19);
+            box-shadow: 4px 10px 17px 0px rgba(0,0,0,0.66) inset;
         }
     }
 
     nav ul {
         margin-bottom: 0px;
+    }
+    nav {
+        width: 100%;
     }
 
     a {
@@ -31,17 +36,46 @@ header {
 
     .connect {
         border: 1px solid white;
-        padding: 8px 8px 8px 8px;
         border-radius: 16px;
-
-        i{
+        display: flex;
+        align-items: center;
+        padding: 1px 1px 1px 1px;
+        i {
             margin-left: 6px;
             margin-right: 6px;
+        }
+        .arrow-down {
+            padding-top: 10px;
         }
     }
 
     .shop {
         font-size: 2rem;
         margin-left: 16px;
+        display: flex;
+
+        .shop-cart {
+            margin-top: 9px;
+            position: relative;
+
+            p{
+                margin-bottom: 0;
+                padding-right: 2px;
+            }
+        }
+
+        .num-articles-header {
+            background-color: red;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            top: -2px;
+            right: -5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+        }
     }
 }

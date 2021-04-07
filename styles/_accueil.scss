@@ -1,0 +1,21 @@
+.home-content {
+    height: 50rem;
+    background-color: red;
+    display: flex;
+    align-items: center;
+
+    .slogan {
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 400px;
+        border-radius: 15px;
+        margin: auto;
+        h1 {
+            color: white;
+            margin: auto;
+            text-align: center;
+        }
+        button {
+            margin: auto;
+        }
+    }
+}
