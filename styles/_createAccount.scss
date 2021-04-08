@@ -18,7 +18,7 @@ main {
   }
   input {
     border-radius: 1px;
-    border: 3px solid $color-red;
+    border: 2px solid $color-red;
     width: 100%;
     color: $color-black;
   }
@@ -28,7 +28,7 @@ main {
   .button {
     display: inline-block;
     border-radius: 4px;
-    background-color:$color-red;
+    background-color: $color-red;
     border: none;
     color: whitesmoke;
     text-align: center;
@@ -46,8 +46,8 @@ main {
     position: relative;
     transition: 0.5s;
   }
-  .button span:after {   
-    content: '\00bb';
+  .button span:after {
+    content: "\00bb";
     position: absolute;
     opacity: 0;
     top: 0;
