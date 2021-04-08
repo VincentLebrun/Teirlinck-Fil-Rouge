@@ -10,15 +10,37 @@
 
 .ant-menu {
     font-size:1.4rem;
+    @media screen and (max-width:767px) {
+        font-size:10px;
+    }
     .iconMenu {
         font-size:10px;
     }
 }
 
+.ant-row-center {
+    width:100%;
+}
+
 // AFFICHAGE DES PRODUITS 
 
 .product {
+    cursor:pointer;
     background-color: $color-black;
-    padding: 8rem;
+    //padding: 8rem;
+    
+    height:auto;
+    p {
+        padding : 10px;
+        color: $color-white;
+        text-align:center;
+        font-size:1.2rem;
+        @media screen and (max-width:767px) {
+            font-size:15px;
+        }
+    }
+    img {
+        width:100%;
+    }
 }
 

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Menu, Row, Col } from 'antd';
 import { RightOutlined } from "@ant-design/icons";
+import Link from "next/link";
 import Hero from '../../components/Hero';
 import Header from "../../components/Header"
 import Footer from "../../components/Footer";
@@ -9,6 +10,39 @@ import products from "../../product";
 const { SubMenu } = Menu;
 
 const Products = () => {
+
+    const [produits, setProduits] = useState(products);
+
+    // const getProduct = () => {
+    //     setProduits(products);
+    // }
+
+    const renderProducts = () => {
+        const listProducts = produits.map(item => {
+          return (
+            <Col key={item.id} xs={24} md={12} xl={8}>
+                <Link href={`/products/${item.id}`}>
+                    <div className="product">
+                        <img src={item.image} alt=""/>
+                        <p>{item.name}</p>
+                    </div>
+                </Link>
+            </Col>
+          );
+        });
+
+        return (
+            <Row gutter={[16, 16]}>
+              {listProducts}
+            </Row>
+        );
+    }
+
+    const renderFilteredProducts = (name) => {
+        const filteredProducts = produits.filter((product) => product.categories.includes(name));
+        setProduits(filteredProducts);
+    }
+        
     return (
         <div>
             <Header />
@@ -16,9 +50,9 @@ const Products = () => {
                 title="Nos produits"
                 image="ourproducts.webp"
             />
-            <div className="menu">
+            <div className="products">
                 <Row gutter={16} justify="center">
-                    <Col xl={4}>
+                    <Col xs={8} sm={6} xl={4}>
                         <Menu
                             //defaultSelectedKeys={['1']}
                             //defaultOpenKeys={['sub1']}
@@ -26,7 +60,7 @@ const Products = () => {
                             theme="dark"
                         >
                             <SubMenu key="sub1" title="Viandes">
-                                <Menu.Item key="1"><RightOutlined className="iconMenu" />Boeuf</Menu.Item>
+                                <Menu.Item key="1" onClick={() => renderFilteredProducts("boeuf")}><RightOutlined className="iconMenu" />Boeuf</Menu.Item>
                                 <Menu.Item key="2"><RightOutlined className="iconMenu" />Veau</Menu.Item>
                                 <Menu.Item key="3"><RightOutlined className="iconMenu" />Agneau</Menu.Item>
                                 <Menu.Item key="4"><RightOutlined className="iconMenu" />Porc</Menu.Item>
@@ -55,12 +89,8 @@ const Products = () => {
                             </Menu.Item>
                         </Menu>
                     </Col>
-                    <Col xl={12}>
-                        <Row gutter={16}>
-                            <Col xl={8}><div className="product"><p>Bonjour</p></div></Col>
-                            <Col xl={8}><div className="product"><p>Bonjour</p></div></Col>
-                            <Col xl={8}><div className="product"><p>Bonjour</p></div></Col>
-                        </Row>
+                    <Col xs={8} sm={10} xl={12}>
+                        {renderProducts()}
                     </Col>
                 </Row>
             </div>
