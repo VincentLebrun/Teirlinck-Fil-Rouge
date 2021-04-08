@@ -1,0 +1,61 @@
+main {
+  padding-top: 5rem;
+  height: 100vh;
+  background-color: #131a22;
+
+  color: whitesmoke;
+  img {
+    width: 100%;
+  }
+  hr {
+    color: $color-red;
+    margin-top: 2rem;
+    border-radius: 2px;
+    border: solid 2px;
+  }
+  h2 {
+    color: whitesmoke;
+  }
+  input {
+    border-radius: 1px;
+    border: 3px solid $color-red;
+    width: 100%;
+    color: $color-black;
+  }
+  .button:hover span {
+    padding-right: 4rem;
+  }
+  .button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color:$color-red;
+    border: none;
+    color: whitesmoke;
+    text-align: center;
+    font-size: 28px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  button span {
+    border-radius: 1px;
+    background-color: $color-red;
+    width: 100%;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  .button span:after {   
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+}
