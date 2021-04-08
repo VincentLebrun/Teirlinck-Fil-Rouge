@@ -12,13 +12,16 @@ const { SubMenu } = Menu;
 const Products = () => {
 
     const [produits, setProduits] = useState(products);
+    const [produitsFiltres, setProduitsFiltres] = useState(products);
+    const [slice, setSlice] = useState(9);
 
+    // Pour le useEffect (appel API)
     // const getProduct = () => {
     //     setProduits(products);
     // }
 
     const renderProducts = () => {
-        const listProducts = produits.map(item => {
+        const listProducts = produitsFiltres.map(item => {
           return (
             <Col key={item.id} xs={24} md={12} xl={8}>
                 <Link href={`/products/${item.id}`}>
@@ -39,12 +42,21 @@ const Products = () => {
     }
 
     const renderFilteredProducts = (name) => {
-        const filteredProducts = produits.filter((product) => product.categories.includes(name));
-        setProduits(filteredProducts);
+
+        if (name != "promotions" && name != "news" ) {
+            const filteredProducts = produits.filter((product) => product.categories.includes(name));
+            setProduitsFiltres(filteredProducts);
+        } else if (name === "promotions") {
+            const filteredProducts = produits.filter((product) => product.promotion === true);
+            setProduitsFiltres(filteredProducts);
+        } else {
+            const filteredProducts = produits.filter((product) => product.highlighted === true);
+            setProduitsFiltres(filteredProducts);
+        }
     }
         
     return (
-        <div>
+        <div className="ourproducts">
             <Header />
             <Hero
                 title="Nos produits"
@@ -61,30 +73,30 @@ const Products = () => {
                         >
                             <SubMenu key="sub1" title="Viandes">
                                 <Menu.Item key="1" onClick={() => renderFilteredProducts("boeuf")}><RightOutlined className="iconMenu" />Boeuf</Menu.Item>
-                                <Menu.Item key="2"><RightOutlined className="iconMenu" />Veau</Menu.Item>
-                                <Menu.Item key="3"><RightOutlined className="iconMenu" />Agneau</Menu.Item>
-                                <Menu.Item key="4"><RightOutlined className="iconMenu" />Porc</Menu.Item>
-                                <Menu.Item key="5"><RightOutlined className="iconMenu" />Lapin</Menu.Item>
+                                <Menu.Item key="2" onClick={() => renderFilteredProducts("veau")}><RightOutlined className="iconMenu" />Veau</Menu.Item>
+                                <Menu.Item key="3" onClick={() => renderFilteredProducts("agneau")}><RightOutlined className="iconMenu" />Agneau</Menu.Item>
+                                <Menu.Item key="4" onClick={() => renderFilteredProducts("porc")}><RightOutlined className="iconMenu" />Porc</Menu.Item>
+                                <Menu.Item key="5" onClick={() => renderFilteredProducts("lapin")}><RightOutlined className="iconMenu" />Lapin</Menu.Item>
                             </SubMenu>
-                            <Menu.Item key="6">
+                            <Menu.Item key="6" onClick={() => renderFilteredProducts("volaille")}>
                                 Volaille
                             </Menu.Item>
-                            <Menu.Item key="7">
+                            <Menu.Item key="7" onClick={() => renderFilteredProducts("abats")}>
                                 Abats
                             </Menu.Item>
-                            <Menu.Item key="8">
+                            <Menu.Item key="8" onClick={() => renderFilteredProducts("barbecue")}>
                                 Barbecue
                             </Menu.Item>
-                            <Menu.Item key="9">
+                            <Menu.Item key="9" onClick={() => renderFilteredProducts("charcuterie")}>
                                 Charcuterie
                             </Menu.Item>
-                            <Menu.Item key="10">
+                            <Menu.Item key="10" onClick={() => renderFilteredProducts("traiteur")}>
                                 Traiteur
                             </Menu.Item>
-                            <Menu.Item key="11">
+                            <Menu.Item key="11" onClick={() => renderFilteredProducts("promotions")}>
                                 Promotions
                             </Menu.Item>
-                            <Menu.Item key="12">
+                            <Menu.Item key="12" onClick={() => renderFilteredProducts("news")}>
                                 Nouveautés
                             </Menu.Item>
                         </Menu>
