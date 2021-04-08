@@ -20,8 +20,12 @@ const Products = () => {
     //     setProduits(products);
     // }
 
+    const seeMore = () => {
+        setSlice(slice+9)
+    }
+
     const renderProducts = () => {
-        const listProducts = produitsFiltres.map(item => {
+        const listProducts = produitsFiltres.slice(0, slice).map(item => {
           return (
             <Col key={item.id} xs={24} md={12} xl={8}>
                 <Link href={`/products/${item.id}`}>
@@ -105,6 +109,7 @@ const Products = () => {
                         {renderProducts()}
                     </Col>
                 </Row>
+                <p onClick={() => seeMore() }>Voir plus</p>
             </div>
             <Footer />
         </div>
