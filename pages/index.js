@@ -1,12 +1,71 @@
 import Head from "next/head";
-
+import { useState } from 'react'
+import products from "../product"
 import Header from "../components/Header"
 import Footer from "../components/Footer";
 import Section from "../components/Section";
+import Seemore from "../components/Seemore";
+import ProductElement from "../components/ProductElement"
 
 import { Row, Col } from 'antd';
+import Link from 'next/link'
 
 export default function Home() {
+  const [produits, setProduits] = useState(products);
+
+  const product = 2;
+
+  const [momentSlice, setMomentSlice] = useState(4);
+  const [soldSlice, setSoldSlice] = useState(4);
+
+  const SeeMore = (name) => {
+    if (name == "sold") {
+      setSoldSlice(soldSlice + 4)
+    } else (
+      setMomentSlice(momentSlice + 4)
+    )
+
+  }
+
+
+  const listMomentProducts = produits.filter((item) => item.highlighted === true).slice(0, momentSlice).map(item => {
+    return (
+      <ProductElement 
+      key={item.id}
+      id={item.id}
+      name={item.name}
+      img={item.image}
+      price={item.price}
+      />
+      
+    )
+  })
+
+  const listSoldProducts = produits.filter((item) => item.promotion === true)
+    .slice(0, soldSlice).map(item => {
+      return (
+        <Col xs={24} sm={6}>
+
+          <Link href={`/products/${item.id}`}>
+
+            <div  className="element">
+              <img src={item.image} alt="" />
+              <div className="element-name"><h1>{item.name}</h1></div>
+              <div className="element-price"><h2>{item.price}/kg</h2></div>
+              <div className="element-absolute">
+                <div className="element-inside"></div>
+              </div>
+            </div>
+
+          </Link>
+
+        </Col>
+      )
+    })
+
+
+
+
   return (
     <div>
       <Head>
@@ -37,24 +96,22 @@ atouts ? Un savoir-faire traditionnel, une fraîcheur irréprochable et un servi
 
 
 
-      <Col className="section-container" xs={16} sm={16}>
+      <Col className="section-container" xs={21} sm={16}>
 
-        <Row xs={12} sm={12} justify="center">
+        <Row justify="center">
           <Section
             title="En ce moment"
             icon="fi-rr-time-fast"
           />
 
-          <Row className="moment-section" gutter={[24, 24]}>
-            <Col className="moment" xs={6} sm={6}><img src="/img/accueil.webp" alt="" /></Col>
-            <Col className="moment" xs={6} sm={6}><img src="/img/accueil.webp" alt="" /></Col>
-            <Col className="moment" xs={6} sm={6}><img src="/img/accueil.webp" alt="" /></Col>
-            <Col className="moment" xs={6} sm={6}><img src="/img/accueil.webp" alt="" /></Col>
+          <Row className="moment-section" gutter={[24, 24]} justify="center">
+            {listMomentProducts}
           </Row>
-
+          <Seemore
+            action={() => SeeMore("moment")}
+          />
 
         </Row>
-
 
         <Row justify="center" >
           <Section
@@ -62,20 +119,79 @@ atouts ? Un savoir-faire traditionnel, une fraîcheur irréprochable et un servi
             icon="fi-rr-label"
           />
 
-          <Row className="sold-section" gutter={[24, 24]}>
-            <Col className="sold" xs={6} sm={6}><img src="/img/accueil.webp" alt="" /></Col>
-            <Col className="sold" xs={6} sm={6}><img src="/img/accueil.webp" alt="" /></Col>
-            <Col className="sold" xs={6} sm={6}><img src="/img/accueil.webp" alt="" /></Col>
-            <Col className="sold" xs={6} sm={6}><img src="/img/accueil.webp" alt="" /></Col>
+          <Row className="sold-section" justify="center" gutter={[24, 24]}>
+            {listSoldProducts}
+
           </Row>
+          <Seemore
+            action={() => SeeMore("sold")}
+          />
+
 
         </Row>
+
         <Row justify="center" >
           <Section
             title="Contact"
             icon="fi-rr-id-badge"
           />
         </Row>
+
+        <Row justify="center" gutter={[24, 24]} className="contact-section">
+          <Col xs={24} sm={12}>
+            <div className="contact">
+              <h3>Commandez pour plus de facilité !</h3>
+              <div className="command-circle">
+                <i class="fi-rr-shop"></i>
+              </div>
+              <div className="tutorial">
+                <button>Je me crée un compte</button>
+                <hr />
+                <button>Je valide mon compte en boucherie</button>
+                <hr />
+                <button>Je me connecte puis je passe commande</button>
+                <hr />
+                <button>Je vais récupérer ma commande</button>
+              </div>
+            </div>
+          </Col>
+
+          <Col xs={24} sm={12} >
+            <div className="contact">
+              <h3>Comment nous trouver ?</h3>
+
+              <div className="contact-circle">
+
+                <i class="fi-rr-home"></i>
+              </div>
+              <div>
+                <i class="fi-rr-marker"></i>
+                <p>30 rue de Condé,</p>
+                <p>59000 Lille</p>
+              </div>
+              <div>
+                <i class="fi-rr-inbox"></i>
+                <p>03 20 53 06 44</p>
+              </div>
+
+              <div className="open-hours">
+                <p>
+                  <i className="fi-rr-calendar"> </i>Horaires
+              </p>
+                <p>Lundi: 09h00 - 13h00, 16h00 - 18h45</p>
+                <p>Mardi: 09h00 - 14h00, 16h00 - 18h45</p>
+                <p>Mercredi: Fermé</p>
+                <p>Jeudi: 09h00 - 14h00, 16h00 - 18h45</p>
+                <p>Vendredi: 09h00 - 14h00, 16h00 - 18h45</p>
+                <p>Samedi: 08h30 - 15h00</p>
+                <p>Dimanche: Fermé</p>
+              </div>
+
+            </div>
+          </Col>
+        </Row>
+
+
       </Col>
 
 

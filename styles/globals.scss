@@ -10,9 +10,9 @@
   font-display: swap;
 }
 
-@import "_accueil";
-
 @import "_variables";
+
+@import "_accueil";
 
 @import "_header";
 
@@ -21,6 +21,8 @@
 @import "_hero";
 
 @import "_products";
+
+@import "_productElement";
 
 html,
 body {

@@ -6,7 +6,7 @@ const Header = () => {
     return (
         <header>
             <Row justify="center" align="middle">
-                <Col xs ={16} sm={16} >
+                <Col xs ={21} sm={16} >
                     <Row justify="space-between" align="middle">
                         <Row align="middle">
                             <Col xs={6} sm={6}>
@@ -15,9 +15,9 @@ const Header = () => {
                             <Col sm={18}>
                                 <nav>
                                     <ul>
-                                        <Link href="/"><a><li>Accueil</li></a></Link>
-                                        <Link href="/products/"><a><li>Nos Produits</li></a></Link>
-                                        <Link href="/api/hello"><a><li>Notre histoire</li></a></Link>
+                                        <Link href="/"><li>Accueil</li></Link>
+                                        <Link href="/products/"><li>Nos Produits</li></Link>
+                                        <Link href="/api/hello"><li>Notre histoire</li></Link>
                                     </ul>
                                 </nav>
                             </Col>
