@@ -16,17 +16,96 @@
         width: 100%;
         display: flex;
         align-items: center;
+    }
 
-        .slogan-cart {
-            margin: auto;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 18px;
+    .slogan-cart {
+        margin: auto;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 18px;
 
-            h1 {
-                font-size: 72px;
-                color: white;
-            }
+        h1 {
+            font-size: 72px;
+            color: white;
+        }
+
+        button {
+            background-color: #db3510;
+            border-radius: 12px;
+            color: white;
+            font-size: 48px;
+            box-shadow: 10px 10px 16px -8px rgba(0, 0, 0, 0.29) inset;
+            margin-bottom: 20px;
+            border: none;
+            cursor: pointer;
+            padding: 3px 20px 3px 20px;
         }
     }
 }
+
+.descript {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 250px;
+
+    .descript-content {
+        position: absolute;
+        border-top: 3px solid #e41616;
+        background-color: #0a0e12;
+        top: -85px;
+        color: white;
+        font-size: 33px;
+        padding: 2rem;
+        text-align: center;
+    }
+}
+
+.section-container {
+margin: auto;
+
+    .section {
+        background-color: #0a0e12;
+        display: flex;
+        align-items: center;
+        border-radius: 18px;
+        margin-bottom: 50px;
+        margin-top: 50px;
+
+        i {
+            font-size: 65px;
+            color: white;
+            padding: 1rem 2rem 0 2rem;
+        }
+
+        .insection {
+            background-color: #e41616;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2 {
+            color: white;
+            font-size: 65px;
+            padding: 0 35px 0 35px;
+            margin-bottom: 0;
+        }
+    }
+}
+
+.moment-section {
+.moment {
+    img {
+        width: 100%;
+    }
+}
+}
+.sold-section {
+    .sold {
+        img {
+            width: 100%;
+        }
+    }
+    }

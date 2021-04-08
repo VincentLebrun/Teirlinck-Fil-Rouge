@@ -15,8 +15,8 @@ const Header = () => {
                             <Col sm={18}>
                                 <nav>
                                     <ul>
-                                        <Link href="/api/hello"><a><li>Accueil</li></a></Link>
-                                        <Link href="/api/hello"><a><li>Nos Produits</li></a></Link>
+                                        <Link href="/"><a><li>Accueil</li></a></Link>
+                                        <Link href="/products/"><a><li>Nos Produits</li></a></Link>
                                         <Link href="/api/hello"><a><li>Notre histoire</li></a></Link>
                                     </ul>
                                 </nav>
