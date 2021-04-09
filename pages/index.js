@@ -13,8 +13,6 @@ import Link from 'next/link'
 export default function Home() {
   const [produits, setProduits] = useState(products);
 
-  const product = 2;
-
   const [momentSlice, setMomentSlice] = useState(4);
   const [soldSlice, setSoldSlice] = useState(4);
 
