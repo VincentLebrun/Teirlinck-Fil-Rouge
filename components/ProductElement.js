@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 
 const ProductElement = ({ id, name, price, img }) => {
-    
+
     return (
         <Col xs={24} sm={6}>
 

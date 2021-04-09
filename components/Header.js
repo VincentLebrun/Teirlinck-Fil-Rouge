@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Row, Col } from 'antd';
+import carts from "../cart"
 
 const Header = () => {
     return (
@@ -26,7 +27,7 @@ const Header = () => {
                             <Col>
                                 <Row align="middle">
                                     <Link href="/api/hello"><a className="connect"><i className="fi-rr-user"></i>Se connecter<i className="fi-rr-angle-down arrow-down"> </i></a></Link>
-                                    <Link href="/panier"><a href="" className="shop"><i className="fi-rr-shopping-cart shop-cart"><div class="num-articles-header"><p>2</p></div></i></a></Link>
+                                    <Link href="/panier"><a href="" className="shop"><i className="fi-rr-shopping-cart shop-cart"><div class="num-articles-header"><p>{carts.length}</p></div></i></a></Link>
                                 </Row>
                             </Col>
                         </Row>
