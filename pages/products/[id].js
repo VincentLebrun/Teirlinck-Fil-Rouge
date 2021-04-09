@@ -6,8 +6,14 @@ import products from "../../product";
 import Section from '../../components/Section'
 import { Row, Col } from 'antd';
 import ProductElement from '../../components/ProductElement';
+import Link from 'next/link';
 
 const Product = ({ product }) => {
+
+    //Nouvelle propriété dans le state pour stocker les éléments du panier
+
+    const [cart, setCart] = useState({ items: [], total: 0 });
+    //on mettra dans items les objets product du tableau products
 
     const [price, setPrice] = useState(0);
 
@@ -18,15 +24,46 @@ const Product = ({ product }) => {
 
     // pour le moment on utilise le tableau de produits pour récupérer le produit, après on récupèrera directement le produit dans la base avec un appel à l'API via un getServerSideProps( { params })
 
+    const addToCart = () => {
+        // Cette ligne permet d'avoir un id unique lors de l'affichage du panier
+        const item = {...product};
+        console.log(item);
+        item.id = `${item.id}-${Date.now()}`;
+        //cart.items.push(product) ==> mutation de state !
+        // on doit toujours passer par la fonction de modification de la propriété qui est mise à disposition par le useState
+
+        setCart({ 
+          items:[...cart.items, item], 
+          total: Number((cart.total + price).toFixed(2))
+        });
+      }
+
     const renderPrice = (e) => {
         if (e.target.name == "weight") {
-            const price = ((product.price * e.target.value) / 1000).toFixed(2)
+            const price = Number(((product.price * e.target.value) / 1000).toFixed(2))
             setPrice(price);
         } else {
-            const price = (product.price * e.target.value).toFixed(2)
+            const price = Number((product.price * e.target.value).toFixed(2))
             setPrice(price);
         }
 
+    }
+
+    const renderButton = () => {
+        if (!cart.items.find((item) => item.name == product.name)) {
+            return (
+                <button onClick={() => addToCart()}>Ajouter au panier</button>
+            )
+        } else {
+            return (
+                <div className="">
+                    <p>Cet article est déjà dans votre panier, veuillez cliquer ci-dessous pour modifier sa quantité</p>
+                    <Link href="/panier">
+                        <button>Modifier</button>
+                    </Link>
+                </div>
+            )
+        }
     }
 
     return (
@@ -67,7 +104,7 @@ const Product = ({ product }) => {
                                 </ul>
                                 <div className="btn_add_to_cart"></div>
                                 <span className="iconCart"><i className="fi-rr-shopping-cart-check"></i></span>
-                                <button>Ajouter au panier</button>
+                                {renderButton()}
                             </div>
                         </Col>
                     </Row>
