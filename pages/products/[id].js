@@ -36,7 +36,7 @@ const Product = ({ product }) => {
                 title={product.name}
                 image="ourproducts.webp"
             />
-            <Row gutter={24} justify="center">
+            <Row justify="center">
                 <Col span={16}>
                     <Row justify="space-around">
                         <Col xs={24} sm={12}>
@@ -49,20 +49,25 @@ const Product = ({ product }) => {
                                     </div>
                                 </div>
                         </Col>
-                        <Col span={7}>
+                        <Col xs={24} xl={8}>
                             <div className="productPrice">
                                 <ul>
-                                    <li>Prix</li>
+                                    <li className="title">Prix</li>
+                                    <hr/>
                                     <li>{product.price} €{product.price_type}</li>
-                                    <li>Quantité</li>
+                                    <li className="title">Quantité</li>
+                                    <hr/>
                                     <li>
-                                        <input onChange={(e) => renderPrice(e)} className={product.price_type === "/pc" ? "hidden" : ""} type="number" name="weight" id="inputWeight" placeholder="(en grammes)" />
-                                        <input onChange={(e) => renderPrice(e)} className={product.price_type === "/kg" ? "hidden" : ""} type="number" name="numberOfPieces" id="inoutNumberOfPieces" placeholder="(nombre de pièces)" />
+                                        <input onChange={(e) => renderPrice(e)} className={product.price_type === "/pc" ? "hidden" : ""} type="number" name="weight" id="inputWeight" placeholder="(en grammes)" step="25" min="0" />
+                                        <input onChange={(e) => renderPrice(e)} className={product.price_type === "/kg" ? "hidden" : ""} type="number" name="numberOfPieces" id="inoutNumberOfPieces" placeholder="(nombre de pièces)" step="25" min="0" />
                                     </li>
-                                    <li>Prix à régler</li>
+                                    <li className="title">Prix à régler</li>
+                                    <hr/>
                                     <li>{price} €</li>
                                 </ul>
                                 <div className="btn_add_to_cart"></div>
+                                <span className="iconCart"><i className="fi-rr-shopping-cart-check"></i></span>
+                                <button>Ajouter au panier</button>
                             </div>
                         </Col>
                     </Row>
@@ -85,7 +90,7 @@ const Product = ({ product }) => {
                     />
                 </Row>
                 <Row justify="center">
-                    <Col span={14}><p>{product.allergenes ? "Ce produit contient des allergènes" : "Ce produit ne contient aucun des 14 allergènes (conformément au Règlement (UE) n° 1169/2011 concernant l'information des consommateurs sur les denrées alimentaires) selon la recette. La contamination croisée dans la boucherie ne peut jamais être totalement exclue)."}</p></Col>
+                    <Col span={14}><p>{product.allergenes.lenght == 0 ? "Ce produit contient les allergènes suivant : " : "Ce produit ne contient aucun des 14 allergènes (conformément au Règlement (UE) n° 1169/2011 concernant l'information des consommateurs sur les denrées alimentaires) selon la recette. La contamination croisée dans la boucherie ne peut jamais être totalement exclue)."}</p></Col>
                 </Row>
             </div>
             <Footer />
