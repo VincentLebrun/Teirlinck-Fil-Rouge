@@ -109,7 +109,11 @@ const Products = () => {
                         {renderProducts()}
                     </Col>
                 </Row>
-                <p onClick={() => seeMore() }>Voir plus</p>
+                <Row justify="center" align="middle">
+                    <Col xs={8} sm={6} xl={4}></Col>
+                    <Col xs={8} sm={10} xl={12}><p onClick={() => seeMore() }>Voir plus</p></Col>
+                </Row>
+                
             </div>
             <Footer />
         </div>
