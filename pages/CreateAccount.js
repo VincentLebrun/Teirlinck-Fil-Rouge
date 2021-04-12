@@ -1,155 +1,151 @@
 import React, { useState } from "react";
-import { Button, Row, Col, Form, Input } from "antd";
-
-
+import { Button, Row, Col, Form, Input, Select } from "antd";
+const { Option } = Select;
 const RegistrationForm = () => {
   const [form] = Form.useForm();
-
+  const prefixSelector = (
+    <Form.Item name="prefix" noStyle>
+      <Select
+        style={{
+          width: 70,
+        }}
+      >
+        <Option value="+33">+33</Option>
+      </Select>
+    </Form.Item>
+  );
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
-  const formItemLayout = {
-    labelCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 8,
-      },
-    },
-    wrapperCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 16,
-      },
-    },
-  };
+
   return (
     <main>
-            <Row align="center" justify="center">
-              <Col justify="center" align="center" xs={14} xl={6} class="image">
-                <img src="/logo.svg" alt="" />
-              </Col>
-            </Row>
-            <hr />
-            <Form
-              form={form}
-              name="register"
-              onFinish={onFinish}
-              {...formItemLayout}
-              scrollToFirstError
-            >
-             
-                <div class="input">
-                  <Form.Item
-                  className="contain"
-                    name="fisrtName"
-                    label="Prénom"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Veuillez entrer votre prénom",
-                        whitespace: true,
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-                </div>
-                <div class="input">
-                  <Form.Item
-                    name="name"
-                    label="Nom"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Veuillez entrez votre nom",
-                        whitespace: true,
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-                </div>           
-               <div class="input">
-                  <Form.Item
-                    class="email"
-                    name="email"
-                    label="E-mail"
-                                   
-                    rules={[
-                      {
-                        type: "email",
-                        message: "L'e-mail n'est pas valide",
-                      },
-                      {
-                        required: true,
-                        message: "Veuillez taper un e-mail",
-                      },
-                    ]}
-                  >
-                    {/* onChange={(e) => setMail(e.target.value)} */}
-                    <Input />
-                  </Form.Item>
-                </div>
-                <div class="input">
-                  <Form.Item
-                    name="password"
-                    label="Mot de passe"
-                    hasFeedback
-                    
-                   
-                    rules={[
-                      {
-                        required: true,
-                        message: "Veuillez entrer un mot de passe",
-                      },
-                    ]}
-                    
-                  >
-                    <Input.Password />
-                  </Form.Item>{" "}
-                </div>
+      
+      <Row   className="container" xl={16}>
+        <Col xl={10}>
+      <img src="/logo.svg" alt="" />
+       <hr/>
+       </Col>
+        <Col xl={16}>
+          
+          <Form
+            form={form}
+            name="register"
+            onFinish={onFinish}
+            initialValues={{
+              prefix: "+33",
+            }}
+            scrollToFirstError
+          >
+            <Row className="contain" justify="space-around" xl={24}>
+              <Form.Item
+                name="fisrtName"
+                rules={[
+                  {
+                    required: true,
+                    message: "Veuillez entrer votre prénom",
+                    whitespace: true,
+                  },
+                ]}
+              >
+                <label>Prénom</label>
+                <Input />
+              </Form.Item>
 
-                <Form.Item
-                  name="confirm"
-                  label="Confirmez le mot de passe"
-                  dependencies={['password']}
-                 
-                  hasFeedback
-                  rules={[
-                    {
-                      required: true,
-                      message: "Confirmez votre mot de passe",
-                    },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue("password") === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(
-                          new Error("Les 2 mot de passe ne correspondent pas ")
-                        );
-                      },
-                    }),
-                  ]}
-                >
-                  {/* onChange={(e) => setRetypePassword(e.target.value)} */}
-                  <Input.Password />
-                </Form.Item>
-                <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Register
-                  </Button>
-                </Form.Item>
-                <hr />
-             
-            </Form>
-         
-        
-     
+              <Form.Item
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Veuillez entrez votre nom",
+                    whitespace: true,
+                  },
+                ]}
+              >
+                <label>Nom</label>
+                <Input />
+              </Form.Item>
+            </Row>
+            <Form.Item
+              name="phone"
+              rules={[
+                {
+                  required: true,
+                  message: "Veuillez saisir un numéro de téléphone",
+                },
+              ]}
+            >
+              {" "}
+              <label>Numéro de téléphone</label>
+              <Input
+                addonBefore={prefixSelector}
+                style={{
+                  width: "100%",
+                }}
+              />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              rules={[
+                {
+                  type: "email",
+                  message: "L'e-mail n'est pas valide",
+                },
+                {
+                  required: true,
+                  message: "Veuillez taper un e-mail",
+                },
+              ]}
+            >
+              <label>E-mail</label>
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: "Veuillez entrer un mot de passe",
+                },
+              ]}
+            >
+              <label>Mot de passe"</label>
+              <Input.Password />
+            </Form.Item>{" "}
+            <Form.Item
+              name="confirm"
+              dependencies={["password"]}
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: "Confirmez votre mot de passe",
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error("Les 2 mot de passe ne correspondent pas ")
+                    );
+                  },
+                }),
+              ]}
+            >
+              <label>Confirmez le mot de passe</label>
+              <Input.Password />
+            </Form.Item>
+            <Form.Item>
+              <Button className="button" htmlType="submit">
+               Se connecter 
+              </Button>
+            </Form.Item>
+            <hr />
+          </Form>
+        </Col>
+      </Row>
     </main>
   );
 };

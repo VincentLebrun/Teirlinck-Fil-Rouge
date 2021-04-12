@@ -1,91 +1,61 @@
 main {
-  height: 100vh;
- 
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #131a22;
+    label {
+      font-family: Rockwell;
+      color: $color-white;
+    }
+    input{
+      border-radius: 4px;
+     
+      border: $color-red solid 2px;
+    }
+    @media screen and (max-width: 767px) {
+      .inputRow {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        width: 70%;
+      }
+    }
 
-  color: whitesmoke;
-  .contain {
-    background-color: $color-black;
-    border-radius: 10px;
-    img {
-      width: 100%;
+    .button:hover {
+      padding-right: 4rem;
     }
-    hr {
-      color: $color-red;
-      margin-top: 2rem;
-      border-radius: 2px;
-      border: solid 2px;
-    }
-    h2 {
+   
+    .button  {
+      display: inline-block;
+      border-radius: 4px;
+      border: none;
       color: whitesmoke;
-      display: flex;
-    }
-  
-    input {
-      border-radius: 1px;
-      border: 2px solid $color-red;
-      width: 100%;
-      color: $color-black;
-      
-    }
-    .image{
-      padding-top: 2rem;
-    }
-   
- 
-  }
-  .email {
-      
-    text-align: center;
-    width: 50%;
-  }
-  @media screen and (max-width: 767px) {
-    .inputRow {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin: auto;
-      width: 70%;
-    }
-  }
+      text-align: center;
+      font-size: 28px;
+      transition: all 0.5s;
+      margin: 8px;
+      border-radius: 4px;
+      background-color: $color-red;
+      width: 75%;
+      cursor: pointer;
+      display: inline-block;
 
-  .button:hover span {
-    padding-right: 4rem;
+      transition: 0.2s;
+    }
+    .button :after {
+      content: "\00bb";
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.2s;
+    }
+    .button:hover :after {
+      opacity: 1;
+      right: 0;
+    }
   }
-  .button {
-    
-    display: inline-block;
-    border-radius: 4px;
-    background-color: $color-red;
-   
-    border: none;
-    color: whitesmoke;
-    text-align: center;
-    font-size: 28px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
-  }
-  button span {
-   
-    border-radius: 1px;
-    background-color: $color-red;
-    width: 100%;
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.2s;
-  }
-  .button span:after {
-    content: "\00bb";
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.2s;
-  }
-  .button:hover span:after {
-    opacity: 1;
-    right: 0;
-  }
- 
 }
