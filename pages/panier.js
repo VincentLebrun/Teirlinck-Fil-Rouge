@@ -10,10 +10,15 @@ const panier = (props) => {
     const [panier, setPanier] = useState();
     const [loading, setLoading] = useState(true);
 
-    useEffect (() => {
+    useEffect(() => {
         setPanier(JSON.parse(localStorage.getItem('cart')));
         setLoading(false);
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(panier));
+
+    }, [panier]);
 
     const itemPrice = (price, quantity, type) => {
 
@@ -27,23 +32,45 @@ const panier = (props) => {
 
     }
 
+    const deleteCart = (id) => {
+        const deleteItem = panier.items.findIndex((item) => item.id == id);
+        let newPanier = panier;
+        newPanier.items.splice(deleteItem, 1);
+
+        setPanier(
+            {
+                items: [...newPanier.items],
+                total: 0
+            });
+    }
+
+    const addCommand = () => {
+        let newPanier = panier;
+        newPanier = {items : [], total : 0};
+        setPanier({
+            items: [...newPanier.items],
+            total:0
+        }
+        )
+    }
+
     const priceType = (type) => {
         if (type == "/kg") {
             return "g";
         }
         else {
-            console.log(type);
+            // console.log(type);
             return "pc";
         }
     }
 
-    
 
-    if(loading) {
-        return(
+
+    if (loading) {
+        return (
             <p>Chargement en cours !</p>
         )
-    } 
+    }
 
     let testTotal = 0;
     const listPanier = panier.items.map(item => {
@@ -88,7 +115,7 @@ const panier = (props) => {
 
                         <h2>~{itemPrice(item.price, item.quantity, item.price_type)}€</h2>
                         <div className="store-button">
-                            <button>Supprimer de votre panier</button>
+                            <button onClick={() => deleteCart(item.id)} >Supprimer de votre panier</button>
                         </div>
 
                     </Col>
@@ -102,8 +129,8 @@ const panier = (props) => {
 
     return (
         <div>
-            <Header 
-            panier_length = {panier.items.length}
+            <Header
+                panier_length={panier.items.length}
             />
             <Hero
 
@@ -143,7 +170,7 @@ const panier = (props) => {
 
                         <h1>Total ({panier.items.length} produits): ~{Number(testTotal.toFixed(2))}€</h1>
 
-                        <button>Passer la commande</button>
+                        <button onClick={() => addCommand()} >Passer la commande</button>
                     </Col>
 
                 </Row>
