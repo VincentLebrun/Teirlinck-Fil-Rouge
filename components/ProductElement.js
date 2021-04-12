@@ -13,7 +13,7 @@ const ProductElement = ({ id, name, price, img }) => {
                 <div className="element">
                     <img src={img} alt="" />
                     <div className="element-name"><h1>{name}</h1></div>
-                    <div className="element-price"><h2>{price}/kg</h2></div>
+                    <div className="element-price"><h2>{price}€/kg</h2></div>
                     <div className="element-absolute">
                         <div className="element-inside"></div>
                     </div>
