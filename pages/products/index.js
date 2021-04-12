@@ -6,6 +6,7 @@ import Hero from '../../components/Hero';
 import Header from "../../components/Header"
 import Footer from "../../components/Footer";
 import products from "../../product";
+import Seemore from '../../components/Seemore';
 
 const { SubMenu } = Menu;
 
@@ -107,13 +108,13 @@ const Products = () => {
                     </Col>
                     <Col xs={8} sm={10} xl={12}>
                         {renderProducts()}
+                        <Row justify="center">
+                            <Seemore
+                                action={() => seeMore() }
+                            />
+                        </Row>
                     </Col>
                 </Row>
-                <Row justify="center" align="middle">
-                    <Col xs={8} sm={6} xl={4}></Col>
-                    <Col xs={8} sm={10} xl={12}><p onClick={() => seeMore() }>Voir plus</p></Col>
-                </Row>
-                
             </div>
             <Footer />
         </div>
