@@ -29,7 +29,7 @@ const carts = [
         image : "https://pictures.henri-boucher.fr/sites/default/files/bddi/images/products/277/FRFR-277-PLA-FRFR-500.jpg",
         price_type : "/pc",
         price : 9.9,
-        quantity: 2,
+        quantity: 1,
     },
 ]
 

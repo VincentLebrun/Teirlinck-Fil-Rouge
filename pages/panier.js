@@ -118,7 +118,7 @@ const panier = () => {
                         <hr />
 
                         <Row justify="end">
-                            <h3>Total( {carts.length} produits): ~{testTotal}€</h3>
+                            <h3>Total( {carts.length} produits): ~{Number(testTotal.toFixed(2))}€</h3>
                         </Row>
                     </Col>
 
@@ -127,7 +127,7 @@ const panier = () => {
                             <i class="fi-rr-exclamation"></i> <p>Le prix peut être légèrement différent au moment du règlement en boucherie dû à la pesée.</p>
                         </div>
 
-                        <h1>Total ({carts.length} produits): ~{testTotal}€</h1>
+                        <h1>Total ({carts.length} produits): ~{Number(testTotal.toFixed(2))}€</h1>
 
                         <button>Passer la commande</button>
                     </Col>

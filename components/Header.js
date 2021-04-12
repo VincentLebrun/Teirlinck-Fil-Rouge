@@ -6,7 +6,7 @@ import carts from "../cart"
 const Header = () => {
     return (
         <header>
-            <Row justify="center" align="middle">
+            <Row justify="center" align="middle" className="header">
                 <Col xs ={21} sm={16} >
                     <Row justify="space-between" align="middle">
                         <Row align="middle">
