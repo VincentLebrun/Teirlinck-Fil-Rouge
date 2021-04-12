@@ -17,11 +17,10 @@ const index = () => {
 
     const [collapsed, setCollapsed] = useState(false);
 
-    useEffect(() => {
+    
         const toggle = () => {
             setCollapsed(!collapsed);
         };
-    }, [])
 
     return (
         <Layout>
