@@ -110,7 +110,7 @@ const products = [
         image : "https://pictures.henri-boucher.fr/sites/default/files/bddi/images/products/379/FRFR-379-PLA-FRFR-500.jpg",
         categories : ["traiteur"],
         allergenes : [""],
-        price_type : "/pc",
+        price_type : "/kg",
         price : 13.90,
         promotion : false,
         highlighted : false,

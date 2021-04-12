@@ -47,8 +47,8 @@ const Product = ({ product }) => {
                 price:product.price,
                 quantity
             };
-            item.quantity = quantity;
-            item.id = `${item.id}-${Date.now()}`;
+            // item.quantity = quantity;
+            // item.id = `${item.id}-${Date.now()}`;
             //cart.items.push(product) ==> mutation de state !
             // on doit toujours passer par la fonction de modification de la propriété qui est mise à disposition par le useState
 
@@ -73,6 +73,10 @@ const Product = ({ product }) => {
         setQuantity(e.target.value);
     }
 
+    const updateQuantity = () => {
+         
+    }
+
     const renderButton = () => {
         if (!cart.items.find((item) => item.name == product.name)) {
             return (
@@ -83,7 +87,7 @@ const Product = ({ product }) => {
                 <div className="">
                     <p>Cet article est déjà dans votre panier, veuillez cliquer ci-dessous pour modifier sa quantité</p>
                     <Link href="/panier">
-                        <button>Modifier</button>
+                        <button onClick={() => updateQuantity()}>Modifier</button>
                     </Link>
                 </div>
             )
@@ -92,7 +96,7 @@ const Product = ({ product }) => {
 
     if(loading) {
         return(
-            <p>Chargement en cours !</p>
+            <p>Chargement en cours...</p>
         )
     } 
 
