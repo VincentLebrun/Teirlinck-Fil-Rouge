@@ -1,13 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import { Row, Col } from 'antd';
+import { useState, useEffect } from 'react'
 import carts from "../cart"
 
-const Header = () => {
+const Header = ({panier_length}) => {
+ 
     return (
         <header>
             <Row justify="center" align="middle" className="header">
-                <Col xs ={21} sm={16} >
+                <Col xs={21} sm={16} >
                     <Row justify="space-between" align="middle">
                         <Row align="middle">
                             <Col xs={6} sm={6}>
@@ -27,7 +29,7 @@ const Header = () => {
                             <Col>
                                 <Row align="middle">
                                     <Link href="/api/hello"><a className="connect"><i className="fi-rr-user"></i>Se connecter<i className="fi-rr-angle-down arrow-down"> </i></a></Link>
-                                    <Link href="/panier"><a href="" className="shop"><i className="fi-rr-shopping-cart shop-cart"><div class="num-articles-header"><p>{carts.length}</p></div></i></a></Link>
+                                    <Link href="/panier"><a href="" className="shop"><i className="fi-rr-shopping-cart shop-cart"><div class="num-articles-header"><p>{panier_length}</p></div></i></a></Link>
                                 </Row>
                             </Col>
                         </Row>
