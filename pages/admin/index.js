@@ -42,7 +42,7 @@ const index = () => {
                 <Header className="site-layout-background" style={{ padding: 0 }}>
                     {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                         className: 'trigger',
-                        // onClick: toggle(),
+                        //onClick: toggle(),
                     })}
                 </Header>
                 <Content

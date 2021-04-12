@@ -1,12 +1,11 @@
 import Head from "next/head";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import products from "../product"
 import Header from "../components/Header"
 import Footer from "../components/Footer";
 import Section from "../components/Section";
 import Seemore from "../components/Seemore";
 import ProductElement from "../components/ProductElement"
-
 import { Row, Col } from 'antd';
 import Link from 'next/link'
 
@@ -15,6 +14,15 @@ export default function Home() {
 
   const [momentSlice, setMomentSlice] = useState(4);
   const [soldSlice, setSoldSlice] = useState(4);
+
+  const [cart, setCart] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect (() => {
+      setCart(JSON.parse(localStorage.getItem('cart')));
+      setLoading(false);
+  }, []);
+
 
   const SeeMore = (name) => {
     if (name == "sold") {
@@ -56,7 +64,11 @@ export default function Home() {
     })
 
 
-
+    if(loading) {
+      return(
+          <p>Chargement en cours !</p>
+      )
+  } 
 
   return (
     <div>
@@ -64,7 +76,9 @@ export default function Home() {
         <title>Teirlinck</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      <Header
+      panier_length = {cart.items.length}
+      />
 
       <div className="home-content">
         <img src="/img/accueil.webp" alt="" />

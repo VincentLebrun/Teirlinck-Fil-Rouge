@@ -14,7 +14,7 @@ const Product = ({ product }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect (() => {
-        setCart (JSON.parse(localStorage.getItem('cart')));
+        setCart(JSON.parse(localStorage.getItem('cart')));
         setLoading(false);
     }, []);
     
@@ -95,10 +95,12 @@ const Product = ({ product }) => {
             <p>Chargement en cours !</p>
         )
     } 
-
+    
     return (
         <div className="productDetails">
-            <Header />
+            <Header
+              panier_length = {cart.items.length}
+            />
             <Hero
                 title={product.name}
                 image="ourproducts.webp"

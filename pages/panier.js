@@ -1,14 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from "../components/Header"
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import { Row, Col } from 'antd';
 import Link from 'next/link'
-import carts from "../cart"
 
-const panier = () => {
-    const [panier, setPanier] = useState(carts);
-    const [total, setTotal] = useState();
+const panier = (props) => {
+
+    const [panier, setPanier] = useState();
+    const [loading, setLoading] = useState(true);
+
+    useEffect (() => {
+        setPanier(JSON.parse(localStorage.getItem('cart')));
+        setLoading(false);
+    }, []);
 
     const itemPrice = (price, quantity, type) => {
 
@@ -32,9 +37,16 @@ const panier = () => {
         }
     }
 
+    
+
+    if(loading) {
+        return(
+            <p>Chargement en cours !</p>
+        )
+    } 
 
     let testTotal = 0;
-    const listPanier = panier.map(item => {
+    const listPanier = panier.items.map(item => {
 
         testTotal += itemPrice(item.price, item.quantity, item.price_type);
 
@@ -90,7 +102,9 @@ const panier = () => {
 
     return (
         <div>
-            <Header />
+            <Header 
+            panier_length = {panier.items.length}
+            />
             <Hero
 
                 title="Votre panier"
@@ -118,7 +132,7 @@ const panier = () => {
                         <hr />
 
                         <Row justify="end">
-                            <h3>Total( {carts.length} produits): ~{Number(testTotal.toFixed(2))}€</h3>
+                            <h3>Total( {panier.items.length} produits): ~{Number(testTotal.toFixed(2))}€</h3>
                         </Row>
                     </Col>
 
@@ -127,7 +141,7 @@ const panier = () => {
                             <i class="fi-rr-exclamation"></i> <p>Le prix peut être légèrement différent au moment du règlement en boucherie dû à la pesée.</p>
                         </div>
 
-                        <h1>Total ({carts.length} produits): ~{Number(testTotal.toFixed(2))}€</h1>
+                        <h1>Total ({panier.items.length} produits): ~{Number(testTotal.toFixed(2))}€</h1>
 
                         <button>Passer la commande</button>
                     </Col>

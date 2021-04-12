@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 function MyApp({ Component, pageProps }) {
 
-  const cart = {items : [], total : 0};
+   let cart = {items : [], total : 0};
 
   useEffect (() => {
     if(!localStorage.getItem('cart')){
