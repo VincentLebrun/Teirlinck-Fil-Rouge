@@ -10,6 +10,8 @@ import Link from 'next/link';
 
 const Product = ({ product }) => {
 
+    const [testCart, setTestCart] = useState(JSON.parse(localStorage.getItem('cart')));
+    console.log(testCart);
     //Nouvelle propriété dans le state pour stocker les éléments du panier
 
     const [cart, setCart] = useState({ items: [], total: 0 });
@@ -25,17 +27,22 @@ const Product = ({ product }) => {
     // pour le moment on utilise le tableau de produits pour récupérer le produit, après on récupèrera directement le produit dans la base avec un appel à l'API via un getServerSideProps( { params })
 
     const addToCart = () => {
-        // Cette ligne permet d'avoir un id unique lors de l'affichage du panier
-        const item = {...product};
-        console.log(item);
-        item.id = `${item.id}-${Date.now()}`;
-        //cart.items.push(product) ==> mutation de state !
-        // on doit toujours passer par la fonction de modification de la propriété qui est mise à disposition par le useState
+        if(price != 0) {
+            // Cette ligne permet d'avoir un id unique lors de l'affichage du panier
+            const item = {...product};
+            console.log(item);
+            item.id = `${item.id}-${Date.now()}`;
+            //cart.items.push(product) ==> mutation de state !
+            // on doit toujours passer par la fonction de modification de la propriété qui est mise à disposition par le useState
 
-        setCart({ 
-          items:[...cart.items, item], 
-          total: Number((cart.total + price).toFixed(2))
-        });
+            setCart({ 
+                items:[...cart.items, item], 
+                total: Number((cart.total + price).toFixed(2))
+            });
+
+        } else {
+            alert("Veuillez saisir une quantité valide pour ce produit");
+        }
       }
 
     const renderPrice = (e) => {
