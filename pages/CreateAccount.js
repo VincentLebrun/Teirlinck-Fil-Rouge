@@ -1,71 +1,157 @@
 import React, { useState } from "react";
-import { Row, Col } from "antd";
+import { Button, Row, Col, Form, Input } from "antd";
 
-const CreateAccount = ({action}) => {
-  const [text, setText] = useState("");
+
+const RegistrationForm = () => {
+  const [form] = Form.useForm();
+
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+  };
+  const formItemLayout = {
+    labelCol: {
+      xs: {
+        span: 24,
+      },
+      sm: {
+        span: 8,
+      },
+    },
+    wrapperCol: {
+      xs: {
+        span: 24,
+      },
+      sm: {
+        span: 16,
+      },
+    },
+  };
   return (
     <main>
-      <Row justify="center" align="middle">
-        <Col xs={16} xl={10}>
-          <Row justify="center" align="middle">
-            <Col
-              justify="center"
-              align="middle"
-              xs={16}
-              xl={10}
-              className="image"
+            <Row align="center" justify="center">
+              <Col justify="center" align="center" xs={14} xl={6} class="image">
+                <img src="/logo.svg" alt="" />
+              </Col>
+            </Row>
+            <hr />
+            <Form
+              form={form}
+              name="register"
+              onFinish={onFinish}
+              {...formItemLayout}
+              scrollToFirstError
             >
-              <img src="/logo.svg" alt="" />
-            </Col>
-          </Row>
-          <hr />
+             
+                <div class="input">
+                  <Form.Item
+                  className="contain"
+                    name="fisrtName"
+                    label="Prénom"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Veuillez entrer votre prénom",
+                        whitespace: true,
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </div>
+                <div class="input">
+                  <Form.Item
+                    name="name"
+                    label="Nom"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Veuillez entrez votre nom",
+                        whitespace: true,
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </div>           
+               <div class="input">
+                  <Form.Item
+                    class="email"
+                    name="email"
+                    label="E-mail"
+                                   
+                    rules={[
+                      {
+                        type: "email",
+                        message: "L'e-mail n'est pas valide",
+                      },
+                      {
+                        required: true,
+                        message: "Veuillez taper un e-mail",
+                      },
+                    ]}
+                  >
+                    {/* onChange={(e) => setMail(e.target.value)} */}
+                    <Input />
+                  </Form.Item>
+                </div>
+                <div class="input">
+                  <Form.Item
+                    name="password"
+                    label="Mot de passe"
+                    hasFeedback
+                    
+                   
+                    rules={[
+                      {
+                        required: true,
+                        message: "Veuillez entrer un mot de passe",
+                      },
+                    ]}
+                    
+                  >
+                    <Input.Password />
+                  </Form.Item>{" "}
+                </div>
 
-          <Row>
-            <h2>Prénom</h2>
-            <input
-              type="text"
-              className="name"
-              onChange={(e) => setText(e.target.value)}
-              value={text}
-            />
-            <h2>Nom</h2>
-            <input
-              type="text"
-              className="name"
-              onChange={(e) => setText(e.target.value)}
-              value={text}
-            />
-          </Row>
-          <Col>
-            <h2>Adresse mail</h2>
-            <input
-              type="text"
-              className="name"
-              onChange={(e) => setText(e.target.value)}
-              value={text}
-            />
-            <h2>Mot de passe</h2>
-            <input
-              type="text"
-              className="name"
-              onChange={(e) => setText(e.target.value)}
-              value={text}
-            />
-            <h2>Retapez votre mot de passe</h2>
-            <input
-              type="text"
-              className="name"
-              onChange={(e) => setText(e.target.value)}
-              value={text}
-            />
-            <button class="button" onClick={action}><span>Créer votre compte</span></button>
-            <i></i><p> Avant de pouvoir passer votre commande il faudra faire valider votre compte en boucherie</p>
-            <hr/>
-          </Col>
-        </Col>
-      </Row>
+                <Form.Item
+                  name="confirm"
+                  label="Confirmez le mot de passe"
+                  dependencies={['password']}
+                 
+                  hasFeedback
+                  rules={[
+                    {
+                      required: true,
+                      message: "Confirmez votre mot de passe",
+                    },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("password") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(
+                          new Error("Les 2 mot de passe ne correspondent pas ")
+                        );
+                      },
+                    }),
+                  ]}
+                >
+                  {/* onChange={(e) => setRetypePassword(e.target.value)} */}
+                  <Input.Password />
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">
+                    Register
+                  </Button>
+                </Form.Item>
+                <hr />
+             
+            </Form>
+         
+        
+     
     </main>
   );
 };
 
-export default CreateAccount;
+export default RegistrationForm;
