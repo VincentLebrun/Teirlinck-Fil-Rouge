@@ -34,6 +34,7 @@ export default function Home() {
       name={item.name}
       img={item.image}
       price={item.price}
+      price_type={item.price_type}
       />
       
     )
@@ -42,22 +43,15 @@ export default function Home() {
   const listSoldProducts = produits.filter((item) => item.promotion === true)
     .slice(0, soldSlice).map(item => {
       return (
-        <Col xs={24} sm={6}>
-
-          <Link href={`/products/${item.id}`}>
-
-            <div  className="element">
-              <img src={item.image} alt="" />
-              <div className="element-name"><h1>{item.name}</h1></div>
-              <div className="element-price"><h2>{item.price}/kg</h2></div>
-              <div className="element-absolute">
-                <div className="element-inside"></div>
-              </div>
-            </div>
-
-          </Link>
-
-        </Col>
+        <ProductElement 
+        key={item.id}
+        id={item.id}
+        name={item.name}
+        img={item.image}
+        price={item.price}
+        price_type={item.price_type}
+        />
+        
       )
     })
 
