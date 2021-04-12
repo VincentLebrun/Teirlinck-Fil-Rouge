@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react'
 
 function MyApp({ Component, pageProps }) {
 
-  const cart = [];
+  const cart = {items : [], total : 0};
 
   useEffect (() => {
-    localStorage.setItem('cart', JSON.stringify(cart))
+    if(!localStorage.getItem('cart')){
+      localStorage.setItem('cart', JSON.stringify(cart))
+    }
   });
   
   

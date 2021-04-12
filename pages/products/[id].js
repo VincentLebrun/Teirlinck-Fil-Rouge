@@ -10,14 +10,24 @@ import Link from 'next/link';
 
 const Product = ({ product }) => {
 
-    const [testCart, setTestCart] = useState(JSON.parse(localStorage.getItem('cart')));
-    console.log(testCart);
+    const [cart, setCart] = useState();
+    const [loading, setLoading] = useState(true);
+
+    useEffect (() => {
+        setCart (JSON.parse(localStorage.getItem('cart')));
+        setLoading(false);
+    }, []);
+    
+    console.log(cart);
     //Nouvelle propriété dans le state pour stocker les éléments du panier
 
-    const [cart, setCart] = useState({ items: [], total: 0 });
-    //on mettra dans items les objets product du tableau products
+    useEffect (() => {
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+    }, [cart]);
 
     const [price, setPrice] = useState(0);
+    const [quantity, setQuantity] = useState(0);
 
     // const [produits, setProduits] = useState(products);
     // const [id, setId] = useState(router.query.id);
@@ -29,8 +39,15 @@ const Product = ({ product }) => {
     const addToCart = () => {
         if(price != 0) {
             // Cette ligne permet d'avoir un id unique lors de l'affichage du panier
-            const item = {...product};
-            console.log(item);
+            const item = {
+                id: `${product.id}-${Date.now()}`,
+                name:product.name,
+                image:product.image,
+                price_type:product.price_type,
+                price:product.price,
+                quantity
+            };
+            item.quantity = quantity;
             item.id = `${item.id}-${Date.now()}`;
             //cart.items.push(product) ==> mutation de state !
             // on doit toujours passer par la fonction de modification de la propriété qui est mise à disposition par le useState
@@ -39,7 +56,7 @@ const Product = ({ product }) => {
                 items:[...cart.items, item], 
                 total: Number((cart.total + price).toFixed(2))
             });
-
+            
         } else {
             alert("Veuillez saisir une quantité valide pour ce produit");
         }
@@ -53,7 +70,7 @@ const Product = ({ product }) => {
             const price = Number((product.price * e.target.value).toFixed(2))
             setPrice(price);
         }
-
+        setQuantity(e.target.value);
     }
 
     const renderButton = () => {
@@ -72,6 +89,12 @@ const Product = ({ product }) => {
             )
         }
     }
+
+    if(loading) {
+        return(
+            <p>Chargement en cours !</p>
+        )
+    } 
 
     return (
         <div className="productDetails">
