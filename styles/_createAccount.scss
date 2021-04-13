@@ -7,9 +7,41 @@ main {
       background-color: #131a22;
       border-radius: 25px;
       padding: 2rem;
+      margin-top: 5vh;
+      margin-bottom: 5vh;
+      position: relative;
+      .pastille-login {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        width: 60px;
+        border-radius: 50%;
+        background-color: $color-red;
+        height: 60px;
+        top: -30px;
+        left: -30px;
+
+        i {
+          display: flex;
+          align-items: center;
+          color: $color-white;
+          font-size: 2rem;
+        }
+      }
+
+      #register {
+        width: 60%;
+        margin: auto;
+      }
+
+      h2 {
+        color: $color-white;
+      }
 
       img {
         width: 30%;
+        margin-bottom: 2rem;
+        cursor: pointer;
       }
 
       label {
@@ -17,16 +49,7 @@ main {
         color: $color-white;
       }
       hr {
-        color: $color-red;
-      }
-      @media screen and (max-width: 767px) {
-        .inputRow {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          margin: auto;
-          width: 70%;
-        }
+        border: 1px solid $color-red;
       }
 
       .button:hover {
@@ -45,10 +68,10 @@ main {
         margin: 8px;
         border-radius: 4px;
         background-color: $color-red;
-        width: 40%;
         cursor: pointer;
         display: inline-block;
         transition: 0.2s;
+        box-shadow: 13px 13px 17px -8px rgba(0, 0, 0, 0.3) inset;
       }
       .button :after {
         content: "\00bb";
@@ -70,5 +93,32 @@ main {
   .ant-form-item-label {
     display: flex;
     justify-content: center;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  main {
+    .container1 {
+      .black-container {
+
+        .pastille-login {
+          width: 45px;
+          height: 45px;
+          top: -22px;
+          left: -22px;
+
+          i{
+            font-size: 1.6rem;
+          }
+        }
+
+        img {
+width: 60%;
+        }
+          #register {
+            width: 100%;
+          }
+      }
+    }
   }
 }
