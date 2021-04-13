@@ -20,6 +20,7 @@
 
 @import "_hero";
 
+@import "_createAccount";
 @import "_products";
 
 @import "_productElement";
@@ -33,7 +34,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: Rockwell;
-    background-color: #F6F6F6;
+  background-color: #f6f6f6;
 }
 
 a {
@@ -44,4 +45,3 @@ a {
 * {
   box-sizing: border-box;
 }
-

@@ -10,6 +10,7 @@ import Seemore from '../../components/Seemore';
 
 const { SubMenu } = Menu;
 
+
 const Products = () => {
 
     const [produits, setProduits] = useState(products);

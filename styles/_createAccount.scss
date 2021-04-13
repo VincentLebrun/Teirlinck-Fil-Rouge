@@ -1,0 +1,74 @@
+main {
+  .container1 {
+    height: 100vh;
+
+    .black-container {
+      text-align: center;
+      background-color: #131a22;
+      border-radius: 25px;
+      padding: 2rem;
+
+      img {
+        width: 30%;
+      }
+
+      label {
+        font-family: Rockwell;
+        color: $color-white;
+      }
+      hr {
+        color: $color-red;
+      }
+      @media screen and (max-width: 767px) {
+        .inputRow {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin: auto;
+          width: 70%;
+        }
+      }
+
+      .button:hover {
+        padding-right: 4rem;
+      }
+
+      .button {
+        height: auto;
+        display: inline-block;
+        border-radius: 4px;
+        border: none;
+        color: whitesmoke;
+        text-align: center;
+        font-size: 28px;
+        transition: all 0.5s;
+        margin: 8px;
+        border-radius: 4px;
+        background-color: $color-red;
+        width: 40%;
+        cursor: pointer;
+        display: inline-block;
+        transition: 0.2s;
+      }
+      .button :after {
+        content: "\00bb";
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.2s;
+      }
+      .button:hover :after {
+        opacity: 1;
+        right: 0;
+      }
+    }
+  }
+}
+.formInputStyle {
+  flex-direction: column;
+  .ant-form-item-label {
+    display: flex;
+    justify-content: center;
+  }
+}
