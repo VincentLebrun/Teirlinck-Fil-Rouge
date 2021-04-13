@@ -1,0 +1,191 @@
+.home-content {
+    margin-top: 179px;
+    height: 50rem;
+    overflow: hidden;
+    position: relative;
+    img {
+        width: 100%;
+    }
+
+    .slogan {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .slogan-cart {
+        margin: auto;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 18px;
+
+        h1 {
+            font-size: 72px;
+            color: $color-white;
+        }
+
+        button {
+            background-color: $color-redbutton;
+            border-radius: 12px;
+            color: $color-white;
+            font-size: 48px;
+            box-shadow: 10px 10px 16px -8px rgba(0, 0, 0, 0.29) inset;
+            margin-bottom: 20px;
+            border: none;
+            cursor: pointer;
+            padding: 3px 20px 3px 20px;
+        }
+    }
+}
+
+.descript {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 250px;
+
+    .descript-content {
+        position: absolute;
+        border-top: 3px solid $color-red;
+        background-color: $color-black;
+        top: -85px;
+        color: $color-white;
+        font-size: 33px;
+        padding: 2rem;
+        text-align: center;
+    }
+}
+
+
+    .seemore {
+        background-color: $color-redbutton;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 8px 8px 16px -8px rgba(0, 0, 0, 0.29) inset;
+        font-size: 30px;
+        color: $color-white;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 35px;
+        margin-bottom: 4rem;
+
+        i {
+            margin-top: 12px;
+            margin-left: 8px;
+        }
+    }
+
+.section-container {
+    margin: auto;
+}
+    .section {
+        background-color: $color-black;
+        display: flex;
+        align-items: center;
+        border-radius: 18px;
+        margin-bottom: 50px;
+        margin-top: 20px;
+
+        i {
+            font-size: 65px;
+            color: $color-white;
+            padding: 1rem 2rem 0 2rem;
+        }
+
+        .insection {
+            background-color: $color-red;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2 {
+            color: white;
+            font-size: 65px;
+            padding: 0 35px 0 35px;
+            margin-bottom: 0;
+        }
+    }
+
+
+
+
+.contact-section {
+    text-align: center;
+
+    .contact {
+        box-shadow: 22px 10px 42px -14px rgba(0, 0, 0, 0.69);
+        min-height: 650px;
+        margin-bottom: 60px;
+        padding: 20px;
+        background-color: $color-black;
+        color: $color-white;
+        border-radius: 10px;
+        position: relative;
+
+        .open-hours {
+            margin-top: 30px;
+        }
+
+        hr {
+            width: 1px;
+            height: 50px;
+        }
+
+        .tutorial {
+            margin-top: 50px;
+        }
+
+        button {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background-color: $color-redbutton;
+            border: none;
+            border-radius: 5px;
+            font-size: 30px;
+            box-shadow: 10px 10px 16px -8px rgba(0, 0, 0, 0.29) inset;
+        }
+
+        p {
+            margin-bottom: 0;
+            font-size: 23px;
+        }
+
+        h3 {
+            color: $color-white;
+            font-size: 35px;
+        }
+        i {
+            font-size: 30px;
+        }
+        .contact-circle {
+            padding-top: 0.7rem;
+            background-color: $color-red;
+            border-radius: 50%;
+            position: absolute;
+            top: -30px;
+            right: -25px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .command-circle {
+            padding-top: 0.7rem;
+            background-color: $color-red;
+            border-radius: 50%;
+            position: absolute;
+            top: -30px;
+            left: -25px;
+            width: 60px;
+            height: 60px;
+        }
+    }
+}

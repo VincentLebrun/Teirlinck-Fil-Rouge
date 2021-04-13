@@ -1,33 +1,36 @@
 import React from 'react'
 import Link from 'next/link'
 import { Row, Col } from 'antd';
-import { Menu, Dropdown, Button, message, Space, Tooltip } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { useState, useEffect } from 'react'
+import carts from "../cart"
 
-const Header = () => {
+const Header = ({panier_length}) => {
+ 
     return (
         <header>
-            <Row justify="center" align="middle">
-                <Col xl={16} >
+            <Row justify="center" align="middle" className="header">
+                <Col xs={21} sm={16} >
                     <Row justify="space-between" align="middle">
                         <Row align="middle">
-                            <Col xl={6}>
+                            <Col xs={6} sm={6}>
                                 <Link href="/"><a><img src="/logo.svg" alt="" /></a></Link>
                             </Col>
-                            <Col xl={18}>
+                            <Col sm={18}>
                                 <nav>
                                     <ul>
-                                        <Link href="/api/hello"><a><li>Accueil</li></a></Link>
-                                        <Link href="/api/hello"><a><li>Nos Produits</li></a></Link>
-                                        <Link href="/api/hello"><a><li>Notre histoire</li></a></Link>
+                                        <Link href="/"><li>Accueil</li></Link>
+                                        <Link href="/products/"><li>Nos Produits</li></Link>
+                                        <Link href="/api/hello"><li>Notre histoire</li></Link>
                                     </ul>
                                 </nav>
                             </Col>
                         </Row>
                         <Row>
-                            <Col align="middle">
-                                <Link href="/api/hello"><a className="connect"><i className="fi-rr-user"></i>Se connecter<i className="fi-rr-angle-down"> </i></a></Link>
-                                <Link href="/panier"><a href="" className="shop"><i className="fi-rr-shopping-cart"></i></a></Link>
+                            <Col>
+                                <Row align="middle">
+                                    <Link href="/api/hello"><a className="connect"><i className="fi-rr-user"></i>Se connecter<i className="fi-rr-angle-down arrow-down"> </i></a></Link>
+                                    <Link href="/panier"><a href="" className="shop"><i className="fi-rr-shopping-cart shop-cart"><div class="num-articles-header"><p>{panier_length}</p></div></i></a></Link>
+                                </Row>
                             </Col>
                         </Row>
                     </Row>
