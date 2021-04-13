@@ -141,7 +141,7 @@ const Product = ({ product }) => {
                                     <li className="title">Quantité</li>
                                     <hr/>
                                     <li>
-                                        <input onChange={(e) => renderPrice(e)} className={product.price_type === "/pc" ? "hidden" : ""} type="number" name="weight" id="inputWeight" placeholder="(en grammes)" step="25" min="0" />
+                                        <input onChange={(e) => renderPrice(e)} className={product.price_type === "/pc" ? "hidden" : ""} type="number" name="weight" id="inputWeight" placeholder="(en grammes)" step="1" min="0" />
                                         <input onChange={(e) => renderPrice(e)} className={product.price_type === "/kg" ? "hidden" : ""} type="number" name="numberOfPieces" id="inoutNumberOfPieces" placeholder="(nombre de pièces)" step="25" min="0" />
                                     </li>
                                     <li className="title">Prix à régler</li>

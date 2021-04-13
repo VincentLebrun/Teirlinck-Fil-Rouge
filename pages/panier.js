@@ -9,6 +9,7 @@ const panier = (props) => {
 
     const [panier, setPanier] = useState();
     const [loading, setLoading] = useState(true);
+    // const [newQuantity, setNewQuantity] = useState();
 
     useEffect(() => {
         setPanier(JSON.parse(localStorage.getItem('cart')));
@@ -64,6 +65,25 @@ const panier = (props) => {
         }
     }
 
+    const updateQuantity = (e, price, price_type, name, quantity) => {
+        const newQuantity = e.target.value;
+        // setNewQuantity(e.target.value);
+        // console.log(newQuantity);
+        const cart_item = panier.items.find((item) => item.name == name);
+        const previous_price = itemPrice(price, quantity, price_type);
+        cart_item.quantity = newQuantity;
+        const new_price = itemPrice(price, cart_item.quantity, price_type);
+        console.log(new_price);
+        let items = panier.items;
+        const index_item = items.indexOf(name);
+        items[index_item] = cart_item;
+        
+        setPanier({ 
+            items:items, 
+            total: Number((panier.total - previous_price + new_price).toFixed(2))
+        }); 
+    }
+
 
 
     if (loading) {
@@ -103,7 +123,7 @@ const panier = (props) => {
                             <Col xs={24} sm={8}>
                                 <h2>{item.name}</h2>
                                 <div className="input-weight">
-                                    <input type="number" placeholder={item.quantity} step="25" min="0" />
+                                    <input onChange={(e) => updateQuantity(e, item.price, item.price_type, item.name, item.quantity)} type="number" placeholder={item.quantity} step={item.price_type === "/kg" ? "25" : "1"} min="0" value={item.quantity}/>
                                     <p>{priceType(item.price_type)}</p>
                                 </div>
                             </Col>
