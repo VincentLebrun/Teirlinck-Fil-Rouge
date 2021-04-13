@@ -1,22 +1,17 @@
 import React, { useState } from "react";
-import { Button, Row, Col, Form, Input, Select } from "antd";
-const { Option } = Select;
+import { Button, Row, Col, Form, Input } from "antd";
+
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const RegistrationForm = () => {
   const [form] = Form.useForm();
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="+33">+33</Option>
-      </Select>
-    </Form.Item>
-  );
+
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
+    const pass = values.password;
+    const testCrypt = bcrypt.hash(pass, saltRounds);
+    console.log(testCrypt);
   };
 
   return (
@@ -33,9 +28,6 @@ const RegistrationForm = () => {
                 form={form}
                 name="register"
                 onFinish={onFinish}
-                initialValues={{
-                  prefix: "+33",
-                }}
                 scrollToFirstError
               >
                 <Row className="contain" justify="space-around" xl={24}>
@@ -80,12 +72,7 @@ const RegistrationForm = () => {
                     },
                   ]}
                 >
-                  <Input
-                    addonBefore={prefixSelector}
-                    style={{
-                      width: "100%",
-                    }}
-                  />
+                  <Input />
                 </Form.Item>
                 <Form.Item
                   label="E-mail"
