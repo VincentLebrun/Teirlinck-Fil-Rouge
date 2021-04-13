@@ -1,5 +1,7 @@
 @import "~antd/dist/antd.css";
 
+@import "/public/icons/uicons/css/uicons-regular-rounded";
+
 @font-face {
   font-family: "Rockwell";
   src: url("/fonts/Rockwell/Rockwell.ttf");
@@ -10,6 +12,8 @@
 
 @import "_variables";
 
+@import "_accueil";
+
 @import "_header";
 
 @import "_footer";
@@ -17,13 +21,20 @@
 @import "_hero";
 
 @import "_createAccount";
+@import "_products";
+
+@import "_productElement";
+
+@import "_store.scss";
+
+@import "_admin.scss";
 
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: Rockwell;
-    background-color: #F6F6F6;
+  background-color: #f6f6f6;
 }
 
 a {

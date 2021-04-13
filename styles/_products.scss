@@ -1,0 +1,136 @@
+.ourproducts, .productDetails {
+    p {
+        text-align:center;
+    }
+}
+
+// MENU LATERAL GAUCHE DES CATEGORIES DE VIANDES
+.ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub {
+    color:$color-white;
+    background-color: $color-black;
+    margin-bottom:2rem;
+}
+
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #5d677434;
+}
+
+.ant-menu {
+    font-size:1.4rem;
+    @media screen and (max-width:767px) {
+        font-size:10px;
+    }
+    .iconMenu {
+        font-size:10px;
+    }
+}
+
+.ant-row-center {
+    width:100%;
+}
+
+// AFFICHAGE DES PRODUITS 
+
+.product {
+    cursor:pointer;
+    background-color: $color-black;
+    //padding: 8rem;
+    
+    height:auto;
+    p {
+        padding : 10px;
+        color: $color-white;
+        text-align:center;
+        font-size:1.2rem;
+        @media screen and (max-width:767px) {
+            font-size:15px;
+        }
+    }
+    img {
+        width:100%;
+    }
+}
+
+// PAGE DETAIL D'UN PRODUIT
+
+.productDetails {
+
+    .productPrice {
+        padding:0rem 2rem;
+        position:relative;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        height:100%;
+        text-align:center;
+        border-radius: 18px;
+        box-shadow: 0px 6px 10px 2px rgba(0, 0, 0, 0.25);
+        background-color: $color-black;
+        color:$color-white;
+        hr {
+            width:75%;
+            border: 1px solid $color-red;
+        }
+        .title {
+            margin-bottom:0;
+            font-weight: bold;
+        }
+        ul {
+            list-style-type: none;
+            padding:2rem 2rem;
+            padding-bottom:0;
+            li {
+                margin-bottom:1rem;
+                font-size: 36px;
+            }
+        }
+        input {
+            font-size:24px;
+            margin-top:20px;
+            width:75%;
+            text-align:center;
+            color:$color-black;
+            &::placeholder {
+                color: $color-black;
+            }
+        }
+        .hidden {
+            display:none;
+        }
+
+        .iconCart {
+            font-size:30px;
+            position:absolute;
+            top:-15px;
+            left:-15px;
+            background-color: $color-red;
+            padding-top: 0.7rem;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+        }
+
+        button {
+            background-color: $color-redbutton;
+            border-radius: 12px;
+            color: $color-white;
+            font-size: 36px;
+            box-shadow: 10px 10px 16px -8px rgba(0, 0, 0, 0.29) inset;
+            margin-bottom: 20px;
+            border: none;
+            cursor: pointer;
+            padding: 3px 20px 3px 20px;
+            &:hover {
+                background-color: $color-white;
+                color: $color-redbutton;
+                box-shadow: 10px 10px 16px -8px rgba(0, 0, 0, 0.29) inset;
+            }
+        }
+    }
+
+    .productInfos {
+        p {
+            font-size:33px;
+        }
+    }
+}
