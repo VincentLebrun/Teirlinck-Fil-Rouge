@@ -73,8 +73,20 @@ const Product = ({ product }) => {
         setQuantity(e.target.value);
     }
 
-    const updateQuantity = () => {
-         
+    const updateQuantity = () => { 
+        const cart_item = cart.items.find((item) => item.name == product.name);
+        const previous_price = Number((cart_item.quantity * cart_item.price /1000).toFixed(2));
+        cart_item.quantity = quantity;
+        const new_price = Number((cart_item.quantity * cart_item.price /1000).toFixed(2));
+        let items = cart.items;
+        const index_item = cart.items.indexOf(product.name);
+        items[index_item] = cart_item;
+        // items = cart.items.splice(index_item, 1);
+        // items = items.push(cart_item);
+        setCart({ 
+            items:items, 
+            total: Number((cart.total - previous_price + new_price).toFixed(2))
+        }); 
     }
 
     const renderButton = () => {
@@ -85,10 +97,8 @@ const Product = ({ product }) => {
         } else {
             return (
                 <div className="">
-                    <p>Cet article est déjà dans votre panier, veuillez cliquer ci-dessous pour modifier sa quantité</p>
-                    <Link href="/panier">
-                        <button onClick={() => updateQuantity()}>Modifier</button>
-                    </Link>
+                    <p>Cet article est déjà dans votre panier, veuillez cliquer ci-dessous pour modifier sa quantité.</p>
+                    <button onClick={() => updateQuantity()}>Modifier</button>
                 </div>
             )
         }

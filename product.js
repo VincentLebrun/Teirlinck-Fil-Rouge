@@ -108,7 +108,7 @@ const products = [
         name:"Travers de porc marinés",
         description :"Ces travers maigres sont indispensables pour votre barbecue. Nos bouchers découpent ces savoureux travers dans la poitrine et retirent également la couenne. Les travers sont aromatisés de notre propre marinade barbecue.",
         image : "https://pictures.henri-boucher.fr/sites/default/files/bddi/images/products/379/FRFR-379-PLA-FRFR-500.jpg",
-        categories : ["traiteur"],
+        categories : ["traiteur", "barbecue"],
         allergenes : [""],
         price_type : "/kg",
         price : 13.90,
