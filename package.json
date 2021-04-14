@@ -10,7 +10,9 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "antd": "^4.15.0",
+    "aws-sdk": "^2.886.0",
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "flat-icons": "^1.0.0",
     "next": "10.1.3",
     "react": "17.0.2",

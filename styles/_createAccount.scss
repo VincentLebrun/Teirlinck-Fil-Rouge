@@ -4,8 +4,8 @@ main {
 
     .black-container {
       text-align: center;
-      background-color: #131a22;
-      border-radius: 25px;
+      background-color: $color-black;
+      border-radius: 17px;
       padding: 2rem;
       margin-top: 5vh;
       margin-bottom: 5vh;
@@ -50,6 +50,56 @@ main {
       }
       hr {
         border: 1px solid $color-red;
+        border-radius: 2px;
+      }
+      h2 {
+        color: $color-white;
+        font-size: 2rem;
+      }
+      p {
+        color: $color-white;
+        font-size: 1rem;
+        i {
+          color: $color-red;
+          font-size: 2rem;
+        }
+      }
+      .pastille-login {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        width: 60px;
+        border-radius: 50%;
+        background-color: $color-red;
+        height: 60px;
+        top: -20px;
+        left: -20px;
+
+        i {
+          display: flex;
+          align-items: center;
+          color: $color-white;
+          font-size: 2rem;
+        }
+      }
+
+      .input75 {
+        width: 75%;
+        margin: auto;
+      }
+      .input50 {
+        width: 50rem;
+        margin: auto;
+      }
+
+      @media screen and (max-width: 767px) {
+        .inputRow {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin: auto;
+          width: 70%;
+        }
       }
 
       .button:hover {
@@ -100,24 +150,23 @@ main {
   main {
     .container1 {
       .black-container {
-
         .pastille-login {
           width: 45px;
           height: 45px;
           top: -22px;
           left: -22px;
 
-          i{
+          i {
             font-size: 1.6rem;
           }
         }
 
         img {
-width: 60%;
+          width: 60%;
         }
-          #register {
-            width: 100%;
-          }
+        #register {
+          width: 100%;
+        }
       }
     }
   }
