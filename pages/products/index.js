@@ -1,25 +1,92 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, Row, Col } from 'antd';
 import { RightOutlined } from "@ant-design/icons";
+import Link from "next/link";
 import Hero from '../../components/Hero';
 import Header from "../../components/Header"
 import Footer from "../../components/Footer";
 import products from "../../product";
+import Seemore from '../../components/Seemore';
 
 const { SubMenu } = Menu;
 
 
 const Products = () => {
+
+    const [produits, setProduits] = useState(products);
+    const [produitsFiltres, setProduitsFiltres] = useState(products);
+    const [slice, setSlice] = useState(9);
+
+    const [cart, setCart] = useState();
+    const [loading, setLoading] = useState(true);
+
+    useEffect (() => {
+        setCart(JSON.parse(localStorage.getItem('cart')));
+        setLoading(false);
+    }, []);
+
+    // Pour le useEffect (appel API)
+    // const getProduct = () => {
+    //     setProduits(products);
+    // }
+
+    const seeMore = () => {
+        setSlice(slice+9)
+    }
+
+    const renderProducts = () => {
+        const listProducts = produitsFiltres.slice(0, slice).map(item => {
+          return (
+            <Col key={item.id} xs={24} md={12} xl={8}>
+                <Link href={`/products/${item.id}`}>
+                    <div className="product">
+                        <img src={item.image} alt=""/>
+                        <p>{item.name}</p>
+                    </div>
+                </Link>
+            </Col>
+          );
+        });
+
+        return (
+            <Row gutter={[16, 16]}>
+              {listProducts}
+            </Row>
+        );
+    }
+
+    const renderFilteredProducts = (name) => {
+
+        if (name != "promotions" && name != "news" ) {
+            const filteredProducts = produits.filter((product) => product.categories.includes(name));
+            setProduitsFiltres(filteredProducts);
+        } else if (name === "promotions") {
+            const filteredProducts = produits.filter((product) => product.promotion === true);
+            setProduitsFiltres(filteredProducts);
+        } else {
+            const filteredProducts = produits.filter((product) => product.highlighted === true);
+            setProduitsFiltres(filteredProducts);
+        }
+    }
+        
+    if(loading) {
+        return(
+            <p>Chargement en cours !</p>
+        )
+    } 
+
     return (
-        <div>
-            <Header />
+        <div className="ourproducts">
+            <Header
+            panier_length = {cart.items.length}
+            />
             <Hero
                 title="Nos produits"
                 image="ourproducts.webp"
             />
-            <div className="menu">
+            <div className="products">
                 <Row gutter={16} justify="center">
-                    <Col xl={4}>
+                    <Col xs={8} sm={6} xl={4}>
                         <Menu
                             //defaultSelectedKeys={['1']}
                             //defaultOpenKeys={['sub1']}
@@ -27,40 +94,41 @@ const Products = () => {
                             theme="dark"
                         >
                             <SubMenu key="sub1" title="Viandes">
-                                <Menu.Item key="1"><RightOutlined className="iconMenu" />Boeuf</Menu.Item>
-                                <Menu.Item key="2"><RightOutlined className="iconMenu" />Veau</Menu.Item>
-                                <Menu.Item key="3"><RightOutlined className="iconMenu" />Agneau</Menu.Item>
-                                <Menu.Item key="4"><RightOutlined className="iconMenu" />Porc</Menu.Item>
-                                <Menu.Item key="5"><RightOutlined className="iconMenu" />Lapin</Menu.Item>
+                                <Menu.Item key="1" onClick={() => renderFilteredProducts("boeuf")}><RightOutlined className="iconMenu" />Boeuf</Menu.Item>
+                                <Menu.Item key="2" onClick={() => renderFilteredProducts("veau")}><RightOutlined className="iconMenu" />Veau</Menu.Item>
+                                <Menu.Item key="3" onClick={() => renderFilteredProducts("agneau")}><RightOutlined className="iconMenu" />Agneau</Menu.Item>
+                                <Menu.Item key="4" onClick={() => renderFilteredProducts("porc")}><RightOutlined className="iconMenu" />Porc</Menu.Item>
+                                <Menu.Item key="5" onClick={() => renderFilteredProducts("lapin")}><RightOutlined className="iconMenu" />Lapin</Menu.Item>
                             </SubMenu>
-                            <Menu.Item key="6">
+                            <Menu.Item key="6" onClick={() => renderFilteredProducts("volaille")}>
                                 Volaille
                             </Menu.Item>
-                            <Menu.Item key="7">
+                            <Menu.Item key="7" onClick={() => renderFilteredProducts("abats")}>
                                 Abats
                             </Menu.Item>
-                            <Menu.Item key="8">
+                            <Menu.Item key="8" onClick={() => renderFilteredProducts("barbecue")}>
                                 Barbecue
                             </Menu.Item>
-                            <Menu.Item key="9">
+                            <Menu.Item key="9" onClick={() => renderFilteredProducts("charcuterie")}>
                                 Charcuterie
                             </Menu.Item>
-                            <Menu.Item key="10">
+                            <Menu.Item key="10" onClick={() => renderFilteredProducts("traiteur")}>
                                 Traiteur
                             </Menu.Item>
-                            <Menu.Item key="11">
+                            <Menu.Item key="11" onClick={() => renderFilteredProducts("promotions")}>
                                 Promotions
                             </Menu.Item>
-                            <Menu.Item key="12">
+                            <Menu.Item key="12" onClick={() => renderFilteredProducts("news")}>
                                 Nouveautés
                             </Menu.Item>
                         </Menu>
                     </Col>
-                    <Col xl={12}>
-                        <Row gutter={16}>
-                            <Col xl={8}><div className="product"><p>Bonjour</p></div></Col>
-                            <Col xl={8}><div className="product"><p>Bonjour</p></div></Col>
-                            <Col xl={8}><div className="product"><p>Bonjour</p></div></Col>
+                    <Col xs={8} sm={10} xl={12}>
+                        {renderProducts()}
+                        <Row justify="center">
+                            <Seemore
+                                action={() => seeMore() }
+                            />
                         </Row>
                     </Col>
                 </Row>

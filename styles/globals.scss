@@ -10,9 +10,9 @@
   font-display: swap;
 }
 
-@import "_accueil";
-
 @import "_variables";
+
+@import "_accueil";
 
 @import "_header";
 
@@ -21,7 +21,18 @@
 @import "_hero";
 
 @import "_createAccount";
+<<<<<<< HEAD
 @import "_products";
+=======
+
+@import "_products";
+
+@import "_productElement";
+
+@import "_store.scss";
+
+@import "_admin.scss";
+>>>>>>> 1124ca27341987e2c273b0dfe35e97fc2f7212e1
 
 html,
 body {
@@ -30,6 +41,7 @@ body {
   font-family: Rockwell;
   background-color: #f6f6f6;
 }
+
 
 a {
   color: inherit;

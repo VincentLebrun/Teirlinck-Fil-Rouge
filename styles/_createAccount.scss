@@ -1,8 +1,8 @@
 main {
-  padding-top: 5rem;
-  height: 100vh;
-  background-color: #131a22;
+  .container1 {
+    height: 100vh;
 
+<<<<<<< HEAD
   color: whitesmoke;
   img {
     width: 100%;
@@ -53,9 +53,125 @@ main {
     top: 0;
     right: -20px;
     transition: 0.5s;
+=======
+    .black-container {
+      text-align: center;
+      background-color: #131a22;
+      border-radius: 25px;
+      padding: 2rem;
+      margin-top: 5vh;
+      margin-bottom: 5vh;
+      position: relative;
+      .pastille-login {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        width: 60px;
+        border-radius: 50%;
+        background-color: $color-red;
+        height: 60px;
+        top: -30px;
+        left: -30px;
+
+        i {
+          display: flex;
+          align-items: center;
+          color: $color-white;
+          font-size: 2rem;
+        }
+      }
+
+      #register {
+        width: 60%;
+        margin: auto;
+      }
+
+      h2 {
+        color: $color-white;
+      }
+
+      img {
+        width: 30%;
+        margin-bottom: 2rem;
+        cursor: pointer;
+      }
+
+      label {
+        font-family: Rockwell;
+        color: $color-white;
+      }
+      hr {
+        border: 1px solid $color-red;
+      }
+
+      .button:hover {
+        padding-right: 4rem;
+      }
+
+      .button {
+        height: auto;
+        display: inline-block;
+        border-radius: 4px;
+        border: none;
+        color: whitesmoke;
+        text-align: center;
+        font-size: 28px;
+        transition: all 0.5s;
+        margin: 8px;
+        border-radius: 4px;
+        background-color: $color-red;
+        cursor: pointer;
+        display: inline-block;
+        transition: 0.2s;
+        box-shadow: 13px 13px 17px -8px rgba(0, 0, 0, 0.3) inset;
+      }
+      .button :after {
+        content: "\00bb";
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.2s;
+      }
+      .button:hover :after {
+        opacity: 1;
+        right: 0;
+      }
+    }
   }
-  .button:hover span:after {
-    opacity: 1;
-    right: 0;
+}
+.formInputStyle {
+  flex-direction: column;
+  .ant-form-item-label {
+    display: flex;
+    justify-content: center;
+>>>>>>> 1124ca27341987e2c273b0dfe35e97fc2f7212e1
+  }
+}
+
+@media screen and (max-width: 767px) {
+  main {
+    .container1 {
+      .black-container {
+
+        .pastille-login {
+          width: 45px;
+          height: 45px;
+          top: -22px;
+          left: -22px;
+
+          i{
+            font-size: 1.6rem;
+          }
+        }
+
+        img {
+width: 60%;
+        }
+          #register {
+            width: 100%;
+          }
+      }
+    }
   }
 }
