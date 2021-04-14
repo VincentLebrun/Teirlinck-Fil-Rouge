@@ -1,17 +1,34 @@
 import React, { useState } from "react";
 import { Button, Row, Col, Form, Input } from "antd";
+//Exemple d'utilisation com!parative de mot de passe 
+//
+// (async ()=> {
+//   const bcrypt = require("bcryptjs");
+//   try {
+//     const text = "Okay"
+//      const salt= await bcrypt.genSalt(10)
+//      const hash = await bcrypt.hash(text, salt)
 
-const bcrypt = require("bcrypt");
+     
+//      console.log(hash)
+//      const compare = await bcrypt(text, hash)
+//      console.log(compare)
+//   } catch (error) {
+//     console.log(error.message)
+//   }
+// })()
+const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
 const RegistrationForm = () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log("Received values of form: ", values);
     const pass = values.password;
-    const testCrypt = bcrypt.hash(pass, saltRounds);
+    const testCrypt = await  bcrypt.hash(pass, saltRounds);
     console.log(testCrypt);
+    
   };
 
   return (
