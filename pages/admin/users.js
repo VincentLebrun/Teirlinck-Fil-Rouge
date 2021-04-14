@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
-
 import AdminLayout from "../../components/AdminLayout"
-import {Tag, Space, Button } from 'antd';
+import {Tag, Space, Button, Switch } from 'antd';
 
-const index = ({ data }) => {
-
+const users = ({ data }) => {
     useEffect(() => {
-        getProducts();
+        getUsers();
     }, [])
 
     const columns = [
@@ -21,46 +19,50 @@ const index = ({ data }) => {
             align: 'left'
         },
         {
-            title: 'Image',
-            key: 'img',
+            title: 'Nom',
+            key: 'name',
             render: (text, item) => (
                 <Space size="middle">
-                    <div className="product-img">
-                        <img src={item.image} alt="" />
+                    <div>
+                        <h1>{item.lastname} {item.firstname}</h1>
                     </div>
                 </Space>
             ),
             align: 'left'
         },
         {
-            title: 'Nom',
-            key: 'name',
+            title: 'E-mail',
+            key: 'mail',
             render: (text, item) => (
                 <Space size="middle">
-                    <h1>{item.name}</h1>
+                    <div>
+                        <h1>{item.mail}</h1>
+                    </div>
                 </Space>
             ),
             align: 'left'
         },
+        {
+            title: 'Numéro',
+            key: 'phone',
+            render: (text, item) => (
+                <Space size="middle">
+                    <div>
+                        <h1>{item.phone}</h1>
+                    </div>
+                </Space>
+            ),
+            align: 'left'
+        },
+        {
+            title: 'Administrateur',
+            key: 'admin',
+            render: (text, item) => (
+                <Space size="middle">
 
-        {
-            title: 'Prix',
-            key: 'price',
-            render: (text, item) => (
-                <Space size="middle">
-                    <h1>{item.price}€{item.price_type}</h1>
-                </Space>
-            ),
-            align: 'left'
-        },
-        {
-            title: 'Catégories',
-            key: 'tags',
-            render: (text, items) => (
-                <Space size="middle">
-                    {items.categories.map(item => (
-                        <Tag color="blue" key={item}>{item}</Tag>
-                    ))}
+                    <Switch checkedChildren="Admin" unCheckedChildren="Client" checked={item.admin}/>
+
+                    
                 </Space>
             ),
             align: 'left'
@@ -71,7 +73,7 @@ const index = ({ data }) => {
             render: (text, item) => (
                 <Space size="middle">
 
-                    <Button type="primary">Modifier</Button>
+                    <Button type="primary" disabled={item.validated}>Valider le client</Button>
 
                     <Button danger onClick={() => this.delete(item._id)}>Supprimer</Button>
                 </Space>
@@ -81,42 +83,18 @@ const index = ({ data }) => {
 
     ];
 
-
-    // const listProducts = data.map(item => {
-    //     return (
-    //         <div>
-    //             <img src={item.image} alt="" />
-    //             <p>{item.name}</p>
-    //         </div>
-    //     )
-    // })
-
-
     return (
         <AdminLayout
-            columns={columns}
-            data={data}
+        columns={columns}
+        data={data}
         />
     )
 }
 
-export default index
+export default users
 
-async function supprimer(id) {
-    await fetch("http://localhost:4000/cars", {
-        method: 'DELETE',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id })
-    });
-
-}
-
-
-async function getProducts() {
-    const res = await fetch("http://localhost:4000/products")
+async function getUsers() {
+    const res = await fetch("http://localhost:4000/users")
         .then(response => response.json())
 
     return res;
@@ -124,7 +102,7 @@ async function getProducts() {
 }
 
 export async function getServerSideProps() {
-    const data = await getProducts();
+    const data = await getUsers();
 
     return {
         props: {
@@ -132,5 +110,3 @@ export async function getServerSideProps() {
         }
     }
 }
-
-
