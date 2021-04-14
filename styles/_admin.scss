@@ -15,7 +15,7 @@
 }
 
 .ant-layout-sider {
-  height: 100vh;
+ margin-bottom: 0px;
 }
 
 .logo {
@@ -28,3 +28,16 @@
     cursor: pointer;
   }
 }
+
+.product-img {
+  width: 40px;
+
+  img {
+    width: 100%;
+  }
+}
+
+.search-input {
+  vertical-align: middle;
+}
+

@@ -1,4 +1,5 @@
 const ProductController = require("../controllers/product");
+const UserController = require("../controllers/user");
 
 module.exports = server => {    
     
@@ -21,5 +22,27 @@ module.exports = server => {
 
     server.delete("/products", (req, res) => {
         ProductController.delete(req, res);
+    });
+
+    // UTILISATEURS
+
+    server.get("/users", (req, res) => {
+        UserController.getAll(req, res);
+    });
+
+    server.get("/users/:id", (req, res) => {
+        UserController.get(req, res);
+    });
+
+    server.post("/users", async (req, res) => {
+        UserController.create(req, res);
+    });
+
+    server.put("/users", async (req, res) => {
+        UserControllerr.update(req, res);
+    });
+
+    server.delete("/users", (req, res) => {
+        UserController.delete(req, res);
     });
 }
