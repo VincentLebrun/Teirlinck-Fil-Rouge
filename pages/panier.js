@@ -1,25 +1,23 @@
-import { useState, useEffect } from 'react'
-import Header from "../components/Header"
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import { Row, Col } from 'antd';
 import Link from 'next/link'
 
-const panier = (props) => {
+const panier = ( { cart, setCart }) => {
 
-    const [panier, setPanier] = useState();
-    const [loading, setLoading] = useState(true);
-    // const [newQuantity, setNewQuantity] = useState();
+    // const [panier, setPanier] = useState();
+    // const [loading, setLoading] = useState(true);
+    // // const [newQuantity, setNewQuantity] = useState();
 
-    useEffect(() => {
-        setPanier(JSON.parse(localStorage.getItem('cart')));
-        setLoading(false);
-    }, []);
+    // useEffect(() => {
+    //     setPanier(JSON.parse(localStorage.getItem('cart')));
+    //     setLoading(false);
+    // }, []);
 
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(panier));
+    // useEffect(() => {
+    //     localStorage.setItem('cart', JSON.stringify(panier));
 
-    }, [panier]);
+    // }, [panier]);
 
     const itemPrice = (price, quantity, type) => {
 
@@ -34,11 +32,11 @@ const panier = (props) => {
     }
 
     const deleteCart = (id) => {
-        const deleteItem = panier.items.findIndex((item) => item.id == id);
-        let newPanier = panier;
+        const deleteItem = cart.items.findIndex((item) => item.id == id);
+        let newPanier = cart;
         newPanier.items.splice(deleteItem, 1);
 
-        setPanier(
+        setCart(
             {
                 items: [...newPanier.items],
                 total: 0
@@ -46,9 +44,9 @@ const panier = (props) => {
     }
 
     const addCommand = () => {
-        let newPanier = panier;
+        let newPanier = cart;
         newPanier = {items : [], total : 0};
-        setPanier({
+        setCart({
             items: [...newPanier.items],
             total:0
         }
@@ -69,37 +67,37 @@ const panier = (props) => {
         const newQuantity = e.target.value;
         // setNewQuantity(e.target.value);
         // console.log(newQuantity);
-        const cart_item = panier.items.find((item) => item.name == name);
+        const cart_item = cart.items.find((item) => item.name == name);
         const previous_price = itemPrice(price, quantity, price_type);
         cart_item.quantity = newQuantity;
         const new_price = itemPrice(price, cart_item.quantity, price_type);
         console.log(new_price);
-        let items = panier.items;
+        let items = cart.items;
         const index_item = items.indexOf(name);
         items[index_item] = cart_item;
         
-        setPanier({ 
+        setCart({ 
             items:items, 
-            total: Number((panier.total - previous_price + new_price).toFixed(2))
+            total: Number((cart.total - previous_price + new_price).toFixed(2))
         }); 
     }
 
 
 
-    if (loading) {
-        return (
-            <p>Chargement en cours !</p>
-        )
-    }
+    // if (loading) {
+    //     return (
+    //         <p>Chargement en cours !</p>
+    //     )
+    // }
 
     let testTotal = 0;
-    const listPanier = panier.items.map(item => {
+    const listPanier = cart.items.map(item => {
 
         testTotal += itemPrice(item.price, item.quantity, item.price_type);
 
 
         return (
-            <div>
+            <div key={item.id}>
                 <hr className="top-hr" />
 
                 <Row justify="space-between">
@@ -149,9 +147,9 @@ const panier = (props) => {
 
     return (
         <div>
-            <Header
-                panier_length={panier.items.length}
-            />
+            {/* <Header
+                panier_length={cart.items.length}
+            /> */}
             <Hero
 
                 title="Votre panier"
@@ -179,7 +177,7 @@ const panier = (props) => {
                         <hr />
 
                         <Row justify="end">
-                            <h3>Total( {panier.items.length} produits): ~{Number(testTotal.toFixed(2))}€</h3>
+                            <h3>Total( {cart.items.length} produits): ~{Number(testTotal.toFixed(2))}€</h3>
                         </Row>
                     </Col>
 
@@ -188,7 +186,7 @@ const panier = (props) => {
                             <i class="fi-rr-exclamation"></i> <p>Le prix peut être légèrement différent au moment du règlement en boucherie dû à la pesée.</p>
                         </div>
 
-                        <h1>Total ({panier.items.length} produits): ~{Number(testTotal.toFixed(2))}€</h1>
+                        <h1>Total ({cart.items.length} produits): ~{Number(testTotal.toFixed(2))}€</h1>
 
                         <button onClick={() => addCommand()} >Passer la commande</button>
                     </Col>

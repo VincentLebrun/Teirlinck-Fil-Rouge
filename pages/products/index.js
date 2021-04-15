@@ -3,27 +3,26 @@ import { Menu, Row, Col } from 'antd';
 import { RightOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import Hero from '../../components/Hero';
-import Header from "../../components/Header"
 import Footer from "../../components/Footer";
-import products from "../../product";
+import productsjs from "../../product";
 import Seemore from '../../components/Seemore';
 
 const { SubMenu } = Menu;
 
 
-const Products = () => {
+const Products = ( {products}) => {
 
     const [produits, setProduits] = useState(products);
     const [produitsFiltres, setProduitsFiltres] = useState(products);
     const [slice, setSlice] = useState(9);
 
-    const [cart, setCart] = useState();
-    const [loading, setLoading] = useState(true);
+    // const [cart, setCart] = useState();
+    // const [loading, setLoading] = useState(true);
 
-    useEffect (() => {
-        setCart(JSON.parse(localStorage.getItem('cart')));
-        setLoading(false);
-    }, []);
+    // useEffect (() => {
+    //     setCart(JSON.parse(localStorage.getItem('cart')));
+    //     setLoading(false);
+    // }, []);
 
     // Pour le useEffect (appel API)
     // const getProduct = () => {
@@ -69,17 +68,17 @@ const Products = () => {
         }
     }
         
-    if(loading) {
-        return(
-            <p>Chargement en cours !</p>
-        )
-    } 
+    // if(loading) {
+    //     return(
+    //         <p>Chargement en cours !</p>
+    //     )
+    // } 
 
     return (
         <div className="ourproducts">
-            <Header
-            panier_length = {cart.items.length}
-            />
+            {/* <Header
+                panier_length={cart.items.length}
+            /> */}
             <Hero
                 title="Nos produits"
                 image="ourproducts.webp"
@@ -139,3 +138,15 @@ const Products = () => {
 }
 
 export default Products;
+
+// getServerSideProps
+
+export async function getServerSideProps() {
+    const products = productsjs;
+
+    return {
+        props: {
+            products,
+        },
+    };
+}

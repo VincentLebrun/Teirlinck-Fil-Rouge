@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import products from "../product";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Section from "../components/Section";
 import Seemore from "../components/Seemore";
@@ -15,13 +14,13 @@ export default function Home() {
   const [momentSlice, setMomentSlice] = useState(4);
   const [soldSlice, setSoldSlice] = useState(4);
 
-  const [cart, setCart] = useState();
-  const [loading, setLoading] = useState(true);
+  // const [cart, setCart] = useState();
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setCart(JSON.parse(localStorage.getItem("cart")));
-    setLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   setCart(JSON.parse(localStorage.getItem("cart")));
+  //   setLoading(false);
+  // }, []);
 
   const SeeMore = (name) => {
     if (name == "sold") {
@@ -61,25 +60,22 @@ export default function Home() {
       );
     });
 
-  if (loading) {
-    return <p>Chargement en cours !</p>;
-  }
+  // if (loading) {
+  //   return <p>Chargement en cours !</p>;
+  // }
 
   return (
     <div>
-      <Head>
-        <title>Teirlinck</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header panier_length={cart.items.length} />
-
+      {/* <Header
+        panier_length={cart.items.length}
+      /> */}
       <div className="home-content">
         <img src="/img/accueil.webp" alt="" />
         <div className="test">
           <div className="slogan">
             <Col xs={16} sm={16} className="slogan-cart">
               <h1>Passez commande et venez la récupérer en boucherie</h1>
-              <button>Créer un compte</button>
+              <button><Link href="/CreateAccount">Créer un compte</Link></button>
             </Col>
           </div>
         </div>
@@ -127,7 +123,7 @@ export default function Home() {
                 <i class="fi-rr-shop"></i>
               </div>
               <div className="tutorial">
-                <button>Je me crée un compte</button>
+                <button><Link href="CreateAccount">Je me crée un compte</Link></button>
                 <hr />
                 <button>Je valide mon compte en boucherie</button>
                 <hr />

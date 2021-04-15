@@ -1,27 +1,25 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
 import { Row, Col } from 'antd';
 import Hero from '../components/Hero';
 import Section from '../components/Section';
-import Header from "../components/Header"
 import Footer from "../components/Footer";
 import team from "../team";
 
 export const OurStory = () => {
 
-    const [cart, setCart] = useState();
-    const [loading, setLoading] = useState(true);
+    // const [cart, setCart] = useState();
+    // const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setCart(JSON.parse(localStorage.getItem('cart')));
-        setLoading(false);
-    }, []);
+    // useEffect(() => {
+    //     setCart(JSON.parse(localStorage.getItem('cart')));
+    //     setLoading(false);
+    // }, []);
 
-    if (loading) {
-        return (
-            <p>Chargement en cours !</p>
-        )
-    }
+    // if (loading) {
+    //     return (
+    //         <p>Chargement en cours !</p>
+    //     )
+    // }
 
     const renderTeam = () => {
         const listTeam = team.map((item) => {
@@ -52,9 +50,9 @@ export const OurStory = () => {
 
     return (
         <div className="ourstory">
-            <Header
+            {/* <Header
                 panier_length={cart.items.length}
-            />
+            /> */}
             <Hero
                 title="Notre histoire"
                 image="accueil.webp"
