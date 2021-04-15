@@ -39,7 +39,7 @@ module.exports = server => {
     });
 
     server.put("/users", async (req, res) => {
-        UserControllerr.update(req, res);
+        UserController.update(req, res);
     });
 
     server.delete("/users", (req, res) => {

@@ -14,6 +14,7 @@ module.exports = {
     create(req, res) {
         console.log(req.body);
         const product = new Product({
+            id: req.body.id,
             name: req.body.name,
             description: req.body.description,
             image: req.body.image,
