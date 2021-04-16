@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Hero from "../../components/Hero";
-import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import products from "../../product";
 import Section from "../../components/Section";
@@ -8,21 +7,21 @@ import { Row, Col } from "antd";
 import ProductElement from "../../components/ProductElement";
 import Link from "next/link";
 
-const Product = ({ product }) => {
-    const [cart, setCart] = useState();
-    const [loading, setLoading] = useState(true);
+const Product = ({ product, cart, setCart }) => {
+    // const [cart, setCart] = useState();
+    // const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setCart(JSON.parse(localStorage.getItem("cart")));
-        setLoading(false);
-    }, []);
+    // useEffect(() => {
+    //     setCart(JSON.parse(localStorage.getItem("cart")));
+    //     setLoading(false);
+    // }, []);
 
-    console.log(cart);
-    //Nouvelle propriété dans le state pour stocker les éléments du panier
+    // console.log(cart);
+    // //Nouvelle propriété dans le state pour stocker les éléments du panier
 
-    useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }, [cart]);
+    // useEffect(() => {
+    //     localStorage.setItem("cart", JSON.stringify(cart));
+    // }, [cart]);
 
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(0);
@@ -108,17 +107,17 @@ const Product = ({ product }) => {
         }
     }
 
-    if (loading) {
-        return (
-            <p>Chargement en cours...</p>
-        )
-    }
+    // if (loading) {
+    //     return (
+    //         <p>Chargement en cours...</p>
+    //     )
+    // }
 
     return (
         <div className="productDetails">
-            <Header
+            {/* <Header
                 panier_length={cart.items.length}
-            />
+            /> */}
             <Hero
                 title={product.name}
                 image="ourproducts.webp"

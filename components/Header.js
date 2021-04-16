@@ -20,7 +20,7 @@ const Header = ({panier_length}) => {
                                     <ul>
                                         <Link href="/"><li>Accueil</li></Link>
                                         <Link href="/products/"><li>Nos Produits</li></Link>
-                                        <Link href="/api/hello"><li>Notre histoire</li></Link>
+                                        <Link href="/notrehistoire"><li>Notre histoire</li></Link>
                                     </ul>
                                 </nav>
                             </Col>
