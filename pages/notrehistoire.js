@@ -25,25 +25,25 @@ export const OurStory = () => {
 
     const renderTeam = () => {
         const listTeam = team.map((item) => {
-            return(
+            return (
                 <Row key={item.id} className="team" justify="space-around" align="middle">
-                        <Col className="teamScreen" xs={24} xl={8}>
-                            <div className="element">
-                                <img src={`/img/${item.image}`} alt="" />
-                                <div className="element-absolute">
-                                    <div className="element-inside"></div>
-                                </div>
+                    <Col className="teamScreen" xs={24} xl={8}>
+                        <div className="element">
+                            <img src={`/img/${item.image}`} alt="" />
+                            <div className="element-absolute">
+                                <div className="element-inside"></div>
                             </div>
-                        </Col>
-                        <Col className="teamDescription" xs={24} xl={12}>
-                            <h2>{item.firstname}.</h2>
-                            <p>{item.description}.</p>
-                        </Col>
+                        </div>
+                    </Col>
+                    <Col className="teamDescription" xs={24} xl={12}>
+                        <h2>{item.firstname}.</h2>
+                        <p>{item.description}.</p>
+                    </Col>
                 </Row>
             )
         });
 
-        return(
+        return (
             <div>
                 {listTeam}
             </div>
@@ -66,7 +66,7 @@ export const OurStory = () => {
                             title="Notre histoire"
                             icon="fi-rr-document"
                         />
-                        
+
                         <Col className="ourstoryText" span={21}>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor pariatur recusandae ab accusantium, deserunt ipsam cum quia beatae! Repellat nesciunt sequi, quos labore cum suscipit ullam fugit tempore natus numquam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos necessitatibus placeat doloremque distinctio cum, est repellendus repudiandae hic ab vel facere nobis nam magnam animi ratione harum architecto at minima.</p>
                             <p>Praesentium esse reprehenderit nesciunt dolorem, sunt, minus deleniti aut ipsum voluptas, harum sint sapiente autem tenetur quis voluptatum voluptates commodi. Rerum est exercitationem modi facere quibusdam sequi excepturi vero non!
@@ -99,24 +99,24 @@ export const OurStory = () => {
                         <Col className="valueItem" xs={24} xl={10}>
                             <h2>Tradition.</h2>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis!</p>
-                            <span className="iconCart"><img src="/img/flaticons/ecologism.svg" alt=""/></span>
+                            <span className="iconCart"><img src="/img/flaticons/ecologism.svg" alt="" /></span>
                         </Col>
                         <Col className="valueItem" xs={24} xl={10}>
                             <h2>Qualité.</h2>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis!</p>
-                            <span className="iconCart"><img src="/img/flaticons/quality.svg" alt=""/></span>
+                            <span className="iconCart"><img src="/img/flaticons/quality.svg" alt="" /></span>
                         </Col>
                     </Row>
                     <Row className="ourValues" justify="space-around">
                         <Col className="valueItem" xs={24} xl={10}>
                             <h2>Produits locaux.</h2>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis!</p>
-                            <span className="iconCart"><img src="/img/flaticons/tool.svg" alt=""/></span>
+                            <span className="iconCart"><img src="/img/flaticons/tool.svg" alt="" /></span>
                         </Col>
                         <Col className="valueItem" xs={24} xl={10}>
                             <h2>Bien-être animal.</h2>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis!</p>
-                            <span className="iconCart"><img src="/img/flaticons/cow.svg" alt=""/></span>
+                            <span className="iconCart"><img src="/img/flaticons/cow.svg" alt="" /></span>
                         </Col>
                     </Row>
                 </Col>
