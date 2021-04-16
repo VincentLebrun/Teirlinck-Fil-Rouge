@@ -14,11 +14,12 @@ module.exports = {
     create(req, res) {
         console.log(req.body);
         const product = new Product({
+            id: req.body.id,
             name: req.body.name,
             description: req.body.description,
             image: req.body.image,
-            categories: [req.body.categories],
-            allergenes: [req.body.allergenes],
+            categories: req.body.categories,
+            allergenes: req.body.allergenes,
             price_type: req.body.price_type,
             price: req.body.price,
             promotion: req.body.promotion,

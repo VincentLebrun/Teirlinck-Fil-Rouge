@@ -1,13 +1,32 @@
-import React, { useEffect } from 'react'
-
+import React, { useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
-import {Tag, Space, Button } from 'antd';
+import {Tag, Space, Button, Popconfirm } from 'antd';
 
 const index = ({ data }) => {
 
-    useEffect(() => {
-        getProducts();
-    }, [])
+    const [products, setProducts] = useState(data);
+
+    async function deleteProduct(id) {
+        console.log("ok");
+        await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ _id: id })
+        }).catch(error => console.log(error));
+
+        const allProducts = [...products];
+        const index = allProducts.findIndex((item) => item._id === id);
+
+        allProducts.splice(index, 1);
+        console.log(allProducts);
+        setProducts(allProducts);
+
+    };
+
+    
 
     const columns = [
         {
@@ -73,7 +92,7 @@ const index = ({ data }) => {
 
                     <Button type="primary">Modifier</Button>
 
-                    <Button danger onClick={() => this.delete(item._id)}>Supprimer</Button>
+                    <Popconfirm title="Etes vous sur?" okText="Oui" cancelText="Annuler" onConfirm={() => deleteProduct(item._id)} ><Button danger>Supprimer le produit</Button></Popconfirm>
                 </Space>
             ),
             align: 'right'
@@ -82,41 +101,20 @@ const index = ({ data }) => {
     ];
 
 
-    // const listProducts = data.map(item => {
-    //     return (
-    //         <div>
-    //             <img src={item.image} alt="" />
-    //             <p>{item.name}</p>
-    //         </div>
-    //     )
-    // })
-
-
     return (
         <AdminLayout
             columns={columns}
-            data={data}
+            data={products}
         />
     )
 }
 
 export default index
 
-async function supprimer(id) {
-    await fetch("http://localhost:4000/cars", {
-        method: 'DELETE',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ id })
-    });
-
-}
 
 
 async function getProducts() {
-    const res = await fetch("http://localhost:4000/products")
+    const res = await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS)
         .then(response => response.json())
 
     return res;

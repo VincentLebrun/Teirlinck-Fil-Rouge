@@ -24,10 +24,31 @@ const RegistrationForm = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    console.log("Received values of form: ", values);
+    // console.log("Received values of form: ", values);
     const pass = values.password;
     const testCrypt = await bcrypt.hash(pass, saltRounds);
-    console.log(testCrypt);
+    console.log(values);
+    const sendAccount = {
+      id: Date.now(),
+      firstname: values.firstname,
+      lastname: values.lastname,
+      mail: values.email,
+      password: testCrypt,
+      phone: values.phone,
+      admin: false,
+      validated: false,
+    }
+    // console.log(testCrypt);
+
+
+    await fetch(process.env.NEXT_PUBLIC_API_USERS, {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sendAccount)
+  }).catch(error => console.log(error));
   };
 
   return (
@@ -52,7 +73,7 @@ const RegistrationForm = () => {
                     <Form.Item
                       className="formInputStyle"
                       label="Prénom"
-                      name="fisrtName"
+                      name="firstname"
                       rules={[
                         {
                           required: true,
@@ -67,7 +88,7 @@ const RegistrationForm = () => {
                     <Form.Item
                       label="Nom"
                       className="formInputStyle"
-                      name="name"
+                      name="lastname"
                       rules={[
                         {
                           required: true,
