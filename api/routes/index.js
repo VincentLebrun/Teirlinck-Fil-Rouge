@@ -1,5 +1,6 @@
 const ProductController = require("../controllers/product");
 const UserController = require("../controllers/user");
+const OrderController = require("../controllers/order");
 
 module.exports = server => {    
     
@@ -39,10 +40,32 @@ module.exports = server => {
     });
 
     server.put("/users", async (req, res) => {
-        UserControllerr.update(req, res);
+        UserController.update(req, res);
     });
 
     server.delete("/users", (req, res) => {
         UserController.delete(req, res);
+    });
+
+    // COMMANDES 
+    
+    server.get("/orders", (req, res) => {
+        OrderController.getAll(req, res);
+    });
+
+    server.get("/orders/:id", (req, res) => {
+        OrderController.get(req, res);
+    });
+
+    server.post("/orders", async (req, res) => {
+        OrderController.create(req, res);
+    });
+
+    server.put("/orders", async (req, res) => {
+        OrderController.update(req, res);
+    });
+
+    server.delete("/orders", (req, res) => {
+        OrderController.delete(req, res);
     });
 }
