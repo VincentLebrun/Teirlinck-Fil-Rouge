@@ -27,8 +27,7 @@ const RegistrationForm = () => {
     // console.log("Received values of form: ", values);
     const pass = values.password;
     const testCrypt = await bcrypt.hash(pass, saltRounds);
-    console.log(values);
-    const sendAccount = {
+      const sendAccount = {
       id: Date.now(),
       firstname: values.firstname,
       lastname: values.lastname,
