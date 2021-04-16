@@ -1,20 +1,55 @@
 import React, { useState, useEffect } from 'react'
+import Link from 'next/link';
 
 import AdminLayout from "../../../components/AdminLayout"
-import {Tag, Switch, Space, Button } from 'antd';
+import { Tag, Switch, Space, Button, Popconfirm, Select } from 'antd';
 
 const index = ({ data }) => {
 
-    const [orders, setOrders]= useState(data);
-    // useEffect(() => {
-    //     getOrders();
-    // }, [])
+    const { Option } = Select;
+
+    const [orders, setOrders] = useState(data);
+
+    function handleChange(value) {
+        console.log(`selected ${value}`);
+        
+        if (value === "readyNotDelivered") {
+            const filteredOrders = data.filter((item) => item.ready && !item.delivered);
+            console.log(filteredOrders);
+            setOrders(filteredOrders);
+        } 
+        if (value === "notReady") {
+            const filteredOrders = data.filter((item) => !item.ready);
+            setOrders(filteredOrders);
+        } 
+        if (value === "all") {
+            setOrders(data)
+        }
+    }
+
+    async function deleteOrder(id) {
+        await fetch("http://localhost:4000/orders", {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ _id: id })
+        }).catch(error => console.log(error));
+
+        const allOrders = [...orders];
+        const index = allOrders.findIndex((item) => item._id === id);
+
+        allOrders.splice(index, 1);
+        setOrders(allOrders);
+
+    };
 
     async function changeDeliveryStatus(id) {
         const allOrders = [...orders];
         const index = allOrders.findIndex((item) => item._id === id);
 
-        if(allOrders[index].delivered) {
+        if (allOrders[index].delivered) {
             allOrders[index].delivered = false;
         } else {
             allOrders[index].delivered = true;
@@ -24,16 +59,44 @@ const index = ({ data }) => {
 
         const order = {
             ...allOrders[index],
-            delivered:allOrders[index].delivered
+            delivered: allOrders[index].delivered
         }
 
         await fetch("http://localhost:4000/orders", {
-            method:'PUT',
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body:JSON.stringify(order)
+            body: JSON.stringify(order)
+
+        }).catch(error => console.log(error));
+    }
+
+    async function changeReadyStatus(id) {
+        const allOrders = [...orders];
+        const index = allOrders.findIndex((item) => item._id === id);
+
+        if (allOrders[index].ready) {
+            allOrders[index].ready = false;
+        } else {
+            allOrders[index].ready = true;
+        }
+
+        setOrders(allOrders);
+
+        const order = {
+            ...allOrders[index],
+            ready: allOrders[index].ready
+        }
+
+        await fetch("http://localhost:4000/orders", {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
 
         }).catch(error => console.log(error));
     }
@@ -92,21 +155,26 @@ const index = ({ data }) => {
             align: 'left'
         },
         {
-            title: 'Statut',
-            key: 'lastname',
+            title: 'Statut de la commande',
+            key: 'orderStatus',
             render: (text, item) => (
                 <Space size="middle">
-                    <Switch onClick={() => changeDeliveryStatus(item._id)} checkedChildren="Délivrée" unCheckedChildren="Non délivrée" checked={item.delivered}/>
+
+                    <Popconfirm title="Etes vous sur?" okText="Oui" cancelText="Annuler" onConfirm={() => changeDeliveryStatus(item._id)} ><Switch checkedChildren="Délivrée" unCheckedChildren="Non délivrée" checked={item.delivered} /></Popconfirm>
+
+                    <Popconfirm title="Etes vous sur?" okText="Oui" cancelText="Annuler" onConfirm={() => changeReadyStatus(item._id)} ><Switch checkedChildren="Prête" unCheckedChildren="Non prête" checked={item.ready} /></Popconfirm>
+
                 </Space>
             ),
             align: 'left'
         },
         {
-            title: 'Action',
-            key: 'action',
+            title: 'Actions',
+            key: 'actions',
             render: (text, item) => (
                 <Space size="middle">
-                    <Button danger onClick={() => supprimer(item._id)}>Supprimer</Button>
+                    <Popconfirm title="Etes vous sur?" okText="Oui" cancelText="Annuler" onConfirm={() => deleteOrder(item._id)} ><Button danger>Supprimer</Button></Popconfirm>
+                    <Button danger><Link href={`orders/${item._id}`}>Voir la commande</Link></Button>
                 </Space>
             ),
             align: 'right'
@@ -115,10 +183,21 @@ const index = ({ data }) => {
     ];
 
     return (
-        <AdminLayout
-            columns={columns}
-            data={orders}
-        />
+        <div>
+            <AdminLayout 
+                columns={columns}
+                data={orders}
+            >
+                <Select defaultValue="all" style={{ width: 250 }} onChange={handleChange}>
+                    <Option value="all">Toutes les commandes</Option>
+                    <Option value="readyNotDelivered">Commandes prêtes non délivrées</Option>
+                    <Option value="notReady">Commandes non prêtes</Option>
+                </Select>
+
+            </AdminLayout>
+            
+        </div>
+
     )
 }
 

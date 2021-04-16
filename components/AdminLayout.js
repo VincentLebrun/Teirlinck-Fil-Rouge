@@ -12,7 +12,7 @@ import {
 import { Table, Button, Input } from 'antd';
 import Link from 'next/link'
 
-const AdminLayout = ({columns, data}) => {
+const AdminLayout = (props) => {
     const { Header, Sider, Content } = Layout;
 
     const { Search } = Input;
@@ -60,9 +60,9 @@ const AdminLayout = ({columns, data}) => {
                     minHeight: 280,
                 }}
             >
-                <Table columns={columns} dataSource={data} rowKey="id" />
+                <Table columns={props.columns} dataSource={props.data} rowKey="id" />
 
-
+            {props.children}
             </Content>
 
         </Layout>

@@ -15,8 +15,10 @@ module.exports = {
         console.log(req.body);
         const order = new Order({
             numero: req.body.numero,
-            products: req.body.cart.items,
-            total:req.body.cart.total,
+            products: req.body.products,
+            // req.body.cart.items,
+            total:req.body.total,
+            // req.body.cart.total,
             date: req.body.date,
             user_id: req.body.user_id,
             user_firstname: req.body.user_firstname,
