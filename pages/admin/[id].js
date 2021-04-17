@@ -1,44 +1,115 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
 import { Tag, Space, Button, Popconfirm, Form, Input, Select, InputNumber, Switch } from 'antd';
 
 const ProductAdmin = ({ product }) => {
 
-    const productArray = [product];
-    const [useProduct, setUseProduct] = useState(product);
 
+    const [useProduct, setUseProduct] = useState(product);
+    const productArray = [useProduct];
 
     const [form] = Form.useForm();
 
+
+    function updatePromotion() {
+
+        const newPromotion = useProduct;
+
+        if (newPromotion.promotion) {
+            newPromotion.promotion = false;
+        } else {
+            newPromotion.promotion = true;
+        }
+
+        setUseProduct(newPromotion);
+
+
+    };
+
+    function updateHighlighted() {
+        const newHighlighted = useProduct;
+
+        if (newHighlighted.highlighted) {
+            newHighlighted.highlighted = false;
+        } else {
+            newHighlighted.highlighted = true;
+        }
+
+        setUseProduct(newHighlighted);
+
+    };
+
+    function updateAvailable() {
+        const newAvailable = useProduct;
+
+        if (newAvailable.available) {
+            newAvailable.available = false;
+        } else {
+            newAvailable.available = true;
+        }
+
+        setUseProduct(newAvailable);
+
+
+
+
+    };
+
     const onFinish = async (values) => {
-        console.log(values);
+
+        const newProduct = {
+            ...useProduct,
+            name: values.name,
+            description: values.description,
+            image: values.image,
+            price_type: values.price_type,
+            price: values.price,
+            promotion: useProduct.promotion,
+            available: useProduct.available,
+            categories: values.categories,
+            allergenes: values.allergenes,
+            highlighted: useProduct.highlighted
+        }
+
+        console.log(newProduct);
+
+        await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newProduct)
+        }).catch(error => console.log(error));
+
+        setUseProduct(newProduct);
     };
 
 
-const options_categories = [
-    {value: "charcuterie", label:"charcuterie"},
-    { value: "vollaile", label:"Volaille" },
-    { value: "viande", label:"Viande" },
-    { value: "porc", label:"Porc" },
-    { value: "agneau", label:"Agneau" },
-    { value: "boeuf", label:"Boeuf" },
-    { value: "traiteur", label:"Tratieur" },
-    { value: "barbecue", label:"Barbecue" },
+    const options_categories = [
+        { value: "charcuterie", label: "charcuterie" },
+        { value: "vollaile", label: "Volaille" },
+        { value: "viande", label: "Viande" },
+        { value: "porc", label: "Porc" },
+        { value: "agneau", label: "Agneau" },
+        { value: "boeuf", label: "Boeuf" },
+        { value: "traiteur", label: "Tratieur" },
+        { value: "barbecue", label: "Barbecue" },
 
-]
+    ]
 
-const options_allergenes = [
-    { value: "cereales", label: "Céréales" },
-    { value: "oeuf" , label: "Oeuf"},
-    { value: "celeri", label: "Céléri" },
-    { value: "moutarde", label: "Moutarde" },
+    const options_allergenes = [
+        { value: "cereales", label: "Céréales" },
+        { value: "oeuf", label: "Oeuf" },
+        { value: "celeri", label: "Céléri" },
+        { value: "moutarde", label: "Moutarde" },
 
-]
+    ]
 
-const options_price_type = [
-    { value: "/kg", label: "/kg" },
-    { value: "/pc", label: "/pc" },
-]
+    const options_price_type = [
+        { value: "/kg", label: "/kg" },
+        { value: "/pc", label: "/pc" },
+    ]
 
     const columns = [
         {
@@ -130,6 +201,16 @@ const options_price_type = [
             ),
             align: 'left'
         },
+        {
+            title: 'Disponible',
+            key: 'tags',
+            render: (text, item) => (
+                <Space size="middle">
+                    <h1>{item.available ? "OUI" : "NON"}</h1>
+                </Space>
+            ),
+            align: 'left'
+        },
 
     ];
 
@@ -143,11 +224,11 @@ const options_price_type = [
                 form={form}
                 name="modify"
                 onFinish={onFinish}
-                >
+            >
 
 
                 <Form.Item
-                    name={['user', 'name']}
+                    name="name"
                     initialValue={useProduct.name}
                     label="Nom du produit"
                     rules={[
@@ -174,7 +255,7 @@ const options_price_type = [
 
                 <Form.Item label="Type de prix" initialValue={useProduct.price_type} name="price_type" >
                     <Select options={options_price_type}>
-                       
+
                     </Select>
                 </Form.Item>
 
@@ -189,7 +270,7 @@ const options_price_type = [
                     ]}
                 >
                     <Select mode="multiple" options={options_categories} placeholder="Sélectionnez votre/vos catégorie(s)">
-                        
+
                     </Select>
                 </Form.Item>
 
@@ -205,18 +286,20 @@ const options_price_type = [
                     ]}
                 >
                     <Select options={options_allergenes} mode="multiple" placeholder="Sélectionnez votre/vos allergène(s)">
-                        
+
                     </Select>
                 </Form.Item>
 
 
+                <Form.Item name="promotion">
+                    <Switch defaultChecked={useProduct.promotion} onClick={() => updatePromotion()} checkedChildren="Promo" unCheckedChildren="Pas de promo" />
+                </Form.Item>
+                <Form.Item name="highlighted">
+                    <Switch checkedChildren="Mis en avant" onClick={() => updateHighlighted()} unCheckedChildren="Pas mis en avant" defaultChecked={useProduct.highlighted} /></Form.Item>
 
-                <Switch name="" checkedChildren="Promo" unCheckedChildren="Pas de promo" checked={useProduct.promotion} />
-
-                <Switch checkedChildren="Mis en avant" unCheckedChildren="Pas mis en avant" checked={useProduct.highlighted} />
-
-                <Switch checkedChildren="Disponible" unCheckedChildren="Pas disponible" checked={useProduct.available} />
-
+                <Form.Item name="available">
+                    <Switch checkedChildren="Disponible" onClick={() => updateAvailable()} unCheckedChildren="Pas disponible" defaultChecked={useProduct.available} />
+                </Form.Item>
                 <Form.Item >
                     <Button type="primary" htmlType="submit">
                         Modifier ce produit

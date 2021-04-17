@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
-import {Tag, Space, Button, Popconfirm } from 'antd';
+import { Tag, Space, Button, Popconfirm } from 'antd';
+import Link from "next/link";
 
 const index = ({ data }) => {
 
@@ -26,7 +27,7 @@ const index = ({ data }) => {
 
     };
 
-    
+
 
     const columns = [
         {
@@ -90,7 +91,7 @@ const index = ({ data }) => {
             render: (text, item) => (
                 <Space size="middle">
 
-                    <Button type="primary">Modifier</Button>
+                    <Link href={`/admin/${item._id}`}><Button type="primary">Modifier</Button></Link>
 
                     <Popconfirm title="Etes vous sur?" okText="Oui" cancelText="Annuler" onConfirm={() => deleteProduct(item._id)} ><Button danger>Supprimer le produit</Button></Popconfirm>
                 </Space>
