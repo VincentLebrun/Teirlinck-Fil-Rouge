@@ -8,7 +8,7 @@ import {
     VideoCameraOutlined,
     UploadOutlined,
 } from '@ant-design/icons';
-import { Table, Button, Input } from 'antd';
+import { Button, Input } from 'antd';
 import Link from 'next/link'
 
 const Order = ({ data }) => {
@@ -23,6 +23,13 @@ const Order = ({ data }) => {
     const toggle = () => {
         setCollapsed(!collapsed);
     };
+
+    const convertToDate = (timestamp) => {
+        const date = new Date(timestamp);
+        const options = { year: 'numeric', month:'2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }
+        const result = date.toLocaleDateString('fr-FR', options);
+        return result;
+    }
 
     const listOrderProducts = data.products.map((item) => {
         return(
@@ -70,7 +77,7 @@ const Order = ({ data }) => {
 
                     <div className="orderDetail">
                         <Row>
-                            <p>Commande numéro {data.numero} passée le {data.date} par {data.user_firstname} {data.user_lastname} :</p>
+                            <p>Commande numéro {data.numero} passée le {convertToDate(data.date)} par {data.user_firstname} {data.user_lastname} :</p>
                         </Row>
                         {listOrderProducts}
                         <p>Total estimé de la commande : {data.total} €</p>

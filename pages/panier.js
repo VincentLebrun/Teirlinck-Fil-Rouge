@@ -48,19 +48,13 @@ const panier = ({ cart, setCart }) => {
         if (cart.items.length === 0) {
             notification['warning']({
                 message: "Attention !",
-                description:"Vous devez remplir votre panier d'au moins un article avant de confirmer votre commande.",
-                placement:"topRight"
-              });
-        };
-        
-        await fetch("http://localhost:4000/orders", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                numero: 125689985,
+                description: "Vous devez remplir votre panier d'au moins un article avant de confirmer votre commande.",
+                placement: "topRight"
+            });
+        } else {
+
+            const order = {
+                numero: Date.now(),
                 products: cart.items,
                 total: cart.total,
                 date: Date.now(),
@@ -70,15 +64,31 @@ const panier = ({ cart, setCart }) => {
                 user_phone: "0651489856",
                 delivered: false,
                 ready: false
-            })
-        }).catch(error => console.log(error));
+            }
 
-        let newPanier = cart;
-        newPanier = { items: [], total: 0 };
-        setCart({
-            items: [...newPanier.items],
-            total: 0
-        })
+            await fetch("http://localhost:4000/orders", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order)
+            }).catch(error => console.log(error));
+
+            notification['info']({
+                message: `Votre commande n°${order.numero} a bien été prise en compte !`,
+                description: "Merci pour votre commande, celle-ci a bien été enregistrée, vous pourrez la récupérer dans notre boutique dans 48h.",
+                placement: "topRight",
+                duration: 0
+            });
+
+            let newPanier = cart;
+            newPanier = { items: [], total: 0 };
+            setCart({
+                items: [...newPanier.items],
+                total: 0
+            })
+        }
     }
 
     const priceType = (type) => {
@@ -133,7 +143,7 @@ const panier = ({ cart, setCart }) => {
                         <Row justify="space-between">
                             <Col xs={24} sm={12}>
 
-                                <Link href={`/products/1`}>
+                                <Link href={`/products/${item.id}`}>
 
                                     <div className="element">
                                         <img src={item.image} alt="" />
@@ -161,7 +171,7 @@ const panier = ({ cart, setCart }) => {
 
                         <h2>~{itemPrice(item.price, item.quantity, item.price_type)}€</h2>
                         <div className="store-button">
-                            <button onClick={() => deleteCart(item.id)} >Supprimer de votre panier</button>
+                            <button onClick={() => deleteCart(item.id)}>Supprimer de votre panier</button>
                         </div>
 
                     </Col>

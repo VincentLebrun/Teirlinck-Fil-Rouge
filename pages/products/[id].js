@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Hero from "../../components/Hero";
 import Footer from "../../components/Footer";
-import products from "../../product";
+
 import Section from "../../components/Section";
 import { Row, Col } from "antd";
 import ProductElement from "../../components/ProductElement";
@@ -37,7 +37,7 @@ const Product = ({ product, cart, setCart }) => {
         if (price != 0) {
             // Cette ligne permet d'avoir un id unique lors de l'affichage du panier
             const item = {
-                id: `${product.id}-${Date.now()}`,
+                id: product.id,
                 name: product.name,
                 image: product.image,
                 price_type: product.price_type,
@@ -190,10 +190,18 @@ const Product = ({ product, cart, setCart }) => {
 
 export default Product;
 
+async function getProduct(id) {
+    const res = await fetch("http://localhost:4000/products/" + id)
+        .then(response => response.json())
+
+    return res;
+
+}
+
 // getServerSideProps
 
 export async function getServerSideProps({ params }) {
-    const product = products.find((product) => product.id == params.id);
+    const product = await getProduct(params.id);
 
     return {
         props: {

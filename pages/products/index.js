@@ -4,16 +4,15 @@ import { RightOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import Hero from '../../components/Hero';
 import Footer from "../../components/Footer";
-import productsjs from "../../product";
 import Seemore from '../../components/Seemore';
 
 const { SubMenu } = Menu;
 
 
-const Products = ( {products}) => {
+const Products = ( {data}) => {
 
-    const [produits, setProduits] = useState(products);
-    const [produitsFiltres, setProduitsFiltres] = useState(products);
+    const [produits, setProduits] = useState(data);
+    const [produitsFiltres, setProduitsFiltres] = useState(data);
     const [slice, setSlice] = useState(9);
 
     // const [cart, setCart] = useState();
@@ -37,7 +36,7 @@ const Products = ( {products}) => {
         const listProducts = produitsFiltres.slice(0, slice).map(item => {
           return (
             <Col key={item.id} xs={24} md={12} xl={8}>
-                <Link href={`/products/${item.id}`}>
+                <Link href={`/products/${item._id}`}>
                     <div className="product">
                         <img src={item.image} alt=""/>
                         <p>{item.name}</p>
@@ -139,14 +138,22 @@ const Products = ( {products}) => {
 
 export default Products;
 
+async function getProducts() {
+    const res = await fetch("http://localhost:4000/products")
+        .then(response => response.json())
+
+    return res;
+
+}
+
 // getServerSideProps
 
 export async function getServerSideProps() {
-    const products = productsjs;
+    const data = await getProducts();
 
     return {
         props: {
-            products,
+            data,
         },
     };
 }

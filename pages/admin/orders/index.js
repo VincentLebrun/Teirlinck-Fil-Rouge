@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link';
 
 import AdminLayout from "../../../components/AdminLayout"
-import { Tag, Switch, Space, Button, Popconfirm, Select } from 'antd';
+import { Tag, Switch, Space, Button, Popconfirm, Select, notification } from 'antd';
 
 const index = ({ data }) => {
 
     const { Option } = Select;
 
-    const [orders, setOrders] = useState(data);
+    const [orders, setOrders] = useState(data.reverse());
 
     function handleChange(value) {
         console.log(`selected ${value}`);
@@ -27,6 +27,13 @@ const index = ({ data }) => {
         }
     }
 
+    const convertToDate = (timestamp) => {
+        const date = new Date(timestamp);
+        const options = { year: 'numeric', month:'2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }
+        const result = date.toLocaleDateString('fr-FR', options);
+        return result;
+    }
+
     async function deleteOrder(id) {
         await fetch("http://localhost:4000/orders", {
             method: 'DELETE',
@@ -39,6 +46,13 @@ const index = ({ data }) => {
 
         const allOrders = [...orders];
         const index = allOrders.findIndex((item) => item._id === id);
+
+        notification['info']({
+            message: `Suppression de la commande n°${allOrders[index].numero} confirmée.`,
+            description: `La commande n°${allOrders[index].numero} du ${convertToDate(allOrders[index].date)} de ${allOrders[index].user_firstname} ${allOrders[index].user_lastname} a été définitivement supprimée de la base de données.`,
+            placement: "topRight",
+            duration: 0
+        });
 
         allOrders.splice(index, 1);
         setOrders(allOrders);
@@ -115,26 +129,6 @@ const index = ({ data }) => {
             align: 'left'
         },
         {
-            title: 'Date',
-            key: 'date',
-            render: (text, item) => (
-                <Space size="middle">
-                    <h1>{item.date}</h1>
-                </Space>
-            ),
-            align: 'left'
-        },
-        {
-            title: 'id utilisateur',
-            key: 'id',
-            render: (text, item) => (
-                <Space size="middle">
-                    <h1>{item.user_id}</h1>
-                </Space>
-            ),
-            align: 'left'
-        },
-        {
             title: 'Prénom',
             key: 'firstname',
             render: (text, item) => (
@@ -150,6 +144,26 @@ const index = ({ data }) => {
             render: (text, item) => (
                 <Space size="middle">
                     <h1>{item.user_lastname}</h1>
+                </Space>
+            ),
+            align: 'left'
+        },
+        {
+            title: 'id utilisateur',
+            key: 'id',
+            render: (text, item) => (
+                <Space size="middle">
+                    <h1>{item.user_id}</h1>
+                </Space>
+            ),
+            align: 'left'
+        },
+        {
+            title: 'Date de la commande',
+            key: 'date',
+            render: (text, item) => (
+                <Space size="middle">
+                    <h1>{convertToDate(item.date)}</h1>
                 </Space>
             ),
             align: 'left'
@@ -174,7 +188,7 @@ const index = ({ data }) => {
             render: (text, item) => (
                 <Space size="middle">
                     <Popconfirm title="Etes vous sur?" okText="Oui" cancelText="Annuler" onConfirm={() => deleteOrder(item._id)} ><Button danger>Supprimer</Button></Popconfirm>
-                    <Button danger><Link href={`orders/${item._id}`}>Voir la commande</Link></Button>
+                    <Button type="primary"><Link href={`orders/${item._id}`}>Voir la commande</Link></Button>
                 </Space>
             ),
             align: 'right'

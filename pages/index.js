@@ -8,8 +8,8 @@ import ProductElement from "../components/ProductElement";
 import { Row, Col } from "antd";
 import Link from "next/link";
 
-export default function Home() {
-  const [produits, setProduits] = useState(products);
+export default function Home({ data }) {
+  const [produits, setProduits] = useState(data);
 
   const [momentSlice, setMomentSlice] = useState(4);
   const [soldSlice, setSoldSlice] = useState(4);
@@ -171,4 +171,22 @@ export default function Home() {
       <Footer />
     </div>
   );
+}
+
+async function getProducts() {
+    const res = await fetch("http://localhost:4000/products")
+        .then(response => response.json())
+
+    return res;
+
+}
+
+export async function getServerSideProps() {
+    const data = await getProducts();
+
+    return {
+        props: {
+            data
+        }
+    }
 }
