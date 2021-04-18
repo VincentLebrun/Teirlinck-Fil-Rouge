@@ -58,7 +58,7 @@ const RegistrationForm = () => {
             <Col span={24}>
               <img src="/logo.svg" alt="" />
             </Col>
-            <div className="pastille-login"><i class="fi-rr-spinner-alt"></i></div>
+            <div className="pastille-login"><i className="fi-rr-spinner-alt"></i></div>
             <Col xl={16}>
               <hr />
               <Form
@@ -185,7 +185,7 @@ const RegistrationForm = () => {
                   </Button>
                 </Form.Item>
                 <p>
-                  <i class="fi-rr-info"></i>Avant de pouvoir passer votre
+                  <i className="fi-rr-info"></i>Avant de pouvoir passer votre
                   commande il faudra faire valider votre compte en boucherie
                 </p>
                 <hr />

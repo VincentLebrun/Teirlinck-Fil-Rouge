@@ -120,7 +120,7 @@ export default function Home() {
             <div className="contact">
               <h3>Commandez pour plus de facilité !</h3>
               <div className="command-circle">
-                <i class="fi-rr-shop"></i>
+                <i className="fi-rr-shop"></i>
               </div>
               <div className="tutorial">
                 <button><Link href="CreateAccount">Je me crée un compte</Link></button>
@@ -139,15 +139,15 @@ export default function Home() {
               <h3>Comment nous trouver ?</h3>
 
               <div className="contact-circle">
-                <i class="fi-rr-home"></i>
+                <i className="fi-rr-home"></i>
               </div>
               <div>
-                <i class="fi-rr-marker"></i>
+                <i className="fi-rr-marker"></i>
                 <p>30 rue de Condé,</p>
                 <p>59000 Lille</p>
               </div>
               <div>
-                <i class="fi-rr-inbox"></i>
+                <i className="fi-rr-inbox"></i>
                 <p>03 20 53 06 44</p>
               </div>
 
