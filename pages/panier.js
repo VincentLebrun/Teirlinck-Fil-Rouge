@@ -1,9 +1,10 @@
+import React from "react";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
-import { Row, Col } from 'antd';
+import { Row, Col, notification } from 'antd';
 import Link from 'next/link'
 
-const panier = ( { cart, setCart }) => {
+const panier = ({ cart, setCart }) => {
 
     // const [panier, setPanier] = useState();
     // const [loading, setLoading] = useState(true);
@@ -43,14 +44,51 @@ const panier = ( { cart, setCart }) => {
             });
     }
 
-    const addCommand = () => {
-        let newPanier = cart;
-        newPanier = {items : [], total : 0};
-        setCart({
-            items: [...newPanier.items],
-            total:0
+    async function addCommand() {
+        if (cart.items.length === 0) {
+            notification['warning']({
+                message: "Attention !",
+                description: "Vous devez remplir votre panier d'au moins un article avant de confirmer votre commande.",
+                placement: "topRight"
+            });
+        } else {
+
+            const order = {
+                numero: Date.now(),
+                products: cart.items,
+                total: cart.total,
+                date: Date.now(),
+                user_id: "3548a2e0b9541435cc418621",
+                user_firstname: "Joris",
+                user_lastname: "Poupoune",
+                user_phone: "0651489856",
+                delivered: false,
+                ready: false
+            }
+
+            await fetch("http://localhost:4000/orders", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order)
+            }).catch(error => console.log(error));
+
+            notification['info']({
+                message: `Votre commande n°${order.numero} a bien été prise en compte !`,
+                description: "Merci pour votre commande, celle-ci a bien été enregistrée, vous pourrez la récupérer dans notre boutique dans 48h.",
+                placement: "topRight",
+                duration: 0
+            });
+
+            let newPanier = cart;
+            newPanier = { items: [], total: 0 };
+            setCart({
+                items: [...newPanier.items],
+                total: 0
+            })
         }
-        )
     }
 
     const priceType = (type) => {
@@ -75,11 +113,11 @@ const panier = ( { cart, setCart }) => {
         let items = cart.items;
         const index_item = items.indexOf(name);
         items[index_item] = cart_item;
-        
-        setCart({ 
-            items:items, 
+
+        setCart({
+            items: items,
             total: Number((cart.total - previous_price + new_price).toFixed(2))
-        }); 
+        });
     }
 
 
@@ -105,7 +143,7 @@ const panier = ( { cart, setCart }) => {
                         <Row justify="space-between">
                             <Col xs={24} sm={12}>
 
-                                <Link href={`/products/1`}>
+                                <Link href={`/products/${item.id}`}>
 
                                     <div className="element">
                                         <img src={item.image} alt="" />
@@ -121,7 +159,7 @@ const panier = ( { cart, setCart }) => {
                             <Col xs={24} sm={8}>
                                 <h2>{item.name}</h2>
                                 <div className="input-weight">
-                                    <input onChange={(e) => updateQuantity(e, item.price, item.price_type, item.name, item.quantity)} type="number" placeholder={item.quantity} step={item.price_type === "/kg" ? "25" : "1"} min="0" value={item.quantity}/>
+                                    <input onChange={(e) => updateQuantity(e, item.price, item.price_type, item.name, item.quantity)} type="number" placeholder={item.quantity} step={item.price_type === "/kg" ? "25" : "1"} min="0" value={item.quantity} />
                                     <p>{priceType(item.price_type)}</p>
                                 </div>
                             </Col>
@@ -133,7 +171,7 @@ const panier = ( { cart, setCart }) => {
 
                         <h2>~{itemPrice(item.price, item.quantity, item.price_type)}€</h2>
                         <div className="store-button">
-                            <button onClick={() => deleteCart(item.id)} >Supprimer de votre panier</button>
+                            <button onClick={() => deleteCart(item.id)}>Supprimer de votre panier</button>
                         </div>
 
                     </Col>
@@ -188,11 +226,10 @@ const panier = ( { cart, setCart }) => {
 
                         <h1>Total ({cart.items.length} produits): ~{Number(testTotal.toFixed(2))}€</h1>
 
-                        <button onClick={() => addCommand()} >Passer la commande</button>
+                        <button onClick={() => addCommand()} >Valider la commande</button>
+
                     </Col>
-
                 </Row>
-
             </Col>
 
             <Footer />

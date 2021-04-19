@@ -1,20 +1,69 @@
 import React, { useState, useEffect } from 'react'
+import Link from 'next/link';
 
 import AdminLayout from "../../../components/AdminLayout"
-import {Tag, Switch, Space, Button } from 'antd';
+import { Tag, Switch, Space, Button, Popconfirm, Select, notification } from 'antd';
 
 const index = ({ data }) => {
 
-    const [orders, setOrders]= useState(data);
-    // useEffect(() => {
-    //     getOrders();
-    // }, [])
+    const { Option } = Select;
+
+    const [orders, setOrders] = useState(data.reverse());
+
+    function handleChange(value) {
+        console.log(`selected ${value}`);
+        
+        if (value === "readyNotDelivered") {
+            const filteredOrders = data.filter((item) => item.ready && !item.delivered);
+            console.log(filteredOrders);
+            setOrders(filteredOrders);
+        } 
+        if (value === "notReady") {
+            const filteredOrders = data.filter((item) => !item.ready);
+            setOrders(filteredOrders);
+        } 
+        if (value === "all") {
+            setOrders(data)
+        }
+    }
+
+    const convertToDate = (timestamp) => {
+        const date = new Date(timestamp);
+        const options = { year: 'numeric', month:'2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }
+        const result = date.toLocaleDateString('fr-FR', options);
+        return result;
+    }
+
+    async function deleteOrder(id) {
+        await fetch("http://localhost:4000/orders", {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ _id: id })
+        }).catch(error => console.log(error));
+
+        const allOrders = [...orders];
+        const index = allOrders.findIndex((item) => item._id === id);
+
+        notification['info']({
+            message: `Suppression de la commande n°${allOrders[index].numero} confirmée.`,
+            description: `La commande n°${allOrders[index].numero} du ${convertToDate(allOrders[index].date)} de ${allOrders[index].user_firstname} ${allOrders[index].user_lastname} a été définitivement supprimée de la base de données.`,
+            placement: "topRight",
+            duration: 0
+        });
+
+        allOrders.splice(index, 1);
+        setOrders(allOrders);
+
+    };
 
     async function changeDeliveryStatus(id) {
         const allOrders = [...orders];
         const index = allOrders.findIndex((item) => item._id === id);
 
-        if(allOrders[index].delivered) {
+        if (allOrders[index].delivered) {
             allOrders[index].delivered = false;
         } else {
             allOrders[index].delivered = true;
@@ -24,16 +73,44 @@ const index = ({ data }) => {
 
         const order = {
             ...allOrders[index],
-            delivered:allOrders[index].delivered
+            delivered: allOrders[index].delivered
         }
 
         await fetch("http://localhost:4000/orders", {
-            method:'PUT',
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body:JSON.stringify(order)
+            body: JSON.stringify(order)
+
+        }).catch(error => console.log(error));
+    }
+
+    async function changeReadyStatus(id) {
+        const allOrders = [...orders];
+        const index = allOrders.findIndex((item) => item._id === id);
+
+        if (allOrders[index].ready) {
+            allOrders[index].ready = false;
+        } else {
+            allOrders[index].ready = true;
+        }
+
+        setOrders(allOrders);
+
+        const order = {
+            ...allOrders[index],
+            ready: allOrders[index].ready
+        }
+
+        await fetch("http://localhost:4000/orders", {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
 
         }).catch(error => console.log(error));
     }
@@ -47,26 +124,6 @@ const index = ({ data }) => {
             render: (text, item) => (
                 <Space size="middle">
                     <h1>{item.numero}</h1>
-                </Space>
-            ),
-            align: 'left'
-        },
-        {
-            title: 'Date',
-            key: 'date',
-            render: (text, item) => (
-                <Space size="middle">
-                    <h1>{item.date}</h1>
-                </Space>
-            ),
-            align: 'left'
-        },
-        {
-            title: 'id utilisateur',
-            key: 'id',
-            render: (text, item) => (
-                <Space size="middle">
-                    <h1>{item.user_id}</h1>
                 </Space>
             ),
             align: 'left'
@@ -92,21 +149,46 @@ const index = ({ data }) => {
             align: 'left'
         },
         {
-            title: 'Statut',
-            key: 'lastname',
+            title: 'id utilisateur',
+            key: 'id',
             render: (text, item) => (
                 <Space size="middle">
-                    <Switch onClick={() => changeDeliveryStatus(item._id)} checkedChildren="Délivrée" unCheckedChildren="Non délivrée" checked={item.delivered}/>
+                    <h1>{item.user_id}</h1>
                 </Space>
             ),
             align: 'left'
         },
         {
-            title: 'Action',
-            key: 'action',
+            title: 'Date de la commande',
+            key: 'date',
             render: (text, item) => (
                 <Space size="middle">
-                    <Button danger onClick={() => supprimer(item._id)}>Supprimer</Button>
+                    <h1>{convertToDate(item.date)}</h1>
+                </Space>
+            ),
+            align: 'left'
+        },
+        {
+            title: 'Statut de la commande',
+            key: 'orderStatus',
+            render: (text, item) => (
+                <Space size="middle">
+
+                    <Popconfirm title="Etes vous sur?" okText="Oui" cancelText="Annuler" onConfirm={() => changeDeliveryStatus(item._id)} ><Switch checkedChildren="Délivrée" unCheckedChildren="Non délivrée" checked={item.delivered} /></Popconfirm>
+
+                    <Popconfirm title="Etes vous sur?" okText="Oui" cancelText="Annuler" onConfirm={() => changeReadyStatus(item._id)} ><Switch checkedChildren="Prête" unCheckedChildren="Non prête" checked={item.ready} /></Popconfirm>
+
+                </Space>
+            ),
+            align: 'left'
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (text, item) => (
+                <Space size="middle">
+                    <Popconfirm title="Etes vous sur?" okText="Oui" cancelText="Annuler" onConfirm={() => deleteOrder(item._id)} ><Button danger>Supprimer</Button></Popconfirm>
+                    <Button type="primary"><Link href={`orders/${item._id}`}>Voir la commande</Link></Button>
                 </Space>
             ),
             align: 'right'
@@ -115,10 +197,21 @@ const index = ({ data }) => {
     ];
 
     return (
-        <AdminLayout
-            columns={columns}
-            data={orders}
-        />
+        <div>
+            <AdminLayout 
+                columns={columns}
+                data={orders}
+            >
+                <Select defaultValue="all" style={{ width: 250 }} onChange={handleChange}>
+                    <Option value="all">Toutes les commandes</Option>
+                    <Option value="readyNotDelivered">Commandes prêtes non délivrées</Option>
+                    <Option value="notReady">Commandes non prêtes</Option>
+                </Select>
+
+            </AdminLayout>
+            
+        </div>
+
     )
 }
 
