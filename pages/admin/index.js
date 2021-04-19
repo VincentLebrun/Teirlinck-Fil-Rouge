@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
-import { Tag, Space, Button, Popconfirm } from 'antd';
+import { Tag, Space, Button, Popconfirm, Table, Input } from 'antd';
 import Link from "next/link";
 
 const index = ({ data }) => {
 
     const [products, setProducts] = useState(data);
+
+    const { Search } = Input;
 
     async function deleteProduct(id) {
         console.log("ok");
@@ -27,7 +29,11 @@ const index = ({ data }) => {
 
     };
 
-
+    const onSearch = (value) => { 
+        value = value.toLowerCase();
+        const filteredProducts = data.filter((item) => item.name.toLowerCase().includes(value));
+        setProducts(filteredProducts);
+    }
 
     const columns = [
         {
@@ -103,10 +109,10 @@ const index = ({ data }) => {
 
 
     return (
-        <AdminLayout
-            columns={columns}
-            data={products}
-        />
+        <AdminLayout>
+            <Search className="search-input" placeholder="Chercher un produit" onSearch={onSearch} style={{ width: 200 }}></Search>
+            <Table columns={columns} dataSource={products} rowKey="id" />
+        </AdminLayout>
     )
 }
 

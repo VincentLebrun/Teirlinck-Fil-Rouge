@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
-import { Space, Button, Switch, Popconfirm } from 'antd';
+import { Space, Button, Switch, Popconfirm, Table, Input } from 'antd';
 
 
 const users = ({ data }) => {
 
     const [users, setUsers] = useState(data);
+
+    const { Search } = Input;
+
+    const onSearch = (value) => { 
+        value = value.toLowerCase();
+        const filteredUsers = data.filter((item) => item.firstname.toLowerCase().includes(value) || item.lastname.toLowerCase().includes(value));
+        setUsers(filteredUsers);
+    }
 
     async function deleteUser(id) {
         console.log("ok");
@@ -164,10 +172,10 @@ const users = ({ data }) => {
     ];
 
     return (
-        <AdminLayout
-            columns={columns}
-            data={users}
-        />
+        <AdminLayout>
+            <Search className="search-input" placeholder="Chercher un utilisateur" onSearch={onSearch} style={{ width: 200 }}></Search>
+            <Table columns={columns} dataSource={users} rowKey="id" />
+        </AdminLayout>
     )
 }
 

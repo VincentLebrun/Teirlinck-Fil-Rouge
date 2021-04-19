@@ -40,6 +40,7 @@ const Products = ( {data}) => {
                     <div className="product">
                         <img src={item.image} alt=""/>
                         <p>{item.name}</p>
+                        <p>{item.price}€ {item.price_type === "/kg" ? "/kg" : "/pc"}</p>
                     </div>
                 </Link>
             </Col>
@@ -54,7 +55,7 @@ const Products = ( {data}) => {
     }
 
     const renderFilteredProducts = (name) => {
-
+        setSlice(+9)
         if (name != "promotions" && name != "news" ) {
             const filteredProducts = produits.filter((product) => product.categories.includes(name));
             setProduitsFiltres(filteredProducts);
@@ -116,7 +117,7 @@ const Products = ( {data}) => {
                             <Menu.Item key="11" onClick={() => renderFilteredProducts("promotions")}>
                                 Promotions
                             </Menu.Item>
-                            <Menu.Item key="12" onClick={() => renderFilteredProducts("news")}>
+                            <Menu.Item className="mg-bt-0" key="12" onClick={() => renderFilteredProducts("news")}>
                                 Nouveautés
                             </Menu.Item>
                         </Menu>

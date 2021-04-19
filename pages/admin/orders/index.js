@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link';
 
 import AdminLayout from "../../../components/AdminLayout"
-import { Tag, Switch, Space, Button, Popconfirm, Select, notification } from 'antd';
+import { Tag, Switch, Space, Button, Popconfirm, Select, notification, Table, Input} from 'antd';
 
 const index = ({ data }) => {
 
     const { Option } = Select;
+
+    const { Search } = Input;
 
     const [orders, setOrders] = useState(data.reverse());
 
@@ -32,6 +34,12 @@ const index = ({ data }) => {
         const options = { year: 'numeric', month:'2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }
         const result = date.toLocaleDateString('fr-FR', options);
         return result;
+    }
+
+    const onSearch = (value) => { 
+        value = value.toLowerCase();
+        const filteredOrders = data.filter((item) => item.user_lastname.toLowerCase().includes(value) || item.user_firstname.toLowerCase().includes(value));
+        setOrders(filteredOrders);
     }
 
     async function deleteOrder(id) {
@@ -115,8 +123,6 @@ const index = ({ data }) => {
         }).catch(error => console.log(error));
     }
 
-    console.log(data);
-
     const columns = [
         {
             title: 'Numéro de commande',
@@ -198,16 +204,15 @@ const index = ({ data }) => {
 
     return (
         <div>
-            <AdminLayout 
-                columns={columns}
-                data={orders}
+            <AdminLayout
             >
-                <Select defaultValue="all" style={{ width: 250 }} onChange={handleChange}>
+                <Select defaultValue="all" style={{ width: 250 }} onSelect={handleChange}>
                     <Option value="all">Toutes les commandes</Option>
                     <Option value="readyNotDelivered">Commandes prêtes non délivrées</Option>
                     <Option value="notReady">Commandes non prêtes</Option>
                 </Select>
-
+                <Search className="search-input" placeholder="Chercher un client" onSearch={onSearch} style={{ width: 200 }}></Search>
+                <Table columns={columns} dataSource={orders} rowKey="id" />
             </AdminLayout>
             
         </div>

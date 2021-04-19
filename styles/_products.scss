@@ -11,6 +11,18 @@
     margin-bottom:2rem;
 }
 
+.ant-menu-item, .ant-menu-submenu-title {
+    .mg-bt-0 {
+        margin-bottom:0px;
+    }
+}
+
+
+
+.ant-menu-dark.ant-menu-inline .ant-menu-item {
+    border-bottom:$color-red solid 2px;
+}
+
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
     background-color: #5d677434;
 }
@@ -34,11 +46,10 @@
 .product {
     cursor:pointer;
     background-color: $color-black;
-    //padding: 8rem;
-    
+    border-bottom:$color-red solid 3px;
     height:auto;
     p {
-        padding : 10px;
+        margin-bottom: 0;
         color: $color-white;
         text-align:center;
         font-size:1.2rem;

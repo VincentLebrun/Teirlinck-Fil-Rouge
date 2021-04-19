@@ -48,8 +48,7 @@ const AdminLayout = (props) => {
                         className: 'trigger',
                         onClick: () => toggle(),
                     })}
-                    <Button type="primary" > Ajouter un produit</Button>
-                    <Search className="search-input" placeholder="Chercher un produit" onSearch={onSearch} style={{ width: 200 }}></Search>
+                    <Button type="primary" ><Link href="/admin/addProducts">Ajouter un produit</Link></Button>
                 </Header>
 
                 <Content
@@ -60,7 +59,7 @@ const AdminLayout = (props) => {
                         minHeight: 280,
                     }}
                 >
-                    <Table columns={props.columns} dataSource={props.data} rowKey="id" />
+
                     {props.children}
 
                 </Content>
