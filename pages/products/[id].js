@@ -37,7 +37,7 @@ const Product = ({ product, cart, setCart }) => {
         if (price != 0) {
             // Cette ligne permet d'avoir un id unique lors de l'affichage du panier
             const item = {
-                id: product.id,
+                id: product._id,
                 name: product.name,
                 image: product.image,
                 price_type: product.price_type,
@@ -177,7 +177,7 @@ const Product = ({ product, cart, setCart }) => {
                     <Row justify="center">
                         <Col span={14}>
                             <p>
-                                {product.allergenes.lenght == 0 ? "Ce produit contient les allergènes suivant : " : "Ce produit ne contient aucun des 14 allergènes (conformément au Règlement (UE) n° 1169/2011 concernant l'information des consommateurs sur les denrées alimentaires) selon la recette. La contamination croisée dans la boucherie ne peut jamais être totalement exclue)."}
+                                {product.allergenes.length === 0 ?  "Ce produit ne contient aucun des 14 allergènes (conformément au Règlement (UE) n° 1169/2011 concernant l'information des consommateurs sur les denrées alimentaires) selon la recette. La contamination croisée dans la boucherie ne peut jamais être totalement exclue)." : `Ce produit contient les allergènes suivants : ${product.allergenes.join(', ')}`}
                             </p>
                         </Col>
                     </Row>

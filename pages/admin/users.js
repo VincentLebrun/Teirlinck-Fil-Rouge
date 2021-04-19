@@ -172,7 +172,7 @@ const users = ({ data }) => {
     ];
 
     return (
-        <AdminLayout>
+        <AdminLayout selectedKeu="3">
             <Search className="search-input" placeholder="Chercher un utilisateur" onSearch={onSearch} style={{ width: 200 }}></Search>
             <Table columns={columns} dataSource={users} rowKey="id" />
         </AdminLayout>

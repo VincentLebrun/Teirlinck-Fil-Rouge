@@ -204,8 +204,7 @@ const index = ({ data }) => {
 
     return (
         <div>
-            <AdminLayout
-            >
+            <AdminLayout selectedKey="4">
                 <Select defaultValue="all" style={{ width: 250 }} onSelect={handleChange}>
                     <Option value="all">Toutes les commandes</Option>
                     <Option value="readyNotDelivered">Commandes prêtes non délivrées</Option>

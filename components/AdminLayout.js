@@ -6,8 +6,9 @@ import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
+    FileAddOutlined,
+    CopyOutlined,
+    ShoppingOutlined
 } from '@ant-design/icons';
 import { Table, Button, Input } from 'antd';
 import Link from 'next/link'
@@ -30,16 +31,19 @@ const AdminLayout = (props) => {
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="logo"> <Link href="/"><img src="/logo.svg" alt="" /></Link></div>
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1" icon={<UserOutlined />}>
-                        Produits
-        </Menu.Item>
-                    <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                        Ajouter un produit
-        </Menu.Item>
-                    <Menu.Item key="3" icon={<UploadOutlined />}>
-                        Utilisateurs
-        </Menu.Item>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={[props.selectedKey]}>
+                    <Menu.Item key="1" icon={<CopyOutlined />}>
+                        <Link href="/admin">Produits</Link>
+                    </Menu.Item>
+                    <Menu.Item key="2" icon={<FileAddOutlined />}>
+                        <Link href="/admin/addProducts">Ajouter un produit</Link>
+                    </Menu.Item>
+                    <Menu.Item key="3" icon={<UserOutlined />}>
+                        <Link href="/admin/users">Utilisateurs</Link>
+                    </Menu.Item>
+                    <Menu.Item key="4" icon={<ShoppingOutlined />}>
+                        <Link href="/admin/orders">Commandes</Link>
+                    </Menu.Item>
                 </Menu>
             </Sider>
             <Layout className="site-layout">

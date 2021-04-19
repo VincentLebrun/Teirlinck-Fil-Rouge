@@ -1,27 +1,11 @@
 import React, { useState } from "react";
+import AdminLayout from "../../components/AdminLayout"
 import { Button, Form, Input, Select, Tag, Table } from "antd";
-import { Layout, Menu } from "antd";
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
+import { Layout } from "antd";
 
 import Link from "next/link";
 const AddProducts = () => {
   const { Header, Sider, Content } = Layout;
-
-  const { Search } = Input;
-
-  const onSearch = (value) => console.log(value);
-
-  const [collapsed, setCollapsed] = useState(false);
-
-  const toggle = () => {
-    setCollapsed(!collapsed);
-  };
 
   const [Product] = Form.useForm();
   const onFinish = async (values) => {
@@ -50,14 +34,15 @@ const AddProducts = () => {
     });
   };
   const optionsAllergenes = [
-    { value: "cereales" },
+    { value: "céréales" },
     { value: "oeuf" },
-    { value: "celeri" },
+    { value: "céleri" },
     { value: "moutarde" },
+    { value: "lait" },
   ];
   const options = [
     { value: "charcuterie" },
-    { value: "vollaile" },
+    { value: "volaille" },
     { value: "viande" },
     { value: "porc" },
     { value: "agneau" },
@@ -86,56 +71,8 @@ const AddProducts = () => {
   };
 
   return (
-    <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo">
-          {" "}
-          <Link href="/">
-            <img src="/logo.svg" alt="" />
-          </Link>
-        </div>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            Produits
-          </Menu.Item>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            Ajouter un produit
-          </Menu.Item>
-          <Menu.Item key="3" icon={<UploadOutlined />}>
-            Utilisateurs
-          </Menu.Item>
-        </Menu>
-      </Sider>
-      <Layout className="site-layout">
-        <Header
-          className="site-layout-background header-admin"
-          style={{ padding: 0 }}
-        >
-          {React.createElement(
-            collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-            {
-              className: "trigger",
-              onClick: () => toggle(),
-            }
-          )}
-          <Button type="primary"> Ajouter un produit</Button>
-          <Search
-            className="search-input"
-            placeholder="Chercher un produit"
-            onSearch={onSearch}
-            style={{ width: 200 }}
-          ></Search>
-        </Header>
-
-        <Content
-          className="site-layout-background"
-          style={{
-            margin: "24px 16px",
-            padding: 24,
-            minHeight: 280,
-          }}
-        >
-          <div>
+    <AdminLayout selectedKey="2">
+      <div>
             <Form
               form={Product}
               name="register"
@@ -166,7 +103,7 @@ const AddProducts = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input.TextArea />
               </Form.Item>
               <Form.Item
                 name="image"
@@ -183,7 +120,7 @@ const AddProducts = () => {
               </Form.Item>
               <Form.Item
                 name="categories"
-                label="Choisissez le type de produit ex charcuterie etc (Choix multiples possible )"
+                label="Choisissez le type de produit (ex : charcuterie, etc. - choix multiples possibles)"
                 rules={[
                   {
                     required: true,
@@ -208,15 +145,14 @@ const AddProducts = () => {
                     },
                   ]}
                 >
-                  <Input />
                 </Select>
               </Form.Item>
               <Form.Item
                 name="allergenes"
-                label="Allergenes"
+                label="Allergènes"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Vous oublié ce champ",
                     type: "array",
                   },
@@ -236,12 +172,12 @@ const AddProducts = () => {
                     },
                   ]}
                 >
-                  <Input />
                 </Select>
               </Form.Item>
               <Form.Item
                 
-                label="Type de prix exemple /pc ou /kg"
+                label="Type de prix"
+                name="price_type"
                 rules={[
                   {
                     required: true,
@@ -250,22 +186,23 @@ const AddProducts = () => {
                   },
                 ]}
               >
-                <Select
-                  mode="multiple"
+                <Select options={options_price_type}>
+
+                </Select>
+                {/* <Select
                   showArrow
                   name="price_type"
-                  tagRender={tagRender}
                   options={options_price_type}
                   rules={[
                     {
-                      required: false,
+                      required: true,
                       message: "Vous avez oublié ce champ",
                       whitespace: true,
                     },
                   ]}
                 >
-                  <Input />
-                </Select>
+                  
+                </Select> */}
               </Form.Item>
               <Form.Item
                 initialValue="10"
@@ -279,7 +216,7 @@ const AddProducts = () => {
                   },
                 ]}
               >
-                <Input step="0.1" min="0" type="number" />
+                <Input step="0.01" min="0" type="number" />
               </Form.Item>
 
               <Form.Item>
@@ -290,9 +227,7 @@ const AddProducts = () => {
               </Form.Item>
             </Form>
           </div>
-        </Content>
-      </Layout>
-    </Layout>
+    </AdminLayout>
   );
 };
 

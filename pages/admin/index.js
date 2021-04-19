@@ -109,7 +109,7 @@ const index = ({ data }) => {
 
 
     return (
-        <AdminLayout>
+        <AdminLayout selectedKey="1">
             <Search className="search-input" placeholder="Chercher un produit" onSearch={onSearch} style={{ width: 200 }}></Search>
             <Table columns={columns} dataSource={products} rowKey="id" />
         </AdminLayout>

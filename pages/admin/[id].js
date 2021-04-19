@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
-import { Tag, Space, Button, Popconfirm, Form, Input, Select, InputNumber, Switch } from 'antd';
+import { Tag, Space, Button, Popconfirm, Form, Input, Select, InputNumber, Switch, Table } from 'antd';
 
 const ProductAdmin = ({ product }) => {
 
@@ -87,22 +87,24 @@ const ProductAdmin = ({ product }) => {
 
 
     const options_categories = [
-        { value: "charcuterie", label: "charcuterie" },
-        { value: "vollaile", label: "Volaille" },
+        { value: "charcuterie", label: "Charcuterie" },
+        { value: "volaille", label: "Volaille" },
         { value: "viande", label: "Viande" },
         { value: "porc", label: "Porc" },
         { value: "agneau", label: "Agneau" },
         { value: "boeuf", label: "Boeuf" },
-        { value: "traiteur", label: "Tratieur" },
+        { value: "traiteur", label: "Traiteur" },
         { value: "barbecue", label: "Barbecue" },
 
     ]
 
     const options_allergenes = [
-        { value: "cereales", label: "Céréales" },
+        { value: "céréales", label: "Céréales" },
         { value: "oeuf", label: "Oeuf" },
-        { value: "celeri", label: "Céléri" },
+        { value: "céleri", label: "Céléri" },
         { value: "moutarde", label: "Moutarde" },
+        { value: "lait", label: "Lait" },
+
 
     ]
 
@@ -216,10 +218,8 @@ const ProductAdmin = ({ product }) => {
 
 
     return (
-        <AdminLayout
-            columns={columns}
-            data={productArray}
-        >
+        <AdminLayout>
+            <Table columns={columns} dataSource={productArray} rowKey="id" />
             <Form
                 form={form}
                 name="modify"
@@ -250,7 +250,7 @@ const ProductAdmin = ({ product }) => {
 
 
                 <Form.Item name="price" label="Prix (€)" initialValue={useProduct.price} >
-                    <Input type="number" value={useProduct.price} step="0.1" min="0" />
+                    <Input type="number" value={useProduct.price} step="0.01" min="0" />
                 </Form.Item>
 
                 <Form.Item label="Type de prix" initialValue={useProduct.price_type} name="price_type" >

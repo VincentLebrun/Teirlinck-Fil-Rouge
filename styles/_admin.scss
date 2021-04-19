@@ -41,3 +41,10 @@
   vertical-align: middle;
 }
 
+.ant-menu-dark .ant-menu-item, .ant-menu-dark .ant-menu-item-group-title, .ant-menu-dark .ant-menu-item > a, .ant-menu-dark .ant-menu-item > span > a {
+  font-size:15px;
+}
+
+.ant-layout.ant-layout-has-sider {
+  min-height:100vh;
+}
