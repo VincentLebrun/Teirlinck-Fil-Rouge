@@ -24,7 +24,6 @@ const RegistrationForm = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    // console.log("Received values of form: ", values);
     const pass = values.password;
     const testCrypt = await bcrypt.hash(pass, saltRounds);
       const sendAccount = {
@@ -37,7 +36,7 @@ const RegistrationForm = () => {
       admin: false,
       validated: false,
     }
-    // console.log(testCrypt);
+    //  console.log(testCrypt);
 
 
     await fetch(process.env.NEXT_PUBLIC_API_USERS, {

@@ -16,8 +16,21 @@ const ConnexionForm = () => {
             </Select>
         </Form.Item>
     );
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log("Received values of form: ", values);
+        await fetch("http://localhost:4000/login", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+           
+        }).catch((err) => {
+            console.log(err);
+        });
+
+
     };
 
     return (
@@ -28,7 +41,7 @@ const ConnexionForm = () => {
                         <Col span={24}>
                             <Link href="/"><img src="/logo.svg" alt="" /></Link>
                         </Col>
-                        <div className="pastille-login"><i class="fi-rr-spinner-alt"></i></div>
+                        <div className="pastille-login"><i className="fi-rr-spinner-alt"></i></div>
                         <Col xl={16}>
                             <hr />
                             <Form
@@ -46,7 +59,7 @@ const ConnexionForm = () => {
                                 <Form.Item
                                     label="E-mail"
                                     className="formInputStyle"
-                                    name="email"
+                                    name="mail"
                                     rules={[
                                         {
                                             type: "email",

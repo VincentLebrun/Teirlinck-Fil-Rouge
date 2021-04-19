@@ -1,9 +1,10 @@
 const ProductController = require("../controllers/product");
 const UserController = require("../controllers/user");
 const OrderController = require("../controllers/order");
+const checkAuth = require("../middleware/check-auth");
 
-module.exports = server => {    
-    
+module.exports = server => {
+
     // PRODUITS
     server.get("/products", (req, res) => {
         ProductController.getAll(req, res);
@@ -13,25 +14,25 @@ module.exports = server => {
         ProductController.get(req, res);
     });
 
-    server.post("/products", async (req, res) => {
+    server.post("/products", checkAuth,  async (req, res) => {
         ProductController.create(req, res);
     });
 
-    server.put("/products", async (req, res) => {
+    server.put("/products", checkAuth, async (req, res) => {
         ProductController.update(req, res);
     });
 
-    server.delete("/products", (req, res) => {
+    server.delete("/products",checkAuth, (req, res) => {
         ProductController.delete(req, res);
     });
 
     // UTILISATEURS
 
-    server.get("/users", (req, res) => {
+    server.get("/users", checkAuth, (req, res, next) => {
         UserController.getAll(req, res);
     });
 
-    server.get("/users/:id", (req, res) => {
+    server.get("/users/:id", checkAuth, (req, res) => {
         UserController.get(req, res);
     });
 
@@ -39,33 +40,40 @@ module.exports = server => {
         UserController.create(req, res);
     });
 
-    server.put("/users", async (req, res) => {
+    server.put("/users", checkAuth, async (req, res) => {
         UserController.update(req, res);
     });
 
-    server.delete("/users", (req, res) => {
+    server.delete("/users", checkAuth, (req, res) => {
         UserController.delete(req, res);
     });
 
     // COMMANDES 
-    
-    server.get("/orders", (req, res) => {
+
+    server.get("/orders", checkAuth, (req, res) => {
         OrderController.getAll(req, res);
     });
 
-    server.get("/orders/:id", (req, res) => {
+    server.get("/orders/:id", checkAuth, (req, res) => {
         OrderController.get(req, res);
     });
 
-    server.post("/orders", async (req, res) => {
+    server.post("/orders", checkAuth, async (req, res) => {
         OrderController.create(req, res);
     });
 
-    server.put("/orders", async (req, res) => {
+    server.put("/orders", checkAuth, async (req, res) => {
         OrderController.update(req, res);
     });
 
-    server.delete("/orders", (req, res) => {
+    server.delete("/orders", checkAuth, (req, res) => {
         OrderController.delete(req, res);
     });
+
+    //LOGIN
+
+    server.post("/login", async (req, res) => {
+        UserController.login(req, res);
+    });
 }
+

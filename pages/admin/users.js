@@ -183,7 +183,12 @@ export default users
 
 
 async function getUsers() {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_USERS)
+    const res = await fetch(process.env.NEXT_PUBLIC_API_USERS, {
+        method: 'GET',
+        headers: {
+            'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiYmViZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjA3ZGNmMTM0ZjExMjgzNTc0NjE0ZGY5IiwidXNlckZpcnN0TmFtZSI6IkpvcmlzIiwidXNlckxhc3RuYW1lIjoiUG91cG91bmUiLCJ1c2VyUGhvbmUiOiIwNjEyMTU0NTc1IiwidXNlckFkbWluIjpmYWxzZSwidXNlclZhbGlkYXRlZCI6ZmFsc2UsImlhdCI6MTYxODg3Mjc3MCwiZXhwIjoxNjE4ODc2MzcwfQ.MZgMPE30nGsgrYhAgf2RKkBHear0w6n_0mOfnupDoqA"
+        }
+    })
         .then(response => response.json())
 
     return res;
