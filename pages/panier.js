@@ -102,14 +102,13 @@ const panier = ({ cart, setCart }) => {
     }
 
     const updateQuantity = (e, price, price_type, name, quantity) => {
-        const newQuantity = e.target.value;
+        const newQuantity = Math.abs(e.target.value);
         // setNewQuantity(e.target.value);
         // console.log(newQuantity);
         const cart_item = cart.items.find((item) => item.name == name);
         const previous_price = itemPrice(price, quantity, price_type);
         cart_item.quantity = newQuantity;
         const new_price = itemPrice(price, cart_item.quantity, price_type);
-        console.log(new_price);
         let items = cart.items;
         const index_item = items.indexOf(name);
         items[index_item] = cart_item;

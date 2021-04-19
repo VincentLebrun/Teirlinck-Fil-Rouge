@@ -61,14 +61,14 @@ const Product = ({ product, cart, setCart }) => {
     const renderPrice = (e) => {
         if (e.target.name == "weight") {
             const price = Number(
-                ((product.price * e.target.value) / 1000).toFixed(2)
+                ((product.price * Math.abs(e.target.value)) / 1000).toFixed(2)
             );
             setPrice(price);
         } else {
-            const price = Number((product.price * e.target.value).toFixed(2));
+            const price = Number((product.price * Math.abs(e.target.value)).toFixed(2));
             setPrice(price);
         }
-        setQuantity(e.target.value);
+        setQuantity(Math.abs(e.target.value));
     };
 
     const updateQuantity = () => {
@@ -145,7 +145,7 @@ const Product = ({ product, cart, setCart }) => {
                                     <hr />
                                     <li>
                                         <input onChange={(e) => renderPrice(e)} className={product.price_type === "/pc" ? "hidden" : ""} type="number" name="weight" id="inputWeight" placeholder="(en grammes)" step="50" min="0" />
-                                        <input onChange={(e) => renderPrice(e)} className={product.price_type === "/kg" ? "hidden" : ""} type="number" name="numberOfPieces" id="inoutNumberOfPieces" placeholder="(nombre de pièces)" step="1" min="0" />
+                                        <input onChange={(e) => renderPrice(e)} className={product.price_type === "/kg" ? "hidden" : ""} type="number" name="numberOfPieces" id="inputNumberOfPieces" placeholder="(nombre de pièces)" step="1" min="0" />
                                     </li>
                                     <li className="title">Prix à régler</li>
                                     <hr />

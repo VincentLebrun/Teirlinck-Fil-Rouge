@@ -84,10 +84,9 @@ export default function Home({ data }) {
       <div className="descript">
         <Col className="descript-content" xs={16} sm={16}>
           <p>
-            Boucherie Teirlinck, synonyme de qualité depuis 1925, vous accueille
-            dans sa boutique situé 30 rue de Condé à Lille. Nos atouts ? Un
-            savoir-faire traditionnel, une fraîcheur irréprochable et un service
-            personnalisé.»
+            Boucherie Teirlinck, synonyme de qualité depuis 1952, vous accueille
+            dans sa boutique à Lille. Nos atouts ? Un savoir-faire traditionnel, une fraîcheur irréprochable et un service
+            convivial et personnalisé. Depuis toujours, nous attachons de l'importance à faire notre propre charcuterie.
           </p>
         </Col>
       </div>

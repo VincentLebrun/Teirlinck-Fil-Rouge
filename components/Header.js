@@ -1,8 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { Row, Col } from 'antd';
-import { useState, useEffect } from 'react'
-import carts from "../cart"
 
 const Header = ({panier_length}) => {
  

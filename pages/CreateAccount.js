@@ -56,7 +56,7 @@ const RegistrationForm = () => {
         <Col xl={16}>
           <Row className="black-container" justify="center" align="middle">
             <Col span={24}>
-              <img src="/logo.svg" alt="" />
+              <Link href="/"><img src="/logo.svg" alt="" /></Link>
             </Col>
             <div className="pastille-login"><i className="fi-rr-spinner-alt"></i></div>
             <Col xl={16}>
@@ -140,7 +140,7 @@ const RegistrationForm = () => {
                     rules={[
                       {
                         message:
-                          "Le mot de passe doit contenir au minimum 6 caractères et une majuscule",
+                          "Le mot de passe doit contenir au minimum 8 caractères, une majuscule et un chiffre",
                         pattern: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}/,
                         required: true,
                       },
@@ -185,13 +185,12 @@ const RegistrationForm = () => {
                   </Button>
                 </Form.Item>
                 <p>
-                  <i className="fi-rr-info"></i>Avant de pouvoir passer votre
-                  commande il faudra faire valider votre compte en boucherie
+                  <i className="fi-rr-info"></i>Avant de pouvoir passer commande sur notre site, il faudra au préalable valider votre compte en boucherie.
                 </p>
                 <hr />
               </Form>
               <h2>Vous avez déjà un compte?</h2>
-              <Link href={"/hello.js"}>
+              <Link href="/connexion">
                 <Button className="button" htmlType="submit">
                   Se connecter
                 </Button>
