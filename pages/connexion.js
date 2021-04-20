@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Row, Col, Form, Input, Select } from "antd";
 import Link from 'next/link'
 const { Option } = Select;
+import cookieCutter from 'cookie-cutter'
 
 const ConnexionForm = () => {
     const [form] = Form.useForm();
@@ -18,17 +19,21 @@ const ConnexionForm = () => {
     );
     const onFinish = async (values) => {
         console.log("Received values of form: ", values);
-        await fetch("http://localhost:4000/login", {
+        const res = await fetch("http://localhost:4000/login", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(values),
-           
-        }).catch((err) => {
-            console.log(err);
-        });
+
+        }).then(res => res.json())
+            .catch((err) => {
+                console.log(err);
+            });
+
+            cookieCutter.set('token', res.token);
+
 
 
     };

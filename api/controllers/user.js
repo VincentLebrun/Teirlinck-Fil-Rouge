@@ -58,7 +58,6 @@ module.exports = {
         });
     },
     login(req, res) {
-        // res.header("Access-Control-Allow-Credentials", true);
         User.find({ mail: req.body.mail })
             .exec()
             .then(user => {
@@ -82,7 +81,7 @@ module.exports = {
                             userPhone: user[0].phone,
                             userAdmin: user[0].admin,
                             userValidated: user[0].validated
-                        }, "secret", 
+                        }, process.env.JWT_KEY, 
                         {
                             expiresIn: "1h"
                         }

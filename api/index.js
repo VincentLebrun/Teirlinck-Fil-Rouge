@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const routes = require("./routes/index");
 const cors = require('cors')
 const server = express();
+require("dotenv").config();
 
 server.use(cors());
 server.use(express.json());
@@ -11,7 +12,7 @@ routes(server);
 server.listen(4000, () => {
     console.log("Ecoute sur le port 4000");
 
-    mongoose.connect("mongodb://localhost/teirlinck", { 
+    mongoose.connect("mongodb://localhost/teirlinck", {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
