@@ -66,7 +66,7 @@ const panier = ({ cart, setCart }) => {
                 ready: false
             }
 
-            await fetch("http://localhost:4000/orders", {
+            const res = await fetch("http://localhost:4000/orders", {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -74,20 +74,28 @@ const panier = ({ cart, setCart }) => {
                 },
                 body: JSON.stringify(order)
             }).catch(error => console.log(error));
+            console.log(res);
+            if (res.status == 200) {
+                notification['info']({
+                    message: `Votre commande n°${order.numero} a bien été prise en compte !`,
+                    description: "Merci pour votre commande, celle-ci a bien été enregistrée, vous pourrez la récupérer dans notre boutique dans 48h.",
+                    placement: "topRight",
+                    duration: 0
+                });
 
-            notification['info']({
-                message: `Votre commande n°${order.numero} a bien été prise en compte !`,
-                description: "Merci pour votre commande, celle-ci a bien été enregistrée, vous pourrez la récupérer dans notre boutique dans 48h.",
-                placement: "topRight",
-                duration: 0
-            });
-
-            let newPanier = cart;
-            newPanier = { items: [], total: 0 };
-            setCart({
-                items: [...newPanier.items],
-                total: 0
-            })
+                let newPanier = cart;
+                newPanier = { items: [], total: 0 };
+                setCart({
+                    items: [...newPanier.items],
+                    total: 0
+                })
+            } else {
+                notification['error']({
+                    message: "Attention !",
+                    description: "Un problème est survenu, veuillez réessayer ultérieusement.",
+                    placement: "topRight"
+                });
+            }
         }
     }
 

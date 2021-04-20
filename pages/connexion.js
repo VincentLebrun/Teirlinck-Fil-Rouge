@@ -3,8 +3,12 @@ import { Button, Row, Col, Form, Input, Select } from "antd";
 import Link from 'next/link'
 const { Option } = Select;
 import cookieCutter from 'cookie-cutter'
+import { Router, useRouter } from 'next/router'
+
+
 
 const ConnexionForm = () => {
+    const router = useRouter();
     const [form] = Form.useForm();
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
@@ -32,9 +36,10 @@ const ConnexionForm = () => {
                 console.log(err);
             });
 
+        if (res.token) {
             cookieCutter.set('token', res.token);
-
-
+            router.push("/");
+        }
 
     };
 
