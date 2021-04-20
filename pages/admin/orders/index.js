@@ -4,7 +4,7 @@ import Link from 'next/link';
 import AdminLayout from "../../../components/AdminLayout"
 import { Tag, Switch, Space, Button, Popconfirm, Select, notification, Table, Input} from 'antd';
 
-const index = ({ data }) => {
+const index = ({ data, token }) => {
 
     const { Option } = Select;
 
@@ -46,6 +46,7 @@ const index = ({ data }) => {
         await fetch("http://localhost:4000/orders", {
             method: 'DELETE',
             headers: {
+                'Authorization' : `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -87,6 +88,7 @@ const index = ({ data }) => {
         await fetch("http://localhost:4000/orders", {
             method: 'PUT',
             headers: {
+                'Authorization' : `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -115,6 +117,7 @@ const index = ({ data }) => {
         await fetch("http://localhost:4000/orders", {
             method: 'PUT',
             headers: {
+                'Authorization' : `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -222,7 +225,10 @@ const index = ({ data }) => {
 export default index
 
 async function getOrders() {
-    const res = await fetch("http://localhost:4000/orders")
+    const res = await fetch("http://localhost:4000/orders", 
+            {headers:{
+                
+            }})
         .then(response => response.json())
 
     return res;

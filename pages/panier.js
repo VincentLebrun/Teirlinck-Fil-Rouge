@@ -3,8 +3,10 @@ import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import { Row, Col, notification } from 'antd';
 import Link from 'next/link'
+import cookieCutter from 'cookie-cutter'
+import jwt from "jsonwebtoken";
 
-const panier = ({ cart, setCart }) => {
+const panier = ({ cart, setCart, token }) => {
 
     // const [panier, setPanier] = useState();
     // const [loading, setLoading] = useState(true);
@@ -51,43 +53,68 @@ const panier = ({ cart, setCart }) => {
                 description: "Vous devez remplir votre panier d'au moins un article avant de confirmer votre commande.",
                 placement: "topRight"
             });
+        } else if (!token) {
+            notification['warning']({
+                message: "Attention !",
+                description: "Vous devez vous connecter avant de passer commande.",
+                placement: "topRight"
+            });
         } else {
 
-            const order = {
-                numero: Date.now(),
-                products: cart.items,
-                total: cart.total,
-                date: Date.now(),
-                user_id: "3548a2e0b9541435cc418621",
-                user_firstname: "Joris",
-                user_lastname: "Poupoune",
-                user_phone: "0651489856",
-                delivered: false,
-                ready: false
+            // fonction de décryptage du token 
+            const decryptedToken = jwt.verify(token, "secret");
+
+
+            if (decryptedToken.userValidated) {
+                const order = {
+                    numero: Date.now(),
+                    products: cart.items,
+                    total: cart.total,
+                    date: Date.now(),
+                    user_id: decryptedToken.userId,
+                    user_firstname: decryptedToken.userFirstName,
+                    user_lastname: decryptedToken.userLastname,
+                    user_phone: decryptedToken.userPhone,
+                    delivered: false,
+                    ready: false
+                }
+
+                const res = await fetch("http://localhost:4000/orders", {
+                    method: 'POST',
+                    headers: {
+                        // 'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(order)
+                }).catch(error => console.log(error));
+
+                if (res) {
+                    notification['info']({
+                        message: `Votre commande n°${order.numero} a bien été prise en compte !`,
+                        description: "Merci pour votre commande, celle-ci a bien été enregistrée, vous pourrez la récupérer dans notre boutique dans 48h.",
+                        placement: "topRight",
+                        duration: 0
+                    });
+    
+                    let newPanier = cart;
+                    newPanier = { items: [], total: 0 };
+                    setCart({
+                        items: [...newPanier.items],
+                        total: 0
+                    })
+                } else {
+                    console.log("Un problème est survenu, la requête n'a pas pu être soumise")
+                }
+                
+            } else {
+                notification['warning']({
+                    message: "Attention !",
+                    description: "Vous devez valider votre compte dans notre boucherie avant de pouvoir passer commande sur notre site.",
+                    placement: "topRight"
+                });
             }
 
-            await fetch("http://localhost:4000/orders", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(order)
-            }).catch(error => console.log(error));
-
-            notification['info']({
-                message: `Votre commande n°${order.numero} a bien été prise en compte !`,
-                description: "Merci pour votre commande, celle-ci a bien été enregistrée, vous pourrez la récupérer dans notre boutique dans 48h.",
-                placement: "topRight",
-                duration: 0
-            });
-
-            let newPanier = cart;
-            newPanier = { items: [], total: 0 };
-            setCart({
-                items: [...newPanier.items],
-                total: 0
-            })
         }
     }
 
