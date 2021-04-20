@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Head from "next/head";
 import Header from "../components/Header";
 import { useRouter } from "next/router";
+import cookieCutter from 'cookie-cutter'
 
 // function MyApp({ Component, pageProps }) {
 //   const [loading, setLoading] = useState(true);
@@ -30,6 +31,8 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [cart, setCart] = useState( { items: [], total: 0 } )
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState()
+  
 
   // Initialisation ou récupération du localStorage
   useEffect(() => {
@@ -39,6 +42,9 @@ function MyApp({ Component, pageProps }) {
       setCart(JSON.parse(localStorage.getItem('cart')));
     }
     setLoading(false);
+    if (cookieCutter.get('token')) {
+      setToken(cookieCutter.get('token'));
+    } 
   }, []);
 
   // Synchronisation panier <=> localStorage
@@ -51,6 +57,7 @@ function MyApp({ Component, pageProps }) {
       return(
         <Header
           panier_length={cart.items.length}
+          //userName={token.firstname}
         />
       )
     }
@@ -72,7 +79,7 @@ function MyApp({ Component, pageProps }) {
         {...pageProps} 
         cart={cart}
         setCart={setCart}
-      
+        token={token}
       />
     </Fragment>
   );

@@ -28,13 +28,13 @@ module.exports = server => {
 
     // UTILISATEURS
 
-    server.get("/users", checkAuth, (req, res, next) => {
+    server.get("/users", (req, res, next) => {
         UserController.getAll(req, res);
     });
 
-    server.get("/users/:id", checkAuth, (req, res) => {
-        UserController.get(req, res);
-    });
+    // server.get("/users/:id", (req, res) => {
+    //     UserController.get(req, res);
+    // });
 
     server.post("/users", async (req, res) => {
         UserController.create(req, res);
@@ -50,11 +50,11 @@ module.exports = server => {
 
     // COMMANDES 
 
-    server.get("/orders", checkAuth, (req, res) => {
+    server.get("/orders", (req, res) => {
         OrderController.getAll(req, res);
     });
 
-    server.get("/orders/:id", checkAuth, (req, res) => {
+    server.get("/orders/:id", (req, res) => {
         OrderController.get(req, res);
     });
 

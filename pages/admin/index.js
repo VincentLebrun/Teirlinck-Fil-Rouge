@@ -3,7 +3,7 @@ import AdminLayout from "../../components/AdminLayout"
 import { Tag, Space, Button, Popconfirm, Table, Input } from 'antd';
 import Link from "next/link";
 
-const index = ({ data }) => {
+const index = ({ data, token }) => {
 
     const [products, setProducts] = useState(data);
 
@@ -14,6 +14,7 @@ const index = ({ data }) => {
         await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
             method: 'DELETE',
             headers: {
+                'Authorization' : "Bearer" + token,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },

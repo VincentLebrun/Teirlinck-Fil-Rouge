@@ -3,8 +3,9 @@ import AdminLayout from "../../components/AdminLayout"
 import { Space, Button, Switch, Popconfirm, Table, Input } from 'antd';
 
 
-const users = ({ data }) => {
+const users = ({ data, token }) => {
 
+    console.log(token);
     const [users, setUsers] = useState(data);
 
     const { Search } = Input;
@@ -20,6 +21,7 @@ const users = ({ data }) => {
         await fetch(process.env.NEXT_PUBLIC_API_USERS, {
             method: 'DELETE',
             headers: {
+                'Authorization' : `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -56,6 +58,7 @@ const users = ({ data }) => {
         await fetch(process.env.NEXT_PUBLIC_API_USERS, {
             method: 'PUT',
             headers: {
+                'Authorization' : `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -87,6 +90,7 @@ const users = ({ data }) => {
         await fetch(process.env.NEXT_PUBLIC_API_USERS, {
             method: 'PUT',
             headers: {
+                'Authorization' : `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -186,7 +190,7 @@ async function getUsers() {
     const res = await fetch(process.env.NEXT_PUBLIC_API_USERS, {
         method: 'GET',
         headers: {
-            'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiYmViZXJAZ21haWwuY29tIiwidXNlcklkIjoiNjA3ZGNmMTM0ZjExMjgzNTc0NjE0ZGY5IiwidXNlckZpcnN0TmFtZSI6IkpvcmlzIiwidXNlckxhc3RuYW1lIjoiUG91cG91bmUiLCJ1c2VyUGhvbmUiOiIwNjEyMTU0NTc1IiwidXNlckFkbWluIjpmYWxzZSwidXNlclZhbGlkYXRlZCI6ZmFsc2UsImlhdCI6MTYxODkwODA3NSwiZXhwIjoxNjE4OTExNjc1fQ.jgO_c8UT9lw38AaFNgE__CI48ZELdTkJqUFn748k6Iw"
+            
         }
     })
         .then(response => response.json())
