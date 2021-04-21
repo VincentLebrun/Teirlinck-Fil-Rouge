@@ -7,7 +7,7 @@ import { Router, useRouter } from 'next/router'
 
 
 
-const ConnexionForm = () => {
+const ConnexionForm = ({ setToken }) => {
     const router = useRouter();
     const [form] = Form.useForm();
     const prefixSelector = (
@@ -38,8 +38,12 @@ const ConnexionForm = () => {
 
         if (res.token) {
             cookieCutter.set('token', res.token);
+            setToken(res.token);
             router.push("/");
+            
         }
+            
+
 
     };
 
