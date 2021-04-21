@@ -10,17 +10,7 @@ import { Router, useRouter } from 'next/router'
 const ConnexionForm = ({ setToken }) => {
     const router = useRouter();
     const [form] = Form.useForm();
-    const prefixSelector = (
-        <Form.Item name="prefix" noStyle>
-            <Select
-                style={{
-                    width: 70,
-                }}
-            >
-                <Option value="+33">+33</Option>
-            </Select>
-        </Form.Item>
-    );
+    
     const onFinish = async (values) => {
        
         const res = await fetch("http://localhost:4000/login", {
