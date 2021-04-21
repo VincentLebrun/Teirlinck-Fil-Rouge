@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [cart, setCart] = useState( { items: [], total: 0 } )
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState()
+  const [token, setToken] = useState();
   
 
   // Initialisation ou récupération du localStorage
@@ -41,10 +41,10 @@ function MyApp({ Component, pageProps }) {
     } else {
       setCart(JSON.parse(localStorage.getItem('cart')));
     }
-    setLoading(false);
     if (cookieCutter.get('token')) {
       setToken(cookieCutter.get('token'));
     } 
+      setLoading(false)
   }, []);
 
   // Synchronisation panier <=> localStorage
@@ -58,6 +58,7 @@ function MyApp({ Component, pageProps }) {
         <Header
           panier_length={cart.items.length}
           //userName={token.firstname}
+          // if(admin) {<Dropdown/>} else {<Dropdown/>}
         />
       )
     }
@@ -80,6 +81,7 @@ function MyApp({ Component, pageProps }) {
         cart={cart}
         setCart={setCart}
         token={token}
+        setToken={setToken}
       />
     </Fragment>
   );

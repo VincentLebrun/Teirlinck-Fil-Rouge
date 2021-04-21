@@ -82,7 +82,7 @@ const panier = ({ cart, setCart, token }) => {
                 const res = await fetch("http://localhost:4000/orders", {
                     method: 'POST',
                     headers: {
-                        // 'Authorization': `Bearer ${token}`,
+                        'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },

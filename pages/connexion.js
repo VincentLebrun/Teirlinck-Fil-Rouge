@@ -4,7 +4,7 @@ import Link from 'next/link'
 const { Option } = Select;
 import cookieCutter from 'cookie-cutter'
 
-const ConnexionForm = () => {
+const ConnexionForm = ({ setToken }) => {
     const [form] = Form.useForm();
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
@@ -33,7 +33,7 @@ const ConnexionForm = () => {
             });
 
             cookieCutter.set('token', res.token);
-
+            setToken(res.token);
 
 
     };
