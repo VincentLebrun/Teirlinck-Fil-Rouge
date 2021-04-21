@@ -1,13 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AdminLayout from "../../components/AdminLayout"
 import { Tag, Space, Button, Popconfirm, Table, Input } from 'antd';
 import Link from "next/link";
 
-const index = ({ data, token }) => {
-   
-    const [products, setProducts] = useState(data);
+const index = ({ token }) => {
+
+    const [products, setProducts] = useState();
 
     const { Search } = Input;
+
+
+    async function getProducts() {
+        await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS)
+            .then(response => response.json()).then(json => { setProducts(json) });
+
+    }
+
+    useEffect(() => {
+       getProducts();
+    }, [])
 
 
     async function deleteProduct(id) {
@@ -109,37 +120,18 @@ const index = ({ data, token }) => {
 
     ];
 
-   
-        return (
-            <AdminLayout selectedKey="1">
-                <Search className="search-input" placeholder="Chercher un produit" onSearch={onSearch} style={{ width: 200 }}></Search>
-                <Table columns={columns} dataSource={products} rowKey="id" />
-            </AdminLayout>
-        )
-    
+
+    return (
+        <AdminLayout selectedKey="1">
+            <Search className="search-input" placeholder="Chercher un produit" onSearch={onSearch} style={{ width: 200 }}></Search>
+            <Table columns={columns} dataSource={products} rowKey="id" />
+        </AdminLayout>
+    )
+
 }
 
 
 export default index
 
-
-
-async function getProducts() {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS)
-        .then(response => response.json())
-
-    return res;
-
-}
-
-export async function getServerSideProps() {
-    const data = await getProducts();
-
-    return {
-        props: {
-            data
-        }
-    }
-}
 
 

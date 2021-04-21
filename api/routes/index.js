@@ -28,7 +28,7 @@ module.exports = server => {
 
     // UTILISATEURS
 
-    server.get("/users", (req, res, next) => {
+    server.get("/users", checkAuth, (req, res, next) => {
         UserController.getAll(req, res);
     });
 
@@ -50,7 +50,7 @@ module.exports = server => {
 
     // COMMANDES 
 
-    server.get("/orders", (req, res) => {
+    server.get("/orders", checkAuth, (req, res) => {
         OrderController.getAll(req, res);
     });
 

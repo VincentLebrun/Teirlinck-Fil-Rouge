@@ -3,12 +3,30 @@ import AdminLayout from "../../components/AdminLayout"
 import { Space, Button, Switch, Popconfirm, Table, Input } from 'antd';
 
 
-const users = ({ data, token }) => {
+const users = ({ token }) => {
 
     console.log(token);
-    const [users, setUsers] = useState(data);
+    const [users, setUsers] = useState();
 
     const { Search } = Input;
+
+
+    async function getUsers() {
+        await fetch(process.env.NEXT_PUBLIC_API_USERS,{
+            method: 'GET',
+            headers: {
+                'Authorization' : `Bearer ${token}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json()).then(json => { setUsers(json) });
+
+    }
+
+    useEffect(() => {
+       getUsers();
+    }, [])
 
     const onSearch = (value) => { 
         value = value.toLowerCase();

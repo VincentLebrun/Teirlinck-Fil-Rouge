@@ -4,13 +4,30 @@ import Link from 'next/link';
 import AdminLayout from "../../../components/AdminLayout"
 import { Tag, Switch, Space, Button, Popconfirm, Select, notification, Table, Input} from 'antd';
 
-const index = ({ data, token }) => {
+const index = ({ token }) => {
 
     const { Option } = Select;
 
     const { Search } = Input;
 
-    const [orders, setOrders] = useState(data.reverse());
+    const [orders, setOrders] = useState();
+
+    async function getOrders() {
+        await fetch(process.env.NEXT_PUBLIC_API_ORDERS,{
+            method: 'GET',
+            headers: {
+                'Authorization' : `Bearer ${token}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json()).then(json => { setOrders(json.reverse()) });
+
+    }
+
+    useEffect(() => {
+       getOrders();
+    }, [])
 
     function handleChange(value) {
         console.log(`selected ${value}`);
@@ -43,7 +60,7 @@ const index = ({ data, token }) => {
     }
 
     async function deleteOrder(id) {
-        const res = await fetch("http://localhost:4000/orders", {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_ORDERS, {
             method: 'DELETE',
             headers: {
                 'Authorization' : `Bearer ${token}`,
@@ -96,7 +113,7 @@ const index = ({ data, token }) => {
             delivered: allOrders[index].delivered
         }
 
-        const res = await fetch("http://localhost:4000/orders", {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_ORDERS, {
             method: 'PUT',
             headers: {
                 'Authorization' : `Bearer ${token}`,
@@ -134,7 +151,7 @@ const index = ({ data, token }) => {
             ready: allOrders[index].ready
         }
 
-       const res = await fetch("http://localhost:4000/orders", {
+       const res = await fetch(process.env.NEXT_PUBLIC_API_ORDERS, {
             method: 'PUT',
             headers: {
                 'Authorization' : `Bearer ${token}`,
@@ -253,26 +270,5 @@ const index = ({ data, token }) => {
 }
 
 export default index
-
-async function getOrders() {
-    const res = await fetch("http://localhost:4000/orders", 
-            {headers:{
-                
-            }})
-        .then(response => response.json())
-
-    return res;
-
-}
-
-export async function getServerSideProps() {
-    const data = await getOrders();
-
-    return {
-        props: {
-            data
-        }
-    }
-}
 
 

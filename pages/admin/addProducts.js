@@ -22,7 +22,7 @@ const AddProducts = () => {
       highlighted: false,
       available: true,
     };
-    await fetch("http://localhost:4000/products", {
+    await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -232,4 +232,3 @@ const AddProducts = () => {
 };
 
 export default AddProducts;
-async function getAdd() {}
