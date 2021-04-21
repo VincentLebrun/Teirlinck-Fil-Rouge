@@ -26,7 +26,7 @@ const RegistrationForm = () => {
   const onFinish = async (values) => {
     const pass = values.password;
     const testCrypt = await bcrypt.hash(pass, saltRounds);
-      const sendAccount = {
+    const sendAccount = {
       id: Date.now(),
       firstname: values.firstname,
       lastname: values.lastname,
@@ -39,14 +39,15 @@ const RegistrationForm = () => {
     //  console.log(testCrypt);
 
 
-    await fetch(process.env.NEXT_PUBLIC_API_USERS, {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_USERS, {
       method: 'POST',
       headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(sendAccount)
-  }).catch(error => console.log(error));
+    }).catch(error => console.log(error));
+
   };
 
   return (

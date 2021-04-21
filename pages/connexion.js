@@ -22,7 +22,7 @@ const ConnexionForm = () => {
         </Form.Item>
     );
     const onFinish = async (values) => {
-        console.log("Received values of form: ", values);
+       
         const res = await fetch("http://localhost:4000/login", {
             method: "POST",
             headers: {

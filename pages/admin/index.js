@@ -4,17 +4,18 @@ import { Tag, Space, Button, Popconfirm, Table, Input } from 'antd';
 import Link from "next/link";
 
 const index = ({ data, token }) => {
-
+   
     const [products, setProducts] = useState(data);
 
     const { Search } = Input;
+
 
     async function deleteProduct(id) {
         console.log("ok");
         await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
             method: 'DELETE',
             headers: {
-                'Authorization' : "Bearer" + token,
+                'Authorization': "Bearer" + token,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -30,7 +31,7 @@ const index = ({ data, token }) => {
 
     };
 
-    const onSearch = (value) => { 
+    const onSearch = (value) => {
         value = value.toLowerCase();
         const filteredProducts = data.filter((item) => item.name.toLowerCase().includes(value));
         setProducts(filteredProducts);
@@ -108,14 +109,16 @@ const index = ({ data, token }) => {
 
     ];
 
-
-    return (
-        <AdminLayout selectedKey="1">
-            <Search className="search-input" placeholder="Chercher un produit" onSearch={onSearch} style={{ width: 200 }}></Search>
-            <Table columns={columns} dataSource={products} rowKey="id" />
-        </AdminLayout>
-    )
+   
+        return (
+            <AdminLayout selectedKey="1">
+                <Search className="search-input" placeholder="Chercher un produit" onSearch={onSearch} style={{ width: 200 }}></Search>
+                <Table columns={columns} dataSource={products} rowKey="id" />
+            </AdminLayout>
+        )
+    
 }
+
 
 export default index
 

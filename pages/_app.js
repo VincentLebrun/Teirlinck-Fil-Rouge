@@ -41,10 +41,11 @@ function MyApp({ Component, pageProps }) {
     } else {
       setCart(JSON.parse(localStorage.getItem('cart')));
     }
-    setLoading(false);
+    
     if (cookieCutter.get('token')) {
       setToken(cookieCutter.get('token'));
     } 
+    setLoading(false);
   }, []);
 
   // Synchronisation panier <=> localStorage

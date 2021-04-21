@@ -43,7 +43,7 @@ const index = ({ data, token }) => {
     }
 
     async function deleteOrder(id) {
-        await fetch("http://localhost:4000/orders", {
+        const res = await fetch("http://localhost:4000/orders", {
             method: 'DELETE',
             headers: {
                 'Authorization' : `Bearer ${token}`,
@@ -53,18 +53,29 @@ const index = ({ data, token }) => {
             body: JSON.stringify({ _id: id })
         }).catch(error => console.log(error));
 
-        const allOrders = [...orders];
-        const index = allOrders.findIndex((item) => item._id === id);
+        if(res.status == 200){
+            const allOrders = [...orders];
+            const index = allOrders.findIndex((item) => item._id === id);
+    
+            notification['info']({
+                message: `Suppression de la commande n°${allOrders[index].numero} confirmée.`,
+                description: `La commande n°${allOrders[index].numero} du ${convertToDate(allOrders[index].date)} de ${allOrders[index].user_firstname} ${allOrders[index].user_lastname} a été définitivement supprimée de la base de données.`,
+                placement: "topRight",
+                duration: 0
+            });
+    
+            allOrders.splice(index, 1);
+            setOrders(allOrders);
 
-        notification['info']({
-            message: `Suppression de la commande n°${allOrders[index].numero} confirmée.`,
-            description: `La commande n°${allOrders[index].numero} du ${convertToDate(allOrders[index].date)} de ${allOrders[index].user_firstname} ${allOrders[index].user_lastname} a été définitivement supprimée de la base de données.`,
-            placement: "topRight",
-            duration: 0
-        });
+        }else{
+            notification['error']({
+                message: "Attention !",
+                description: "Un problème est survenu, veuillez réessayer ultérieusement.",
+                placement: "topRight"
+            });
+        }
 
-        allOrders.splice(index, 1);
-        setOrders(allOrders);
+        
 
     };
 
@@ -78,14 +89,14 @@ const index = ({ data, token }) => {
             allOrders[index].delivered = true;
         }
 
-        setOrders(allOrders);
+       
 
         const order = {
             ...allOrders[index],
             delivered: allOrders[index].delivered
         }
 
-        await fetch("http://localhost:4000/orders", {
+        const res = await fetch("http://localhost:4000/orders", {
             method: 'PUT',
             headers: {
                 'Authorization' : `Bearer ${token}`,
@@ -95,6 +106,16 @@ const index = ({ data, token }) => {
             body: JSON.stringify(order)
 
         }).catch(error => console.log(error));
+
+        if(res.status == 200) {
+            setOrders(allOrders);
+        }else{
+            notification['error']({
+                message: "Attention !",
+                description: "Un problème est survenu, veuillez réessayer ultérieusement.",
+                placement: "topRight"
+            });
+        }
     }
 
     async function changeReadyStatus(id) {
@@ -107,14 +128,13 @@ const index = ({ data, token }) => {
             allOrders[index].ready = true;
         }
 
-        setOrders(allOrders);
 
         const order = {
             ...allOrders[index],
             ready: allOrders[index].ready
         }
 
-        await fetch("http://localhost:4000/orders", {
+       const res = await fetch("http://localhost:4000/orders", {
             method: 'PUT',
             headers: {
                 'Authorization' : `Bearer ${token}`,
@@ -124,6 +144,16 @@ const index = ({ data, token }) => {
             body: JSON.stringify(order)
 
         }).catch(error => console.log(error));
+
+        if(res.status == 200) {
+            setOrders(allOrders);
+        }else{
+            notification['error']({
+                message: "Attention !",
+                description: "Un problème est survenu, veuillez réessayer ultérieusement.",
+                placement: "topRight"
+            });
+        }
     }
 
     const columns = [

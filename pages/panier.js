@@ -22,6 +22,7 @@ const panier = ({ cart, setCart, token }) => {
 
     // }, [panier]);
 
+
     const itemPrice = (price, quantity, type) => {
 
         if (type == "/kg") {
