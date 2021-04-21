@@ -83,7 +83,7 @@ module.exports = {
                             userValidated: user[0].validated
                         }, process.env.JWT_KEY, 
                         {
-                            expiresIn: "1h"
+                            expiresIn: "2h"
                         }
                         );
                         return res.status(200).json({

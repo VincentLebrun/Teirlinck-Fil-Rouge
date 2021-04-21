@@ -7,7 +7,7 @@ import cookieCutter from 'cookie-cutter'
 import jwt from "jsonwebtoken";
 import { Menu, Dropdown, Button } from 'antd';
 import Link from 'next/link';
-import {UserOutlined} from '@ant-design/icons';
+import {DownOutlined} from '@ant-design/icons';
 
 // function MyApp({ Component, pageProps }) {
 //   const [loading, setLoading] = useState(true);
@@ -64,7 +64,7 @@ function MyApp({ Component, pageProps }) {
         <p>Se déconnecter</p>
       </Menu.Item>
       <Menu.Item>
-        <Link href="/admin"><p>Administrateur</p></Link>
+        <Link href="/admin"><p>Administration</p></Link>
       </Menu.Item>
     </Menu>
   );
@@ -77,7 +77,14 @@ function MyApp({ Component, pageProps }) {
       setCart(JSON.parse(localStorage.getItem('cart')));
     }
     if (cookieCutter.get('token')) {
-      setToken(cookieCutter.get('token'));
+      jwt.verify(cookieCutter.get('token'), "secret", (err, decode) => {
+        if(err) {
+          cookieCutter.set('token', '', { expires: new Date(0) })
+          setToken();
+        } else {
+          setToken(cookieCutter.get('token'));
+        }
+      });           
     }
     setLoading(false)
   }, []);
@@ -98,13 +105,13 @@ function MyApp({ Component, pageProps }) {
       if (decryptedToken.userValidated && !decryptedToken.userAdmin) {
         return (
           <Dropdown overlay={menuUser} placement="bottomCenter" arrow>
-            <Button>{decryptedToken.userFirstName}</Button>
+            <Button><i className="fi-rr-user"></i> {decryptedToken.userFirstName}<DownOutlined /></Button>
           </Dropdown>
         )
       } else if (decryptedToken.userValidated && decryptedToken.userAdmin) {
           return(
             <Dropdown overlay={menuAdmin} placement="bottomCenter" arrow>
-              <Button>{decryptedToken.userFirstName}</Button>
+              <Button><i className="fi-rr-user"></i> {decryptedToken.userFirstName}<DownOutlined /></Button>
             </Dropdown>
           )
       }

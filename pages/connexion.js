@@ -28,6 +28,7 @@ const ConnexionForm = ({ setToken }) => {
 
         if (res.token) {
             cookieCutter.set('token', res.token);
+            
             setToken(res.token);
             router.push("/");
             
