@@ -70,7 +70,7 @@ export default function Home({ data }) {
         panier_length={cart.items.length}
       /> */}
       <div className="home-content">
-        <img src="/img/accueil.webp" alt="" />
+        <img src="/img/homepicture.webp" alt="" />
         <div className="test">
           <div className="slogan">
             <Col xs={22} sm={20} lg={16} className="slogan-cart">

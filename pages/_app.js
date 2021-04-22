@@ -77,7 +77,7 @@ function MyApp({ Component, pageProps }) {
       setCart(JSON.parse(localStorage.getItem('cart')));
     }
     if (cookieCutter.get('token')) {
-      jwt.verify(cookieCutter.get('token'), "secret", (err, decode) => {
+      jwt.verify(cookieCutter.get('token'), process.env.NEXT_PUBLIC_JWT_KEY, (err, decode) => {
         if(err) {
           cookieCutter.set('token', '', { expires: new Date(0) })
           setToken();
@@ -92,7 +92,7 @@ function MyApp({ Component, pageProps }) {
   let decryptedToken = {};
   if (token) {
     // fonction de décryptage du token 
-    decryptedToken = jwt.verify(token, "secret");
+    decryptedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_KEY);
   } 
 
   // Synchronisation panier <=> localStorage
