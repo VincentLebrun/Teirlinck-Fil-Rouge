@@ -3,7 +3,7 @@
     background-color: white;
     margin-bottom: 60px;
 
-    .top-hr{
+    .top-hr {
         color: $color-red;
         border: 1px solid $color-red;
     }
@@ -24,7 +24,7 @@
             font-size: 1.3rem;
 
             &::placeholder {
-                color : $color-black;
+                color: $color-black;
                 opacity: 1;
             }
         }
@@ -62,7 +62,7 @@
     color: $color-white;
     padding: 1.5rem;
     height: 20%;
-    margin-bottom:2rem;
+    margin-bottom: 2rem;
 
     h1 {
         color: $color-white;
@@ -71,13 +71,13 @@
 
     button {
         color: $color-white;
-                background-color: $color-redbutton;
-                border: none;
-                border-radius: 5px;
-                font-size: 1.5rem;
-                box-shadow: 10px 10px 15px -8px rgba(0, 0, 0, 0.29) inset;
-                cursor: pointer;
-                margin-top: 35px;
+        background-color: $color-redbutton;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.5rem;
+        box-shadow: 10px 10px 15px -8px rgba(0, 0, 0, 0.29) inset;
+        cursor: pointer;
+        margin-top: 35px;
     }
 
     .info {
@@ -86,6 +86,22 @@
             color: $color-red;
             font-size: 1.5rem;
             padding-top: 0.4rem;
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .store-item-container {
+        h2 {
+            font-size: 1rem;
+        }
+        .input-weight {
+            p {
+                font-size: 1.5rem;
+            }
+            input {
+                font-size: 1rem;
+            }
         }
     }
 }

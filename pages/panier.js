@@ -6,6 +6,7 @@ import Link from 'next/link'
 import cookieCutter from 'cookie-cutter'
 import jwt from "jsonwebtoken";
 
+
 const panier = ({ cart, setCart, token }) => {
 
     // const [panier, setPanier] = useState();
@@ -63,7 +64,7 @@ const panier = ({ cart, setCart, token }) => {
         } else {
 
             // fonction de décryptage du token 
-            const decryptedToken = jwt.verify(token, "secret");
+            const decryptedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_KEY);
 
 
             if (decryptedToken.userValidated) {
@@ -80,7 +81,7 @@ const panier = ({ cart, setCart, token }) => {
                     ready: false
                 }
 
-                const res = await fetch("http://localhost:4000/orders", {
+                const res = await fetch(process.env.NEXT_PUBLIC_API_ORDERS, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -170,9 +171,9 @@ const panier = ({ cart, setCart, token }) => {
                 <hr className="top-hr" />
 
                 <Row justify="space-between">
-                    <Col xs={24} sm={12}>
+                    <Col xs={15} sm={12}>
                         <Row justify="space-between">
-                            <Col xs={15} sm={10}>
+                            <Col xs={12} sm={10}>
 
                                 <Link href={`/products/${item.id}`}>
 
@@ -187,7 +188,7 @@ const panier = ({ cart, setCart, token }) => {
 
                             </Col>
 
-                            <Col xs={15} sm={10}>
+                            <Col className="nameAndPrice" xs={9} sm={10}>
                                 <h2>{item.name}</h2>
                                 <div className="input-weight">
                                     <input onChange={(e) => updateQuantity(e, item.price, item.price_type, item.name, item.quantity)} type="number" placeholder={item.quantity} step={item.price_type === "/kg" ? "25" : "1"} min="0" value={item.quantity} />
@@ -225,7 +226,7 @@ const panier = ({ cart, setCart, token }) => {
                 image="panier.webp"
             />
 
-            <Col className="section-container" xs={21} sm={16}>
+            <Col className="section-container" xs={21} sm={20} md={16}>
                 <Row justify="space-between">
                     <Col className="store-item-container" xs={24} sm={24} xl={15}>
                         <Row justify="space-between">
@@ -250,7 +251,7 @@ const panier = ({ cart, setCart, token }) => {
                         </Row>
                     </Col>
 
-                    <Col xs={24} sm={24} xl={7} className="total-store">
+                    <Col xs={24} sm={24} xl={8} className="total-store">
                         <div className="info">
                             <i class="fi-rr-exclamation"></i> <p>Le prix peut être légèrement différent au moment du règlement en boucherie dû à la pesée.</p>
                         </div>
