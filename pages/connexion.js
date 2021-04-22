@@ -58,7 +58,7 @@ const ConnexionForm = () => {
                                         },
                                     ]}
                                 >
-                                    <Input />
+                                    <Input maxLength="90"/>
                                 </Form.Item>
                                 <Form.Item
                                     className="formInputStyle"
@@ -75,7 +75,7 @@ const ConnexionForm = () => {
                                     ]}
                                 >
                                     {/* <label>Mot de passe"</label> */}
-                                    <Input.Password />
+                                    <Input.Password maxLength="90" />
                                 </Form.Item>
 
                                 <Form.Item>

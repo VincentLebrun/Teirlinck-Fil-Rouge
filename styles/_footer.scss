@@ -8,20 +8,41 @@ footer {
       width: 100%;
     }
   }
+  .fi-rr-calendar {
+    margin: 15px;
+    
+  }
   i {
+    margin-left: 18px;
+    
     font-size: 1rem;
   }
   p {
-    margin-bottom: 12px;
+    text-align: center;
+    margin-bottom: 5px;
   }
-  @media screen and (max-width: 800px) {
-    footer {
-      display: flex;
-      flex-basis: 50%;
-      img {
-        margin: auto;
-        
-      }
-    }
+  .pCalendar{
+    margin-top:20px;
+    margin-right: 50px;
+  }
+  @media screen and (max-width: 768px) {
+   .bodyFooter{
+     justify-content: center;
+   }
+   .iconFooter{
+     display: flex;
+     justify-content: center;
+   }
+   i {
+    margin-left: 18px;
+    
+    font-size: 1rem;
+  }
+ 
+  .anticon {
+  
+    margin:auto
+  }
+  
   }
 }

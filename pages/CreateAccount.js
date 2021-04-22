@@ -37,7 +37,7 @@ const RegistrationForm = () => {
       admin: false,
       validated: false,
     }
-    // console.log(testCrypt);
+  
 
 
     await fetch(process.env.NEXT_PUBLIC_API_USERS, {
@@ -53,7 +53,7 @@ const RegistrationForm = () => {
   return (
     <main>
       <Row justify="center" align="middle" className="container1">
-        <Col xl={16}>
+        <Col xl={16}  xs={22}>
           <Row className="black-container" justify="center" align="middle">
             <Col span={24}>
               <Link href="/"><img src="/logo.svg" alt="" /></Link>
@@ -67,8 +67,9 @@ const RegistrationForm = () => {
                 onFinish={onFinish}
                 scrollToFirstError
               >
-                <div className="input50">
-                  <Row className="contain" justify="space-around" xl={24}>
+                
+                  {/* <Row className="contain" justify="space-around" xs={16} xl={5}> */}
+                  <div className="input75">
                     <Form.Item
                       className="formInputStyle"
                       label="Prénom"
@@ -81,7 +82,7 @@ const RegistrationForm = () => {
                         },
                       ]}
                     >
-                      <Input />
+                      <Input maxLength="90" />
                     </Form.Item>
 
                     <Form.Item
@@ -96,11 +97,11 @@ const RegistrationForm = () => {
                         },
                       ]}
                     >
-                      <Input />
+                      <Input maxLength="90"/>
                     </Form.Item>
-                  </Row>{" "}
-                </div>
-                <div className="input75">
+                  
+             
+                
                   <Form.Item
                     label="Numéro de téléphone"
                     className="formInputStyle"
@@ -112,7 +113,7 @@ const RegistrationForm = () => {
                       },
                     ]}
                   >
-                    <Input />
+                    <Input maxLength="90" />
                   </Form.Item>
                   <Form.Item
                     label="Adresse mail"
@@ -129,7 +130,7 @@ const RegistrationForm = () => {
                       },
                     ]}
                   >
-                    <Input />
+                    <Input maxLength="90"/>
                   </Form.Item>
 
                   <Form.Item
@@ -147,7 +148,7 @@ const RegistrationForm = () => {
                     ]}
                   >
                     {/* <label>Mot de passe"</label> */}
-                    <Input.Password />
+                    <Input.Password maxLength="90" />
                   </Form.Item>
 
                   <Form.Item
@@ -176,7 +177,7 @@ const RegistrationForm = () => {
                     ]}
                   >
                     {/* <label>Confirmez le mot de passe</label> */}
-                    <Input.Password />
+                    <Input.Password  maxLength="90"/>
                   </Form.Item>
                 </div>
                 <Form.Item>

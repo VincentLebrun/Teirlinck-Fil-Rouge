@@ -18,8 +18,8 @@ main {
         border-radius: 50%;
         background-color: $color-red;
         height: 60px;
-        top: -30px;
-        left: -30px;
+        top: -40px;
+        left: -40px;
 
         i {
           display: flex;
@@ -72,8 +72,8 @@ main {
         border-radius: 50%;
         background-color: $color-red;
         height: 60px;
-        top: -20px;
-        left: -20px;
+        top: -19px;
+        left: -19px;
 
         i {
           display: flex;
@@ -88,17 +88,24 @@ main {
         margin: auto;
       }
       .input50 {
-        width: 50rem;
+        width: auto;
         margin: auto;
       }
 
-      @media screen and (max-width: 767px) {
+      @media screen and (max-width: 780px) {
+        .input50{
+          width: 75%;
+        }
         .inputRow {
           display: flex;
           flex-direction: column;
           justify-content: center;
           margin: auto;
           width: 70%;
+        }
+        .pastille-login {
+          top:  -19px;
+          left: -19px;;
         }
       }
 
