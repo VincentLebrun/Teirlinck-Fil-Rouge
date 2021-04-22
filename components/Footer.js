@@ -6,15 +6,15 @@ import { FacebookOutlined, InstagramOutlined } from "@ant-design/icons";
 const Footer = () => {
   return (
     <footer>
-      <Row justify="center" align="middle">
-        <Col  xl={16}>
-          <Row justify="space-between" align="middle">
-            <Col align="middle" xs={20} xl={3} className="image">
+      <Row justify="center" align="middle" >
+        <Col md={16} xs={24} >
+          <Row className="bodyFooter" justify="space-between" align="middle">
+            <Col md={5} sm={8} xs={16} align="middle" className="image">
               <img src="/logo.svg" alt="" />
             </Col>
 
-            <Col align="middle">
-              <p>
+            <Col md={16}xs={22} align="middle">
+              <p className="pCalendar">
                 <i className="fi-rr-calendar"> </i>Horaires
               </p>
               <p>Lundi: 09h00 - 13h00, 16h00 - 18h45</p>
@@ -25,16 +25,18 @@ const Footer = () => {
               <p>Samedi: 08h30 - 15h00</p>
               <p>Dimanche: Fermé</p>
             </Col>
-            <Col >
-              <Link href="https://www.facebook.com/boucherie.teirlinck">
-                <FacebookOutlined style={{ fontSize: "3rem" }} />
-              </Link>
-              <Link href="/api/hello">
-                <InstagramOutlined style={{ fontSize: "3rem" }} />
-              </Link>
-              <Link href="/api/hello">
-                <i></i>
-              </Link>
+
+            <Col className="iconFooter" md={3} xs={7} >
+              
+                  <Link href="https://www.facebook.com/boucherie.teirlinck">
+                    <FacebookOutlined style={{ fontSize: "3rem" }} />
+                  </Link>
+
+                  <Link href="/api/hello">
+                    <InstagramOutlined style={{ fontSize: "3rem" }} />
+                  </Link>
+                
+             
             </Col>
           </Row>
         </Col>

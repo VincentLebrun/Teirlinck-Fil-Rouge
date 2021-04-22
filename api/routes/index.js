@@ -77,3 +77,30 @@ module.exports = server => {
     });
 }
 
+    // server.post('reset-password', (req,res)=>{
+    //     crypto.randomBytes(32,(err,buffer)=>{
+    //         if(err){
+    //             console.log(err)
+    //         }
+    //         const token = buffer.toString("hex")
+    //         User.findOne({email:req.body.email}).then(user=>{
+    //             if(!user){
+    //                 return res.status(422).json({error:"Cet e-mail n'existe pas "})
+    //             }
+    //             user.resetToken = token
+    //             user.expireToken= Date.now() + 3600000
+    //             user.save().then((result)=>{
+    //                 transporter.sendMail({
+    //                     to:user.email,
+    //                     from:"no-reply",
+    //                     subject:"password reset",
+    //                     html: `<p>Vous avez sollicité un changement de mot de passe</p>
+    //                     <h5>Cliquez sur ce <a href="http://localhost:3000/resetpassword${token}" >lien</a> pour le changer </h5>`
+    //                 })
+    //                 res.json({message:"Validez votre e-mail"})
+    //             })
+    //             //
+    //         })
+    //     })
+    // })
+// }
