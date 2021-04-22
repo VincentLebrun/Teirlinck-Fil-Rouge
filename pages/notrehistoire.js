@@ -66,10 +66,8 @@ export const OurStory = () => {
                         />
 
                         <Col className="ourstoryText" span={22}>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor pariatur recusandae  elit pariatur deserunt ab accusantium, deserunt ipsam cum quia nesciunt beatae! Repellat nesciunt sequi, quos labore cum suscipit ullam fugit tempore natus numquam?</p>
-                            <p>Lorem ipsum dolor sit amet, facere consequatur consectetur adipisicing elit. Quos necessitatibus placeat tenetur  maiores doloremque distinctio cum, facere est repellendus repudiandae hic ab vel facere nobis nam magnam animi ratione harum architecto at minima.</p>
-                            <p>Molestias reprehenderit consequatur porro nulla similique, minima maiores accusantium quos magnam neque! Repellat officia explicabo, nesciunt tenetur maiores sit quod officiis qui minima veniam! Rem iure, consequatur ex aspernatur aliquid aperiam sit.</p>
-                            <p>Laboriosam dignissimos suscipit quam cupiditate dolor fugiat voluptatum, officia fugit, vero nostrum expedita harum, atque perspiciatis ullam? Veniam earum harum voluptas dignissimos porro aut perspiciatis quia animi mollitia illo, rem itaque!</p>
+                            <p>La boucherie Teirlinck, située au 30 rue de Condé à Lille, est tenue par Alexandre Teirlinck et existe depuis 3 générations (1930).</p> 
+                            <p>Toutes nos charcuteries sont confectionnées avec les recettes du grand-père d'Alexandre, et nos viandes sont issues d'animaux élevés dans notre région, dans le respect des normes et de la qualité.</p>
                         </Col>
                     </Row>
                     <Row justify="center">
@@ -86,26 +84,26 @@ export const OurStory = () => {
                         />
                     </Row>
                     <Row className="ourValues" justify="space-around">
-                        <Col className="valueItem" xs={24} xl={10}>
+                        <Col className="valueItem" xl={10}>
                             <h2>Tradition.</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis! Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercit ationem odit possimus repellendus.</p>
                             <span className="iconCart"><img src="/img/flaticons/ecologism.svg" alt="" /></span>
                         </Col>
-                        <Col className="valueItem" xs={24} xl={10}>
+                        <Col className="valueItem" xl={10}>
                             <h2>Qualité.</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis! Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercit ationem odit possimus repellendus.</p>
                             <span className="iconCart"><img src="/img/flaticons/quality.svg" alt="" /></span>
                         </Col>
                     </Row>
                     <Row className="ourValues" justify="space-around">
-                        <Col className="valueItem" xs={24} xl={10}>
+                        <Col className="valueItem" xl={10}>
                             <h2>Produits locaux.</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis! Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercit ationem odit possimus repellendus.</p>
                             <span className="iconCart"><img src="/img/flaticons/tool.svg" alt="" /></span>
                         </Col>
-                        <Col className="valueItem" xs={24} xl={10}>
+                        <Col className="valueItem" xl={10}>
                             <h2>Bien-être animal.</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercitationem odit possimus repellendus nam veniam tempora ad ut, dignissimos officiis! Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio inventore, exercit ationem odit possimus repellendus.</p>
                             <span className="iconCart"><img src="/img/flaticons/cow.svg" alt="" /></span>
                         </Col>
                     </Row>

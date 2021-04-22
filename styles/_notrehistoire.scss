@@ -11,7 +11,6 @@
     }
 
     .team {
-        //height:450px;
         margin-bottom: 2rem;
         .teamScreen {
             margin-bottom: 2rem;
@@ -20,7 +19,6 @@
             }
         }
         .teamDescription {
-            height:100%;
             margin-bottom: 2rem;
             padding: 2rem;
             color: $color-white;
@@ -48,7 +46,7 @@
         .valueItem {
             position:relative;
             margin-bottom: 2rem;
-            padding: 2rem;
+            padding: 5rem;
             color: $color-white;
             background-color: $color-black;
             box-shadow: 0px 6px 10px 2px rgba(0, 0, 0, 0.25);
