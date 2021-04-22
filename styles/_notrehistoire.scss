@@ -3,6 +3,10 @@
         p {
             text-align: center;
             font-size: 24px;
+            @media screen and (max-width: 768px) {
+                font-size:18px;
+                text-align: justify;
+            }
         }
     }
 
@@ -16,7 +20,7 @@
             }
         }
         .teamDescription {
-            //height:100%;
+            height:100%;
             margin-bottom: 2rem;
             padding: 2rem;
             color: $color-white;
@@ -26,9 +30,15 @@
             h2 {
                 font-size: 36px;
                 color: $color-white;
+                @media screen and (max-width: 768px) {
+                    font-size:32px;
+                }
             }
             p {
                 font-size: 24px;
+                @media screen and (max-width: 768px) {
+                    font-size:18px;
+                }
             }
         }
     }
@@ -47,10 +57,16 @@
                 font-size: 36px;
                 color: $color-white;
                 text-align: center;
+                @media screen and (max-width: 768px) {
+                    font-size:32px;
+                }
             }
             p {
                 text-align: center;
                 font-size: 24px;
+                @media screen and (max-width: 768px) {
+                    font-size:18px;
+                }
             }
             .iconCart {
                 display:flex;

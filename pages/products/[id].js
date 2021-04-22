@@ -123,9 +123,9 @@ const Product = ({ product, cart, setCart }) => {
                 image="ourproducts.webp"
             />
             <Row justify="center">
-                <Col span={16}>
-                    <Row justify="space-around">
-                        <Col xs={24} sm={12}>
+                <Col xs={22} xl={16}>
+                    <Row gutter={[16, 24]} justify="space-around">
+                        <Col sm={16} xxl={12}>
                             <div className="element">
                                 <img src={product.image} alt="" />
                                 {/* <div className="element-name"><h1>{product.name}</h1></div> */}
@@ -135,7 +135,7 @@ const Product = ({ product, cart, setCart }) => {
                                 </div>
                             </div>
                         </Col>
-                        <Col xs={24} xl={8}>
+                        <Col md={16} xxl={8}>
                             <div className="productPrice">
                                 <ul>
                                     <li className="title">Prix</li>
@@ -171,9 +171,9 @@ const Product = ({ product, cart, setCart }) => {
                             <p>{product.description}</p>
                         </Col>
                     </Row>
-                    <Row justify="center">
+                   
                         <Section title="Allergènes" icon="fi-rr-exclamation" />
-                    </Row>
+                    
                     <Row justify="center">
                         <Col span={14}>
                             <p>

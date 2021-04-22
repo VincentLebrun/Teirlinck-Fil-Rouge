@@ -212,14 +212,12 @@
         }
     }
 
-    .section-container {
-        .section {
-            i {
-                font-size: 10vw;
-            }
-            h2 {
-                font-size: 6vw;
-            }
+    .section {
+        i {
+            font-size: 10vw;
+        }
+        h2 {
+            font-size: 6vw;
         }
     }
 
@@ -266,14 +264,12 @@
         }
     }
 
-    .section-container {
-        .section {
-            i {
-                font-size: 3rem;
-            }
-            h2 {
-                font-size: 2.2rem;
-            }
+    .section {
+        i {
+            font-size: 3rem;
+        }
+        h2 {
+            font-size: 2.2rem;
         }
     }
 
@@ -295,7 +291,6 @@
 }
 
 @media (min-width: 992px) and (max-width: 1600px) {
-    
     .home-content {
         margin-top: 175px;
         height: 45rem;
@@ -318,14 +313,12 @@
         }
     }
 
-    .section-container {
-        .section {
-            i {
-                font-size: 3rem;
-            }
-            h2 {
-                font-size: 2.2rem;
-            }
+    .section {
+        i {
+            font-size: 3rem;
+        }
+        h2 {
+            font-size: 2.2rem;
         }
     }
 

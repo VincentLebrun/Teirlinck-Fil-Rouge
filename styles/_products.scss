@@ -1,26 +1,28 @@
-.ourproducts, .productDetails {
+.ourproducts,
+.productDetails {
     p {
-        text-align:center;
+        text-align: center;
     }
 }
 
 // MENU LATERAL GAUCHE DES CATEGORIES DE VIANDES
-.ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub {
-    color:$color-white;
+.ant-menu.ant-menu-dark,
+.ant-menu-dark .ant-menu-sub,
+.ant-menu.ant-menu-dark .ant-menu-sub {
+    color: $color-white;
     background-color: $color-black;
-    margin-bottom:2rem;
+    margin-bottom: 2rem;
 }
 
-.ant-menu-item, .ant-menu-submenu-title {
+.ant-menu-item,
+.ant-menu-submenu-title {
     .mg-bt-0 {
-        margin-bottom:0px;
+        margin-bottom: 0px;
     }
 }
 
-
-
 .ant-menu-dark.ant-menu-inline .ant-menu-item {
-    border-bottom:$color-red solid 2px;
+    border-bottom: $color-red solid 2px;
 }
 
 .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
@@ -28,92 +30,91 @@
 }
 
 .ant-menu {
-    font-size:1.4rem;
-    @media screen and (max-width:767px) {
-        font-size:10px;
+    font-size: 1.4rem;
+    @media screen and (max-width: 767px) {
+        font-size: 10px;
     }
     .iconMenu {
-        font-size:10px;
+        font-size: 10px;
     }
 }
 
 .ant-row-center {
-    width:100%;
+    width: 100%;
 }
 
-// AFFICHAGE DES PRODUITS 
+// AFFICHAGE DES PRODUITS
 
 .product {
-    cursor:pointer;
+    cursor: pointer;
     background-color: $color-black;
-    border-bottom:$color-red solid 3px;
-    height:auto;
+    border-bottom: $color-red solid 3px;
+    height: auto;
     p {
         margin-bottom: 0;
         color: $color-white;
-        text-align:center;
-        font-size:1.2rem;
-        @media screen and (max-width:767px) {
-            font-size:15px;
+        text-align: center;
+        font-size: 1.2rem;
+        @media screen and (max-width: 767px) {
+            font-size: 15px;
         }
     }
     img {
-        width:100%;
+        width: 100%;
     }
 }
 
 // PAGE DETAIL D'UN PRODUIT
 
 .productDetails {
-
     .productPrice {
-        padding:0rem 2rem;
-        position:relative;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        height:100%;
-        text-align:center;
+        padding: 0rem 2rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        text-align: center;
         border-radius: 18px;
         box-shadow: 0px 6px 10px 2px rgba(0, 0, 0, 0.25);
         background-color: $color-black;
-        color:$color-white;
+        color: $color-white;
         hr {
-            width:75%;
+            width: 75%;
             border: 1px solid $color-red;
         }
         .title {
-            margin-bottom:0;
+            margin-bottom: 0;
             font-weight: bold;
         }
         ul {
             list-style-type: none;
-            padding:2rem 2rem;
-            padding-bottom:0;
+            padding: 2rem 2rem;
+            padding-bottom: 0;
             li {
-                margin-bottom:1rem;
+                margin-bottom: 1rem;
                 font-size: 36px;
             }
         }
         input {
-            font-size:24px;
-            margin-top:20px;
-            width:75%;
-            text-align:center;
-            color:$color-black;
+            font-size: 24px;
+            margin-top: 20px;
+            width: 75%;
+            text-align: center;
+            color: $color-black;
             &::placeholder {
                 color: $color-black;
             }
         }
         .hidden {
-            display:none;
+            display: none;
         }
 
         .iconCart {
-            font-size:30px;
-            position:absolute;
-            top:-15px;
-            left:-15px;
+            font-size: 30px;
+            position: absolute;
+            top: -15px;
+            left: -15px;
             background-color: $color-red;
             padding-top: 0.7rem;
             border-radius: 50%;
@@ -141,7 +142,27 @@
 
     .productInfos {
         p {
-            font-size:33px;
+            font-size: 24px;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .productDetails {
+        .productPrice {
+            button {
+                font-size: 20px;
+            }
+            ul {
+                li {
+                    font-size:24px;
+                }
+            }
+        }
+        .productInfos {
+            p {
+                font-size: 20px;
+            }
         }
     }
 }
