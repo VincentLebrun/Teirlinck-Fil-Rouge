@@ -35,7 +35,7 @@ const Products = ( {data}) => {
     const renderProducts = () => {
         const listProducts = produitsFiltres.slice(0, slice).map(item => {
           return (
-            <Col key={item.id} xs={24} md={12} xl={8}>
+            <Col key={item.id} sm={22} lg={12} xxl={8}>
                 <Link href={`/products/${item._id}`}>
                     <div className="product">
                         <img src={item.image} alt=""/>
@@ -48,7 +48,7 @@ const Products = ( {data}) => {
         });
 
         return (
-            <Row gutter={[16, 16]}>
+            <Row justify="center" gutter={[16, 16]}>
               {listProducts}
             </Row>
         );
@@ -84,8 +84,10 @@ const Products = ( {data}) => {
                 image="ourproducts.webp"
             />
             <div className="products">
-                <Row gutter={16} justify="center">
-                    <Col xs={8} sm={6} xl={4}>
+                <Row justify="center">
+                <Col xs={22} xl={16}>
+                <Row gutter={16} justify="space-between">
+                    <Col xs={12} xl={6}>
                         <Menu
                             //defaultSelectedKeys={['1']}
                             //defaultOpenKeys={['sub1']}
@@ -122,7 +124,7 @@ const Products = ( {data}) => {
                             </Menu.Item>
                         </Menu>
                     </Col>
-                    <Col xs={8} sm={10} xl={12}>
+                    <Col xl={18}>
                         {renderProducts()}
                         <Row justify="center">
                             <Seemore
@@ -130,6 +132,8 @@ const Products = ( {data}) => {
                             />
                         </Row>
                     </Col>
+                </Row>
+                </Col>
                 </Row>
             </div>
             <Footer />

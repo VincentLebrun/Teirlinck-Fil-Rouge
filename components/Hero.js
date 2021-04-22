@@ -7,7 +7,7 @@ const Hero = ({ title, image }) => {
             <div className="heroImage">
                 <img src={`/img/${image}`} alt=""/>
                 <Row>
-                    <Col xs={16} xl={16} className="heroTitle">
+                    <Col xs={22} xl={16} className="heroTitle">
                         <p>{title}</p>
                     </Col> 
                 </Row>
