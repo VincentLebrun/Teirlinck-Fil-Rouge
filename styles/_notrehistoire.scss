@@ -3,11 +3,14 @@
         p {
             text-align: center;
             font-size: 24px;
+            @media screen and (max-width: 768px) {
+                font-size:18px;
+                text-align: justify;
+            }
         }
     }
 
     .team {
-        //height:450px;
         margin-bottom: 2rem;
         .teamScreen {
             margin-bottom: 2rem;
@@ -16,7 +19,6 @@
             }
         }
         .teamDescription {
-            //height:100%;
             margin-bottom: 2rem;
             padding: 2rem;
             color: $color-white;
@@ -26,9 +28,15 @@
             h2 {
                 font-size: 36px;
                 color: $color-white;
+                @media screen and (max-width: 768px) {
+                    font-size:32px;
+                }
             }
             p {
                 font-size: 24px;
+                @media screen and (max-width: 768px) {
+                    font-size:18px;
+                }
             }
         }
     }
@@ -38,7 +46,7 @@
         .valueItem {
             position:relative;
             margin-bottom: 2rem;
-            padding: 2rem;
+            padding: 5rem;
             color: $color-white;
             background-color: $color-black;
             box-shadow: 0px 6px 10px 2px rgba(0, 0, 0, 0.25);
@@ -47,10 +55,16 @@
                 font-size: 36px;
                 color: $color-white;
                 text-align: center;
+                @media screen and (max-width: 768px) {
+                    font-size:32px;
+                }
             }
             p {
                 text-align: center;
                 font-size: 24px;
+                @media screen and (max-width: 768px) {
+                    font-size:18px;
+                }
             }
             .iconCart {
                 display:flex;
