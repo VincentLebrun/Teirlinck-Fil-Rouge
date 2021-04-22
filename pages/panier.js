@@ -172,7 +172,7 @@ const panier = ({ cart, setCart, token }) => {
                 <Row justify="space-between">
                     <Col xs={24} sm={12}>
                         <Row justify="space-between">
-                            <Col xs={24} sm={12}>
+                            <Col xs={15} sm={10}>
 
                                 <Link href={`/products/${item.id}`}>
 
@@ -187,7 +187,7 @@ const panier = ({ cart, setCart, token }) => {
 
                             </Col>
 
-                            <Col xs={24} sm={8}>
+                            <Col xs={15} sm={10}>
                                 <h2>{item.name}</h2>
                                 <div className="input-weight">
                                     <input onChange={(e) => updateQuantity(e, item.price, item.price_type, item.name, item.quantity)} type="number" placeholder={item.quantity} step={item.price_type === "/kg" ? "25" : "1"} min="0" value={item.quantity} />
@@ -227,7 +227,7 @@ const panier = ({ cart, setCart, token }) => {
 
             <Col className="section-container" xs={21} sm={16}>
                 <Row justify="space-between">
-                    <Col className="store-item-container" sm={15}>
+                    <Col className="store-item-container" xs={24} sm={24} xl={15}>
                         <Row justify="space-between">
                             <Col>
                                 <h2>Vos produits</h2>
@@ -250,7 +250,7 @@ const panier = ({ cart, setCart, token }) => {
                         </Row>
                     </Col>
 
-                    <Col sm={7} className="total-store">
+                    <Col xs={24} sm={24} xl={7} className="total-store">
                         <div className="info">
                             <i class="fi-rr-exclamation"></i> <p>Le prix peut être légèrement différent au moment du règlement en boucherie dû à la pesée.</p>
                         </div>

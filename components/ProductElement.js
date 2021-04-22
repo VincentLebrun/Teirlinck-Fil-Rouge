@@ -6,7 +6,7 @@ import Link from 'next/link'
 const ProductElement = ({ id, name, price, price_type, img }) => {
     
     return (
-        <Col xs={24} sm={6}>
+        <Col xs={12} sm={12} lg={8} xl={6} >
 
             <Link href={`/products/${id}`}>
 

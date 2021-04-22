@@ -144,7 +144,6 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Boucherie Teirlinck</title>
         <link rel="icon" href="/favicon.ico"></link>
-        {/* rajouter la favicon pour l'appli */}
       </Head>
       {renderHeader()}
       <Component

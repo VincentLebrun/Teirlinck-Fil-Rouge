@@ -73,7 +73,7 @@ export default function Home({ data }) {
         <img src="/img/accueil.webp" alt="" />
         <div className="test">
           <div className="slogan">
-            <Col xs={16} sm={16} className="slogan-cart">
+            <Col xs={22} sm={20} lg={16} className="slogan-cart">
               <h1>Passez commande et venez la récupérer en boucherie</h1>
               <button><Link href="/CreateAccount">Créer un compte</Link></button>
             </Col>
@@ -82,7 +82,7 @@ export default function Home({ data }) {
       </div>
 
       <div className="descript">
-        <Col className="descript-content" xs={16} sm={16}>
+        <Col className="descript-content" xs={22} sm={20} lg={16}>
           <p>
             Boucherie Teirlinck, synonyme de qualité depuis 1952, vous accueille
             dans sa boutique à Lille. Nos atouts ? Un savoir-faire traditionnel, une fraîcheur irréprochable et un service
@@ -91,9 +91,9 @@ export default function Home({ data }) {
         </Col>
       </div>
 
-      <Col className="section-container" xs={21} sm={16}>
+      <Col className="section-container" xs={21} sm={21} lg={16}>
         <Row justify="center">
-          <Section title="En ce moment" icon="fi-rr-time-fast" />
+          <Col><Section title="En ce moment" icon="fi-rr-time-fast" /></Col>
 
           <Row className="moment-section" gutter={[24, 24]} justify="center">
             {listMomentProducts}
@@ -102,20 +102,24 @@ export default function Home({ data }) {
         </Row>
 
         <Row justify="center">
-          <Section title="Promotions" icon="fi-rr-label" />
+          <Col>
+            <Section title="Promotions" icon="fi-rr-label" />
+          </Col>
 
           <Row className="sold-section" justify="center" gutter={[24, 24]}>
             {listSoldProducts}
           </Row>
+
           <Seemore action={() => SeeMore("sold")} />
+
         </Row>
 
-        <Row justify="center">
-          <Section title="Contact" icon="fi-rr-id-badge" />
-        </Row>
+        
+            <Section title="Contact" icon="fi-rr-id-badge" />
+        
 
         <Row justify="center" gutter={[24, 24]} className="contact-section">
-          <Col xs={24} sm={12}>
+          <Col xs={24} sm={22} md={12}>
             <div className="contact">
               <h3>Commandez pour plus de facilité !</h3>
               <div className="command-circle">
@@ -133,7 +137,7 @@ export default function Home({ data }) {
             </div>
           </Col>
 
-          <Col xs={24} sm={12}>
+          <Col xs={24} sm={22} md={12}>
             <div className="contact">
               <h3>Comment nous trouver ?</h3>
 
@@ -173,19 +177,19 @@ export default function Home({ data }) {
 }
 
 async function getProducts() {
-    const res = await fetch("http://localhost:4000/products")
-        .then(response => response.json())
+  const res = await fetch("http://localhost:4000/products")
+    .then(response => response.json())
 
-    return res;
+  return res;
 
 }
 
 export async function getServerSideProps() {
-    const data = await getProducts();
+  const data = await getProducts();
 
-    return {
-        props: {
-            data
-        }
+  return {
+    props: {
+      data
     }
+  }
 }

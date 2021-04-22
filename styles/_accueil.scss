@@ -47,7 +47,7 @@
     position: relative;
     display: flex;
     justify-content: center;
-    margin-bottom: 250px;
+    margin-bottom: 330px;
 
     .descript-content {
         position: absolute;
@@ -61,62 +61,58 @@
     }
 }
 
+.seemore {
+    background-color: $color-redbutton;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 8px 8px 16px -8px rgba(0, 0, 0, 0.29) inset;
+    font-size: 30px;
+    color: $color-white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 35px;
+    margin-bottom: 4rem;
 
-    .seemore {
-        background-color: $color-redbutton;
-        border: none;
-        border-radius: 8px;
-        box-shadow: 8px 8px 16px -8px rgba(0, 0, 0, 0.29) inset;
-        font-size: 30px;
-        color: $color-white;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 35px;
-        margin-bottom: 4rem;
-
-        i {
-            margin-top: 12px;
-            margin-left: 8px;
-        }
+    i {
+        margin-top: 12px;
+        margin-left: 8px;
     }
+}
 
 .section-container {
     margin: auto;
 }
-    .section {
-        background-color: $color-black;
-        display: flex;
-        align-items: center;
-        border-radius: 18px;
-        margin-bottom: 50px;
-        margin-top: 20px;
+.section {
+    background-color: $color-black;
+    display: flex;
+    align-items: center;
+    border-radius: 18px;
+    margin-bottom: 50px;
+    margin-top: 20px;
 
-        i {
-            font-size: 65px;
-            color: $color-white;
-            padding: 1rem 2rem 0 2rem;
-        }
-
-        .insection {
-            background-color: $color-red;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        h2 {
-            color: white;
-            font-size: 65px;
-            padding: 0 35px 0 35px;
-            margin-bottom: 0;
-        }
+    i {
+        font-size: 65px;
+        color: $color-white;
+        padding: 1rem 2rem 0 2rem;
     }
 
+    .insection {
+        background-color: $color-red;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-
+    h2 {
+        color: white;
+        font-size: 65px;
+        padding: 0 35px 0 35px;
+        margin-bottom: 0;
+    }
+}
 
 .contact-section {
     text-align: center;
@@ -150,7 +146,7 @@
             background-color: $color-redbutton;
             border: none;
             border-radius: 5px;
-            font-size: 30px;
+            font-size: 25px;
             box-shadow: 10px 10px 16px -8px rgba(0, 0, 0, 0.29) inset;
         }
 
@@ -186,6 +182,166 @@
             left: -25px;
             width: 60px;
             height: 60px;
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .seemore {
+        font-size: 1.2rem;
+    }
+    .home-content {
+        margin-top: 150px;
+        height: 35rem;
+        .slogan-cart {
+            h1 {
+                font-size: 2rem;
+            }
+            button {
+                font-size: 2rem;
+            }
+        }
+    }
+
+    .descript {
+        margin-bottom: 270px;
+        .descript-content {
+            p {
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .section-container {
+        .section {
+            i {
+                font-size: 10vw;
+            }
+            h2 {
+                font-size: 6vw;
+            }
+        }
+    }
+
+    .contact-section {
+        .contact {
+            h3 {
+                font-size: 1.8rem;
+            }
+
+            button {
+                font-size: 1.1rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 576px) and (max-width: 992px) {
+    .seemore {
+        font-size: 1.5rem;
+    }
+    .home-content {
+        margin-top: 150px;
+        height: 35rem;
+        .slogan-cart {
+            h1 {
+                font-size: 2rem;
+            }
+            button {
+                font-size: 2rem;
+            }
+        }
+    }
+
+    .descript {
+        margin-bottom: 220px;
+        .descript-content {
+            p {
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .section-container {
+        .section {
+            i {
+                font-size: 3rem;
+            }
+            h2 {
+                font-size: 2.2rem;
+            }
+        }
+    }
+
+    .contact-section {
+        .contact {
+            h3 {
+                font-size: 1.8rem;
+            }
+
+            button {
+                font-size: 1.1rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1600px) {
+    
+    .home-content {
+        margin-top: 175px;
+        height: 45rem;
+        .slogan-cart {
+            h1 {
+                font-size: 3rem;
+            }
+            button {
+                font-size: 2.3rem;
+            }
+        }
+    }
+
+    .descript {
+        margin-bottom: 250px;
+        .descript-content {
+            p {
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    .section-container {
+        .section {
+            i {
+                font-size: 3rem;
+            }
+            h2 {
+                font-size: 2.2rem;
+            }
+        }
+    }
+
+    .contact-section {
+        .contact {
+            h3 {
+                font-size: 2.2rem;
+            }
+
+            button {
+                font-size: 1.4rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
         }
     }
 }
