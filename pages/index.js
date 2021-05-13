@@ -35,7 +35,7 @@ export default function Home({ data }) {
       return (
         <ProductElement
           key={item.id}
-          id={item.id}
+          id={item._id}
           name={item.name}
           img={item.image}
           price={item.price}
@@ -114,9 +114,9 @@ export default function Home({ data }) {
 
         </Row>
 
-        
-            <Section title="Contact" icon="fi-rr-id-badge" />
-        
+
+        <Section title="Contact" icon="fi-rr-id-badge" />
+
 
         <Row justify="center" gutter={[24, 24]} className="contact-section">
           <Col xs={24} sm={22} md={12}>

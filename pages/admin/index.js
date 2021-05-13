@@ -5,6 +5,7 @@ import Link from "next/link";
 
 const index = ({ token }) => {
 
+    const [data, setData] = useState();
     const [products, setProducts] = useState();
 
     const { Search } = Input;
@@ -12,12 +13,12 @@ const index = ({ token }) => {
 
     async function getProducts() {
         await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS)
-            .then(response => response.json()).then(json => { setProducts(json) });
+            .then(response => response.json()).then(json => { setProducts(json), setData(json) });
 
     }
 
     useEffect(() => {
-       getProducts();
+        getProducts();
     }, [])
 
 

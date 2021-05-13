@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
 import { Tag, Space, Button, Popconfirm, Form, Input, Select, InputNumber, Switch, Table } from 'antd';
 
-const ProductAdmin = ({ product }) => {
+const ProductAdmin = ({ product, token }) => {
 
 
     const [useProduct, setUseProduct] = useState(product);
@@ -76,6 +76,7 @@ const ProductAdmin = ({ product }) => {
         await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
             method: 'PUT',
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
