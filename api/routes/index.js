@@ -2,6 +2,7 @@ const ProductController = require("../controllers/product");
 const UserController = require("../controllers/user");
 const OrderController = require("../controllers/order");
 const checkAuth = require("../middleware/check-auth");
+const checkAuthAdmin = require("../middleware/check-auth-admin");
 
 module.exports = (server) => {
   // PRODUITS
@@ -13,21 +14,21 @@ module.exports = (server) => {
     ProductController.get(req, res);
   });
 
-  server.post("/products", checkAuth, async (req, res) => {
+  server.post("/products", checkAuth, checkAuthAdmin, async (req, res) => {
     ProductController.create(req, res);
   });
 
-  server.put("/products", checkAuth, async (req, res) => {
+  server.put("/products", checkAuth, checkAuthAdmin, async (req, res) => {
     ProductController.update(req, res);
   });
 
-  server.delete("/products", checkAuth, (req, res) => {
+  server.delete("/products", checkAuth, checkAuthAdmin, (req, res) => {
     ProductController.delete(req, res);
   });
 
   // UTILISATEURS
 
-  server.get("/users", checkAuth, (req, res, next) => {
+  server.get("/users", checkAuth, checkAuthAdmin, (req, res, next) => {
     UserController.getAll(req, res);
   });
 
@@ -39,17 +40,17 @@ module.exports = (server) => {
     UserController.create(req, res);
   });
 
-  server.put("/users", checkAuth, async (req, res) => {
+  server.put("/users", checkAuth, checkAuthAdmin, async (req, res) => {
     UserController.update(req, res);
   });
 
-  server.delete("/users", checkAuth, (req, res) => {
+  server.delete("/users", checkAuth, checkAuthAdmin, (req, res) => {
     UserController.delete(req, res);
   });
 
   // COMMANDES
 
-  server.get("/orders", checkAuth, (req, res) => {
+  server.get("/orders", checkAuth, checkAuthAdmin, (req, res) => {
     OrderController.getAll(req, res);
   });
 
@@ -57,15 +58,15 @@ module.exports = (server) => {
     OrderController.get(req, res);
   });
 
-  server.post("/orders", checkAuth, async (req, res) => {
+  server.post("/orders", checkAuth, checkAuthAdmin, async (req, res) => {
     OrderController.create(req, res);
   });
 
-  server.put("/orders", checkAuth, async (req, res) => {
+  server.put("/orders", checkAuth, checkAuthAdmin, async (req, res) => {
     OrderController.update(req, res);
   });
 
-  server.delete("/orders", checkAuth, (req, res) => {
+  server.delete("/orders", checkAuth, checkAuthAdmin, (req, res) => {
     OrderController.delete(req, res);
   });
 

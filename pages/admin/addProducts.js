@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import AdminLayout from "../../components/AdminLayout"
 import { Button, Form, Input, Select, Tag, Table } from "antd";
 import { Layout } from "antd";
+import { admin } from "../../middleware/admin"
+import { useRouter } from 'next/router'
 
 import Link from "next/link";
 const AddProducts = ({ token }) => {
   const { Header, Sider, Content } = Layout;
+  const router = useRouter();
 
   const [Product] = Form.useForm();
   const onFinish = async (values) => {

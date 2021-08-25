@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react'
 import AdminLayout from "../../components/AdminLayout"
 import { Tag, Space, Button, Popconfirm, Table, Input } from 'antd';
 import Link from "next/link";
+import { admin } from "../../middleware/admin"
+import { useRouter } from 'next/router'
+
 
 const index = ({ token }) => {
+    const router = useRouter();
 
     const [data, setData] = useState();
     const [products, setProducts] = useState();
@@ -18,6 +22,9 @@ const index = ({ token }) => {
     }
 
     useEffect(() => {
+        if (!admin(token)){
+            router.push("/")
+        }
         getProducts();
     }, [])
 

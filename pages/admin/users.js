@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
 import { Space, Button, Switch, Popconfirm, Table, Input } from 'antd';
+import { admin } from "../../middleware/admin"
+import { useRouter } from 'next/router'
 
 
 const users = ({ token }) => {
-
+    const router = useRouter();
     console.log(token);
     const [users, setUsers] = useState();
 
@@ -25,6 +27,9 @@ const users = ({ token }) => {
     }
 
     useEffect(() => {
+        if (!admin(token)){
+            router.push("/")
+        }
        getUsers();
     }, [])
 

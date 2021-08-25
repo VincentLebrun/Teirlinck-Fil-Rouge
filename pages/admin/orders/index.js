@@ -3,8 +3,11 @@ import Link from 'next/link';
 
 import AdminLayout from "../../../components/AdminLayout"
 import { Tag, Switch, Space, Button, Popconfirm, Select, notification, Table, Input } from 'antd';
+import { useRouter } from 'next/router'
+import { admin } from "../../../middleware/admin"
 
 const index = ({ token }) => {
+    const router = useRouter();
 
     const { Option } = Select;
 
@@ -27,6 +30,9 @@ const index = ({ token }) => {
     }
 
     useEffect(() => {
+        if (!admin(token)){
+            router.push("/")
+        }
         getOrders();
     }, [])
 

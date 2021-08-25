@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
 import { Tag, Space, Button, Popconfirm, Form, Input, Select, InputNumber, Switch, Table } from 'antd';
+import { admin } from "../../middleware/admin"
+import { useRouter } from 'next/router'
 
 const ProductAdmin = ({ product, token }) => {
+    const router = useRouter();
 
 
     const [useProduct, setUseProduct] = useState(product);
     const productArray = [useProduct];
 
     const [form] = Form.useForm();
+
+    useEffect(() => {
+        if (!admin(token)){
+            router.push("/")
+        }
+    }, [])
 
 
     function updatePromotion() {
