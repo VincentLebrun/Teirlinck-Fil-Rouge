@@ -117,10 +117,36 @@ function MyApp({ Component, pageProps }) {
             <Button><i className="fi-rr-user"></i> {decryptedToken.userFirstName}<DownOutlined /></Button>
           </Dropdown>
         )
+      } else if (!decryptedToken.userValidated && !decryptedToken.userAdmin) {
+        return (
+          <Dropdown overlay={menuUser} placement="bottomCenter" arrow>
+            <Button><i className="fi-rr-user"></i> {decryptedToken.userFirstName}<DownOutlined /></Button>
+          </Dropdown>
+        )
       }
     } else {
       return (
         <Button><Link href="/connexion"><i className="fi-rr-user"> Se connecter</i></Link></Button>
+      )
+    }
+  }
+
+  const cookieBar = () => {
+    if(token){
+      return (
+        <CookieConsent
+        location="bottom"
+        buttonText="Accepter"
+        setDeclineCookie={false}
+        enableDeclineButton
+        declineButtonText="Refuser"
+        style={{ background: "#222222" }}
+        onDecline={() => {
+          cookieCutter.set('token', '', { expires: new Date(0) })
+          setToken()
+        }}
+      >
+        Ce site utilise un cookie de connexion nécessaire, si vous refusez celui ci vous serez alors déconnecté ! </CookieConsent>
       )
     }
   }
@@ -133,6 +159,7 @@ function MyApp({ Component, pageProps }) {
         //userName={decryptedToken.userFirstName}
         >
           {renderDropdown()}
+          {cookieBar()}
         </Header>
       )
     }
@@ -144,12 +171,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Fragment>
-      <CookieConsent
-        location="bottom"
-        buttonText="Accepter"
-        style={{ background: "#222222" }}
-      >
-        Ce site utilise des cookies pour améliorer l'expérience de navigation et fournir des fonctionnalités supplémentaires !</CookieConsent>
+      
       <Head>
         <title>Boucherie Teirlinck</title>
         <link rel="icon" href="/favicon.ico"></link>
