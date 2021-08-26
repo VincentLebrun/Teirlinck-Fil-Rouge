@@ -7,7 +7,9 @@ import cookieCutter from 'cookie-cutter'
 import jwt from "jsonwebtoken";
 import { Menu, Dropdown, Button } from 'antd';
 import Link from 'next/link';
-import {DownOutlined} from '@ant-design/icons';
+import { DownOutlined } from '@ant-design/icons';
+import CookieConsent from "react-cookie-consent";
+
 
 // function MyApp({ Component, pageProps }) {
 //   const [loading, setLoading] = useState(true);
@@ -36,6 +38,7 @@ function MyApp({ Component, pageProps }) {
   const [cart, setCart] = useState({ items: [], total: 0 })
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState();
+
 
   const logout = () => {
     // Supprimer les cookies
@@ -78,13 +81,13 @@ function MyApp({ Component, pageProps }) {
     }
     if (cookieCutter.get('token')) {
       jwt.verify(cookieCutter.get('token'), process.env.NEXT_PUBLIC_JWT_KEY, (err, decode) => {
-        if(err) {
+        if (err) {
           cookieCutter.set('token', '', { expires: new Date(0) })
           setToken();
         } else {
           setToken(cookieCutter.get('token'));
         }
-      });           
+      });
     }
     setLoading(false)
   }, []);
@@ -93,7 +96,7 @@ function MyApp({ Component, pageProps }) {
   if (token) {
     // fonction de décryptage du token 
     decryptedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_KEY);
-  } 
+  }
 
   // Synchronisation panier <=> localStorage
   useEffect(() => {
@@ -109,14 +112,14 @@ function MyApp({ Component, pageProps }) {
           </Dropdown>
         )
       } else if (decryptedToken.userValidated && decryptedToken.userAdmin) {
-          return(
-            <Dropdown overlay={menuAdmin} placement="bottomCenter" arrow>
-              <Button><i className="fi-rr-user"></i> {decryptedToken.userFirstName}<DownOutlined /></Button>
-            </Dropdown>
-          )
+        return (
+          <Dropdown overlay={menuAdmin} placement="bottomCenter" arrow>
+            <Button><i className="fi-rr-user"></i> {decryptedToken.userFirstName}<DownOutlined /></Button>
+          </Dropdown>
+        )
       }
     } else {
-      return(
+      return (
         <Button><Link href="/connexion"><i className="fi-rr-user"> Se connecter</i></Link></Button>
       )
     }
@@ -127,9 +130,9 @@ function MyApp({ Component, pageProps }) {
       return (
         <Header
           panier_length={cart.items.length}
-          //userName={decryptedToken.userFirstName}
+        //userName={decryptedToken.userFirstName}
         >
-            {renderDropdown()}
+          {renderDropdown()}
         </Header>
       )
     }
@@ -141,6 +144,12 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Fragment>
+      <CookieConsent
+        location="bottom"
+        buttonText="Accepter"
+        style={{ background: "#222222" }}
+      >
+        Ce site utilise des cookies pour améliorer l'expérience de navigation et fournir des fonctionnalités supplémentaires !</CookieConsent>
       <Head>
         <title>Boucherie Teirlinck</title>
         <link rel="icon" href="/favicon.ico"></link>
