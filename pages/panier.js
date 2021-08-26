@@ -3,7 +3,6 @@ import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import { Row, Col, notification } from 'antd';
 import Link from 'next/link'
-import cookieCutter from 'cookie-cutter'
 import jwt from "jsonwebtoken";
 
 

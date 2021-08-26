@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Row, Col, Form, Input, Select } from "antd";
+import { Button, Row, Col, Form, Input, Select, notification } from "antd";
 import Link from 'next/link'
 const { Option } = Select;
 import cookieCutter from 'cookie-cutter'
@@ -10,9 +10,9 @@ import { Router, useRouter } from 'next/router'
 const ConnexionForm = ({ setToken }) => {
     const router = useRouter();
     const [form] = Form.useForm();
-    
+
     const onFinish = async (values) => {
-       
+
         const res = await fetch("http://localhost:4000/login", {
             method: "POST",
             headers: {
@@ -28,13 +28,22 @@ const ConnexionForm = ({ setToken }) => {
 
         if (res.token) {
             cookieCutter.set('token', res.token);
-            
+
             setToken(res.token);
             router.push("/");
-            
-        }
-            
 
+        } else {
+            notification['error']({
+                message: "Informations incorrectes",
+                description: "Votre adresse mail ou votre mot de passe est incorrect, veuillez réessayer",
+                placement: "topRight",
+                duration: 15,
+                style: {
+                    width: 500,
+                    // fontSize: "larger"
+                }
+            });
+        }
 
     };
 
@@ -46,7 +55,7 @@ const ConnexionForm = ({ setToken }) => {
                         <Col span={24}>
                             <Link href="/"><img src="/logo.svg" alt="" /></Link>
                         </Col>
-                        <div className="pastille-login"><i className="fi-rr-spinner-alt"></i></div>
+                        <div className="pastille-login"><i onClick={() => router.push("/")} className="fi-rr-cross-small"></i></div>
                         <Col xl={16}>
                             <hr />
                             <Form
@@ -76,7 +85,7 @@ const ConnexionForm = ({ setToken }) => {
                                         },
                                     ]}
                                 >
-                                    <Input maxLength="90"/>
+                                    <Input maxLength="90" />
                                 </Form.Item>
                                 <Form.Item
                                     className="formInputStyle"
@@ -99,7 +108,7 @@ const ConnexionForm = ({ setToken }) => {
                                 <Form.Item>
                                     <Button className="button" htmlType="submit">
                                         Connexion
-                  </Button>
+                                    </Button>
                                 </Form.Item>
 
                             </Form>
@@ -107,7 +116,7 @@ const ConnexionForm = ({ setToken }) => {
                             <h2>Vous n'avez pas encore de compte?</h2>
                             <Link href="/CreateAccount"><Button className="button" htmlType="submit">
                                 Créer un compte
-                  </Button>
+                            </Button>
                             </Link>
                         </Col>
                     </Row>
