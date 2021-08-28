@@ -1,14 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/AdminLayout"
 import { Button, Form, Input, Select, Tag, Table } from "antd";
 import { Layout } from "antd";
 import { admin } from "../../middleware/admin"
 import { useRouter } from 'next/router'
+import { Upload, message } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
 
-import Link from "next/link";
+const { Dragger } = Upload;
+
 const AddProducts = ({ token }) => {
   const { Header, Sider, Content } = Layout;
   const router = useRouter();
+
+  const props = {
+    name: 'file',
+    multiple: false,
+    accept: "image/*",
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e) {
+      console.log('Dropped files', e.dataTransfer.files);
+    },
+  };
 
   const [Product] = Form.useForm();
   const onFinish = async (values) => {
@@ -37,6 +60,11 @@ const AddProducts = ({ token }) => {
       console.log(err);
     });
   };
+  useEffect(() => {
+    if (!admin(token)) {
+      router.push("/")
+    }
+  }, [])
   const optionsAllergenes = [
     { value: "céréales" },
     { value: "oeuf" },
@@ -120,7 +148,12 @@ const AddProducts = ({ token }) => {
               },
             ]}
           >
-            <Input />
+            <Dragger {...props}>
+              <p className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </p>
+              <p className="ant-upload-text">Glisser et déposer un fichier dans cette zone pour uploader</p>
+            </Dragger>
           </Form.Item>
           <Form.Item
             name="categories"
@@ -227,7 +260,7 @@ const AddProducts = ({ token }) => {
             {" "}
             <Button className="button" htmlType="submit">
               Ajouter un produit
-                </Button>
+            </Button>
           </Form.Item>
         </Form>
       </div>
