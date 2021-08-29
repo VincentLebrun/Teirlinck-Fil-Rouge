@@ -37,7 +37,7 @@ export default function Home({ data }) {
           key={item.id}
           id={item._id}
           name={item.name}
-          img={item.image}
+          img={process.env.NEXT_PUBLIC_URL + item.image}
           price={item.price}
           price_type={item.price_type}
         />
@@ -53,7 +53,7 @@ export default function Home({ data }) {
           key={item.id}
           id={item.id}
           name={item.name}
-          img={item.image}
+          img={process.env.NEXT_PUBLIC_URL + item.image}
           price={item.price}
           price_type={item.price_type}
         />

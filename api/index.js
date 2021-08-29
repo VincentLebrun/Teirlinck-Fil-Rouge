@@ -9,6 +9,8 @@ server.use(cors());
 server.use(express.json());
 routes(server);
 
+server.use('/uploads', express.static('./uploads'));
+
 server.listen(4000, () => {
     console.log("Ecoute sur le port 4000");
 

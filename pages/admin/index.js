@@ -73,7 +73,7 @@ const index = ({ token }) => {
             render: (text, item) => (
                 <Space size="middle">
                     <div className="product-img">
-                        <img src={item.image} alt="" />
+                        <img src={process.env.NEXT_PUBLIC_URL + item.image} alt="" />
                     </div>
                 </Space>
             ),

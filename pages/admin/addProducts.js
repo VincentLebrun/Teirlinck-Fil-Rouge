@@ -14,48 +14,34 @@ const AddProducts = ({ token }) => {
   const router = useRouter();
 
   const props = {
-    name: 'file',
+    name: 'productFile',
     multiple: false,
     accept: "image/*",
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-    onDrop(e) {
-      console.log('Dropped files', e.dataTransfer.files);
-    },
+    maxCount: 1
   };
 
   const [Product] = Form.useForm();
   const onFinish = async (values) => {
     console.log("J'ai ça ", values);
-    const sendProducts = {
-      name: values.name,
-      description: values.description,
-      image: values.image,
-      categories: values.categories,
-      allergenes: values.allergenes,
-      price_type: values.price_type,
-      price: values.price,
-      promotion: false,
-      highlighted: false,
-      available: true,
-    };
+
+    const formData = new FormData();
+    formData.append("productImage", values.image.file.originFileObj);
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+    formData.append("categories", values.categories);
+    formData.append("allergenes", values.allergenes);
+    formData.append("price_type", values.price_type);
+    formData.append("price", values.price);
+    formData.append("promotion", false);
+    formData.append("highlighted", false);
+    formData.append("available", true);
+
     await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Accept': "application/json",
-        "Content-Type": "application/json",
       },
-      body: JSON.stringify(sendProducts),
+      body: formData,
     }).catch((err) => {
       console.log(err);
     });
@@ -110,6 +96,7 @@ const AddProducts = ({ token }) => {
           name="register"
           onFinish={onFinish}
           scrollToFirstError
+          
         >
           <Form.Item
             name="name"
@@ -140,13 +127,7 @@ const AddProducts = ({ token }) => {
           <Form.Item
             name="image"
             label="Image du produit"
-            rules={[
-              {
-                required: true,
-                message: "Vous avez oublié ce champ",
-                whitespace: true,
-              },
-            ]}
+            valuePropName="fileLists"
           >
             <Dragger {...props}>
               <p className="ant-upload-drag-icon">

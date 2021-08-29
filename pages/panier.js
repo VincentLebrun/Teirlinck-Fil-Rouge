@@ -181,7 +181,7 @@ const panier = ({ cart, setCart, token }) => {
                                 <Link href={`/products/${item.id}`}>
 
                                     <div className="element">
-                                        <img src={item.image} alt="" />
+                                        <img src={process.env.NEXT_PUBLIC_URL + item.image} alt="" />
                                         <div className="element-absolute">
                                             <div className="element-inside"></div>
                                         </div>

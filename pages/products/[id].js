@@ -95,7 +95,7 @@ const Product = ({ product, cart, setCart }) => {
                     <Row gutter={[16, 24]} justify="space-around">
                         <Col sm={16} xxl={12}>
                             <div className="element">
-                                <img src={product.image} alt="" />
+                                <img src={process.env.NEXT_PUBLIC_URL + product.image} alt="" />
                                 <div className="element-absolute">
                                     <div className="element-inside"></div>
                                 </div>
