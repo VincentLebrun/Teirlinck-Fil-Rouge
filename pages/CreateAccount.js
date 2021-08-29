@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, Row, Col, Form, Input } from "antd";
+import { Button, Row, Col, Form, Input, notification } from "antd";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 //Exemple d'utilisation com!parative de mot de passe
 //
 // (async ()=> {
@@ -21,6 +22,7 @@ const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
 const RegistrationForm = () => {
+  const router = useRouter();
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
@@ -37,8 +39,6 @@ const RegistrationForm = () => {
       validated: false,
     }
   
-
-
     const res = await fetch(process.env.NEXT_PUBLIC_API_USERS, {
       method: 'POST',
       headers: {
@@ -47,6 +47,42 @@ const RegistrationForm = () => {
       },
       body: JSON.stringify(sendAccount)
     }).catch(error => console.log(error));
+
+    if(res.status && res.status === 200){
+      notification['success']({
+        message: "BRAVO",
+        description: "BRAVO, vous venez de créer votre compte sur boucherie-teirlinck.fr, vous pouvez maintenant vous connecter. Il ne vous reste plus qu'à vous rendre en boucherie pour faire valider votre compte avant de pouvoir passer commande ! ",
+        placement: "topRight",
+        duration: 0,
+        style: {
+          width: 500,
+          // fontSize: "larger"
+        }
+    });
+    router.push("/connexion");
+    } else if (res.status && res.status === 409) {
+      notification['warning']({
+        message: "Erreur",
+        description: "L'adresse e-mail que vous avez saisie est utilisée pour un compte déjà existant",
+        placement: "topRight",
+        duration: 0,
+        style: {
+          width: 500,
+          // fontSize: "larger"
+        }
+    });
+    } else {
+      notification['error']({
+        message: "OUPS",
+        description: "Une erreur s'est produite, votre compte n'a pas pu être créé, veuillez réessayer",
+        placement: "topRight",
+        duration: 0,
+        style: {
+          width: 500,
+          // fontSize: "larger"
+        }
+    });
+    }
 
   };
 
@@ -58,7 +94,7 @@ const RegistrationForm = () => {
             <Col span={24}>
               <Link href="/"><img src="/logo.svg" alt="" /></Link>
             </Col>
-            <div className="pastille-login"><i className="fi-rr-spinner-alt"></i></div>
+            <div className="pastille-login"><i onClick={() => router.push("/")} className="fi-rr-cross-small"></i></div>
             <Col xl={16}>
               <hr />
               <Form

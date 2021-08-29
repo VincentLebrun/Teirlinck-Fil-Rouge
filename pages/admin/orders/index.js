@@ -2,45 +2,52 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link';
 
 import AdminLayout from "../../../components/AdminLayout"
-import { Tag, Switch, Space, Button, Popconfirm, Select, notification, Table, Input} from 'antd';
+import { Tag, Switch, Space, Button, Popconfirm, Select, notification, Table, Input } from 'antd';
+import { useRouter } from 'next/router'
+import { admin } from "../../../middleware/admin"
 
 const index = ({ token }) => {
+    const router = useRouter();
 
     const { Option } = Select;
 
     const { Search } = Input;
 
+    const [data, setData] = useState();
     const [orders, setOrders] = useState();
 
     async function getOrders() {
-        await fetch(process.env.NEXT_PUBLIC_API_ORDERS,{
+        await fetch(process.env.NEXT_PUBLIC_API_ORDERS, {
             method: 'GET',
             headers: {
-                'Authorization' : `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
         })
-            .then(response => response.json()).then(json => { setOrders(json.reverse()) });
+            .then(response => response.json()).then(json => { setOrders(json.reverse()), setData(json.reverse()) });
 
     }
 
     useEffect(() => {
-       getOrders();
+        if (!admin(token)){
+            router.push("/")
+        }
+        getOrders();
     }, [])
 
     function handleChange(value) {
         console.log(`selected ${value}`);
-        
+
         if (value === "readyNotDelivered") {
             const filteredOrders = data.filter((item) => item.ready && !item.delivered);
             console.log(filteredOrders);
             setOrders(filteredOrders);
-        } 
+        }
         if (value === "notReady") {
             const filteredOrders = data.filter((item) => !item.ready);
             setOrders(filteredOrders);
-        } 
+        }
         if (value === "all") {
             setOrders(data)
         }
@@ -48,14 +55,14 @@ const index = ({ token }) => {
 
     const convertToDate = (timestamp) => {
         const date = new Date(timestamp);
-        const options = { year: 'numeric', month:'2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }
         const result = date.toLocaleDateString('fr-FR', options);
         return result;
     }
 
-    const onSearch = (value) => { 
-        value = value.toLowerCase();
-        const filteredOrders = data.filter((item) => item.user_lastname.toLowerCase().includes(value) || item.user_firstname.toLowerCase().includes(value));
+    const onSearch = (value) => {
+        //value = value.toLowerCase();
+        const filteredOrders = data.filter((item) => item.user_lastname === value || item.user_firstname === value);
         setOrders(filteredOrders);
     }
 
@@ -63,28 +70,28 @@ const index = ({ token }) => {
         const res = await fetch(process.env.NEXT_PUBLIC_API_ORDERS, {
             method: 'DELETE',
             headers: {
-                'Authorization' : `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ _id: id })
         }).catch(error => console.log(error));
 
-        if(res.status == 200){
+        if (res.status == 200) {
             const allOrders = [...orders];
             const index = allOrders.findIndex((item) => item._id === id);
-    
+
             notification['info']({
                 message: `Suppression de la commande n°${allOrders[index].numero} confirmée.`,
                 description: `La commande n°${allOrders[index].numero} du ${convertToDate(allOrders[index].date)} de ${allOrders[index].user_firstname} ${allOrders[index].user_lastname} a été définitivement supprimée de la base de données.`,
                 placement: "topRight",
                 duration: 0
             });
-    
+
             allOrders.splice(index, 1);
             setOrders(allOrders);
 
-        }else{
+        } else {
             notification['error']({
                 message: "Attention !",
                 description: "Un problème est survenu, veuillez réessayer ultérieusement.",
@@ -92,7 +99,7 @@ const index = ({ token }) => {
             });
         }
 
-        
+
 
     };
 
@@ -106,7 +113,7 @@ const index = ({ token }) => {
             allOrders[index].delivered = true;
         }
 
-       
+
 
         const order = {
             ...allOrders[index],
@@ -116,7 +123,7 @@ const index = ({ token }) => {
         const res = await fetch(process.env.NEXT_PUBLIC_API_ORDERS, {
             method: 'PUT',
             headers: {
-                'Authorization' : `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -124,9 +131,9 @@ const index = ({ token }) => {
 
         }).catch(error => console.log(error));
 
-        if(res.status == 200) {
+        if (res.status == 200) {
             setOrders(allOrders);
-        }else{
+        } else {
             notification['error']({
                 message: "Attention !",
                 description: "Un problème est survenu, veuillez réessayer ultérieusement.",
@@ -151,10 +158,10 @@ const index = ({ token }) => {
             ready: allOrders[index].ready
         }
 
-       const res = await fetch(process.env.NEXT_PUBLIC_API_ORDERS, {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_ORDERS, {
             method: 'PUT',
             headers: {
-                'Authorization' : `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -162,9 +169,9 @@ const index = ({ token }) => {
 
         }).catch(error => console.log(error));
 
-        if(res.status == 200) {
+        if (res.status == 200) {
             setOrders(allOrders);
-        }else{
+        } else {
             notification['error']({
                 message: "Attention !",
                 description: "Un problème est survenu, veuillez réessayer ultérieusement.",
@@ -263,7 +270,7 @@ const index = ({ token }) => {
                 <Search className="search-input" placeholder="Chercher un client" onSearch={onSearch} style={{ width: 200 }}></Search>
                 <Table columns={columns} dataSource={orders} rowKey="id" />
             </AdminLayout>
-            
+
         </div>
 
     )

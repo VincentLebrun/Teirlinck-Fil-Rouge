@@ -3,7 +3,6 @@ import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import { Row, Col, notification } from 'antd';
 import Link from 'next/link'
-import cookieCutter from 'cookie-cutter'
 import jwt from "jsonwebtoken";
 
 
@@ -136,20 +135,24 @@ const panier = ({ cart, setCart, token }) => {
 
     const updateQuantity = (e, price, price_type, name, quantity) => {
         const newQuantity = Math.abs(e.target.value);
-        // setNewQuantity(e.target.value);
-        // console.log(newQuantity);
-        const cart_item = cart.items.find((item) => item.name == name);
-        const previous_price = itemPrice(price, quantity, price_type);
-        cart_item.quantity = newQuantity;
-        const new_price = itemPrice(price, cart_item.quantity, price_type);
-        let items = cart.items;
-        const index_item = items.indexOf(name);
-        items[index_item] = cart_item;
+        if (newQuantity > 0) {
+            // setNewQuantity(e.target.value);
+            // console.log(newQuantity);
+            const cart_item = cart.items.find((item) => item.name == name);
+            const previous_price = itemPrice(price, quantity, price_type);
+            cart_item.quantity = newQuantity;
+            const new_price = itemPrice(price, cart_item.quantity, price_type);
+            let items = cart.items;
+            const index_item = items.indexOf(name);
+            items[index_item] = cart_item;
 
-        setCart({
-            items: items,
-            total: Number((cart.total - previous_price + new_price).toFixed(2))
-        });
+            setCart({
+                items: items,
+                total: Number((cart.total - previous_price + new_price).toFixed(2))
+            });
+        } else {
+            alert("Veuillez saisir une quantité valide pour ce produit");
+        }
     }
 
 
@@ -178,7 +181,7 @@ const panier = ({ cart, setCart, token }) => {
                                 <Link href={`/products/${item.id}`}>
 
                                     <div className="element">
-                                        <img src={item.image} alt="" />
+                                        <img src={process.env.NEXT_PUBLIC_URL + item.image} alt="" />
                                         <div className="element-absolute">
                                             <div className="element-inside"></div>
                                         </div>
@@ -191,7 +194,7 @@ const panier = ({ cart, setCart, token }) => {
                             <Col className="nameAndPrice" xs={9} sm={10}>
                                 <h2>{item.name}</h2>
                                 <div className="input-weight">
-                                    <input onChange={(e) => updateQuantity(e, item.price, item.price_type, item.name, item.quantity)} type="number" placeholder={item.quantity} step={item.price_type === "/kg" ? "25" : "1"} min="0" value={item.quantity} />
+                                    <input onChange={(e) => updateQuantity(e, item.price, item.price_type, item.name, item.quantity)} type="number" placeholder={item.quantity} step={item.price_type === "/kg" ? "25" : "1"} min={item.price_type === "/kg" ? "25" : "1"} value={item.quantity} />
                                     <p>{priceType(item.price_type)}</p>
                                 </div>
                             </Col>

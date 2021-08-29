@@ -4,34 +4,11 @@ import Footer from "../../components/Footer";
 
 import Section from "../../components/Section";
 import { Row, Col } from "antd";
-import ProductElement from "../../components/ProductElement";
-import Link from "next/link";
 
 const Product = ({ product, cart, setCart }) => {
-    // const [cart, setCart] = useState();
-    // const [loading, setLoading] = useState(true);
-
-    // useEffect(() => {
-    //     setCart(JSON.parse(localStorage.getItem("cart")));
-    //     setLoading(false);
-    // }, []);
-
-    // console.log(cart);
-    // //Nouvelle propriété dans le state pour stocker les éléments du panier
-
-    // useEffect(() => {
-    //     localStorage.setItem("cart", JSON.stringify(cart));
-    // }, [cart]);
 
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(0);
-
-    // const [produits, setProduits] = useState(products);
-    // const [id, setId] = useState(router.query.id);
-    // const product = produits.find((product) => product.id == id);
-    // const [produit, setProduit] = useState(product);
-
-    // pour le moment on utilise le tableau de produits pour récupérer le produit, après on récupèrera directement le produit dans la base avec un appel à l'API via un getServerSideProps( { params })
 
     const addToCart = () => {
         if (price != 0) {
@@ -100,24 +77,15 @@ const Product = ({ product, cart, setCart }) => {
                     <p>
                         Cet article est déjà dans votre panier, veuillez cliquer ci-dessous
                         pour modifier sa quantité.
-          </p>
+                    </p>
                     <button onClick={() => updateQuantity()}>Modifier</button>
                 </div>
             );
         }
     }
 
-    // if (loading) {
-    //     return (
-    //         <p>Chargement en cours...</p>
-    //     )
-    // }
-
     return (
         <div className="productDetails">
-            {/* <Header
-                panier_length={cart.items.length}
-            /> */}
             <Hero
                 title={product.name}
                 image="ourproducts.webp"
@@ -127,9 +95,7 @@ const Product = ({ product, cart, setCart }) => {
                     <Row gutter={[16, 24]} justify="space-around">
                         <Col sm={16} xxl={12}>
                             <div className="element">
-                                <img src={product.image} alt="" />
-                                {/* <div className="element-name"><h1>{product.name}</h1></div> */}
-                                {/* <div className="element-price"><h2>{product.price}€{product.price_type}</h2></div> */}
+                                <img src={process.env.NEXT_PUBLIC_URL + product.image} alt="" />
                                 <div className="element-absolute">
                                     <div className="element-inside"></div>
                                 </div>
@@ -171,13 +137,13 @@ const Product = ({ product, cart, setCart }) => {
                             <p>{product.description}</p>
                         </Col>
                     </Row>
-                   
-                        <Section title="Allergènes" icon="fi-rr-exclamation" />
-                    
+
+                    <Section title="Allergènes" icon="fi-rr-exclamation" />
+
                     <Row justify="center">
                         <Col span={14}>
                             <p>
-                                {product.allergenes.length === 0 ?  "Ce produit ne contient aucun des 14 allergènes (conformément au Règlement (UE) n° 1169/2011 concernant l'information des consommateurs sur les denrées alimentaires) selon la recette. La contamination croisée dans la boucherie ne peut jamais être totalement exclue)." : `Ce produit contient les allergènes suivants : ${product.allergenes.join(', ')}`}
+                                {product.allergenes.length === 0 ? "Ce produit ne contient aucun des 14 allergènes (conformément au Règlement (UE) n° 1169/2011 concernant l'information des consommateurs sur les denrées alimentaires) selon la recette. La contamination croisée dans la boucherie ne peut jamais être totalement exclue)." : `Ce produit contient les allergènes suivants : ${product.allergenes.join(', ')}`}
                             </p>
                         </Col>
                     </Row>
@@ -191,7 +157,7 @@ const Product = ({ product, cart, setCart }) => {
 export default Product;
 
 async function getProduct(id) {
-    const res = await fetch("http://localhost:4000/products/" + id)
+    const res = await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS + '/' + id)
         .then(response => response.json())
 
     return res;
