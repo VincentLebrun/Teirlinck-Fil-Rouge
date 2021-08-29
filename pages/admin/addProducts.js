@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/AdminLayout"
-import { Button, Form, Input, Select, Tag, Table } from "antd";
+import { Button, Form, Input, Select, Tag, Table, notification } from "antd";
 import { Layout } from "antd";
 import { admin } from "../../middleware/admin"
 import { useRouter } from 'next/router'
@@ -20,23 +20,37 @@ const AddProducts = ({ token }) => {
     maxCount: 1
   };
 
+  function normFile(e) {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    if (e.fileList.length > 1) {
+      e.fileList.shift();
+    }
+    return e && e.fileList;
+  }
+
   const [Product] = Form.useForm();
   const onFinish = async (values) => {
     console.log("J'ai ça ", values);
 
     const formData = new FormData();
-    formData.append("productImage", values.image.file.originFileObj);
+    formData.append("productImage", values.image[0].originFileObj);
     formData.append("name", values.name);
     formData.append("description", values.description);
-    formData.append("categories", values.categories);
-    formData.append("allergenes", values.allergenes);
+    for (var i = 0; i < values.categories.length; i++) {
+      formData.append('categories[]', values.categories[i]);
+    }
+    for (var i = 0; i < values.allergenes.length; i++) {
+      formData.append('allergenes[]', values.allergenes[i]);
+    }
     formData.append("price_type", values.price_type);
     formData.append("price", values.price);
     formData.append("promotion", false);
     formData.append("highlighted", false);
     formData.append("available", true);
 
-    await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -45,6 +59,29 @@ const AddProducts = ({ token }) => {
     }).catch((err) => {
       console.log(err);
     });
+
+    if (res.status && res.status === 200) {
+      notification['success']({
+        message: "BRAVO",
+        description: "BRAVO, vous venez de rajouter un produit sur le site boucherie-teirlinck.fr ! Vous pouvez maintenant le consulter dans votre liste de produits ",
+        placement: "topRight",
+        duration: 0,
+        style: {
+          width: 500,
+        }
+      })
+    } else {
+      notification['error']({
+        message: "OUPS",
+        description: "Une erreur s'est produite, votre produit n'a pas été ajouté, veuillez réessayer",
+        placement: "topRight",
+        duration: 0,
+        style: {
+          width: 500,
+        }
+      })
+    }
+
   };
   useEffect(() => {
     if (!admin(token)) {
@@ -96,7 +133,7 @@ const AddProducts = ({ token }) => {
           name="register"
           onFinish={onFinish}
           scrollToFirstError
-          
+
         >
           <Form.Item
             name="name"
@@ -127,7 +164,15 @@ const AddProducts = ({ token }) => {
           <Form.Item
             name="image"
             label="Image du produit"
-            valuePropName="fileLists"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: 'Please select your country!',
+              },
+            ]}
           >
             <Dragger {...props}>
               <p className="ant-upload-drag-icon">
@@ -139,6 +184,7 @@ const AddProducts = ({ token }) => {
           <Form.Item
             name="categories"
             label="Choisissez le type de produit (ex : charcuterie, etc. - choix multiples possibles)"
+            initialValue={[]}
             rules={[
               {
                 required: true,
@@ -168,6 +214,7 @@ const AddProducts = ({ token }) => {
           <Form.Item
             name="allergenes"
             label="Allergènes"
+            initialValue={[]}
             rules={[
               {
                 required: false,

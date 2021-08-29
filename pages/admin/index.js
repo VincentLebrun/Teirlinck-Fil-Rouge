@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AdminLayout from "../../components/AdminLayout"
-import { Tag, Space, Button, Popconfirm, Table, Input } from 'antd';
+import { Tag, Space, Button, Popconfirm, Table, Input, notification } from 'antd';
 import Link from "next/link";
 import { admin } from "../../middleware/admin"
 import { useRouter } from 'next/router'
@@ -30,23 +30,36 @@ const index = ({ token }) => {
 
 
     async function deleteProduct(id) {
-        console.log("ok");
-        await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
+       const res = await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
             method: 'DELETE',
             headers: {
-                'Authorization': "Bearer" + token,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ _id: id })
         }).catch(error => console.log(error));
 
-        const allProducts = [...products];
-        const index = allProducts.findIndex((item) => item._id === id);
 
-        allProducts.splice(index, 1);
-        console.log(allProducts);
-        setProducts(allProducts);
+        if (res.status && res.status === 200) {
+            const allProducts = [...products];
+            const index = allProducts.findIndex((item) => item._id === id);
+    
+            allProducts.splice(index, 1);
+            console.log(allProducts);
+            setProducts(allProducts);
+        } else {
+            notification['error']({
+                message: "OUPS",
+                description: "Une erreur s'est produite, votre produit n'a pas été supprimé, veuillez réessayer",
+                placement: "topRight",
+                duration: 0,
+                style: {
+                    width: 500,
+                }
+            })
+        }
+        
 
     };
 

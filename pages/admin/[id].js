@@ -1,11 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
-import { Tag, Space, Button, Popconfirm, Form, Input, Select, InputNumber, Switch, Table } from 'antd';
+import { Tag, Space, Button, Popconfirm, Form, Input, Select, InputNumber, Switch, Table, notification } from 'antd';
 import { admin } from "../../middleware/admin"
 import { useRouter } from 'next/router'
+import { Upload, message } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
+
+
+const { Dragger } = Upload;
 
 const ProductAdmin = ({ product, token }) => {
     const router = useRouter();
+
+    const props = {
+        name: 'productFile',
+        multiple: false,
+        accept: "image/*",
+        maxCount: 1
+    };
+
+    function normFile(e) {
+        if (Array.isArray(e)) {
+            return e;
+        }
+        if (e.fileList.length > 1) {
+            e.fileList.shift();
+        }
+        return e && e.fileList;
+    }
 
 
     const [useProduct, setUseProduct] = useState(product);
@@ -14,7 +36,7 @@ const ProductAdmin = ({ product, token }) => {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (!admin(token)){
+        if (!admin(token)) {
             router.push("/")
         }
     }, [])
@@ -59,18 +81,17 @@ const ProductAdmin = ({ product, token }) => {
 
         setUseProduct(newAvailable);
 
-
-
-
     };
 
     const onFinish = async (values) => {
+
+        console.log("J'ai ça ", values);
 
         const newProduct = {
             ...useProduct,
             name: values.name,
             description: values.description,
-            image: values.image,
+            productImage: values.image ? values.image[0].originFileObj : useProduct.image,
             price_type: values.price_type,
             price: values.price,
             promotion: useProduct.promotion,
@@ -80,17 +101,54 @@ const ProductAdmin = ({ product, token }) => {
             highlighted: useProduct.highlighted
         }
 
-        console.log(newProduct);
+        var formData = new FormData();
 
-        await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
+        for (var key in newProduct) {
+            if (key == "categories") {
+                for (var i = 0; i < values.categories.length; i++) {
+                    formData.append('categories[]', values.categories[i]);
+                }
+            } else if (key == "allergenes") {
+                for (var i = 0; i < values.allergenes.length; i++) {
+                    formData.append('allergenes[]', values.allergenes[i]);
+                }
+            } else {
+                formData.append(key, newProduct[key]);
+            }
+
+        }
+
+        const res = await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newProduct)
+            body: formData
         }).catch(error => console.log(error));
+
+
+        if (res.status && res.status === 200) {
+            notification['success']({
+                message: "BRAVO",
+                description: `BRAVO, vous venez de modifier ${useProduct.name} sur le site boucherie-teirlinck.fr ! Vous pouvez maintenant consulter la modification dans votre liste de produits `,
+                placement: "topRight",
+                duration: 0,
+                style: {
+                    width: 500,
+                }
+            })
+        } else {
+            notification['error']({
+                message: "OUPS",
+                description: "Une erreur s'est produite, votre produit n'a pas été modifié, veuillez réessayer",
+                placement: "topRight",
+                duration: 0,
+                style: {
+                    width: 500,
+                }
+            })
+        }
+
 
         setUseProduct(newProduct);
     };
@@ -140,7 +198,7 @@ const ProductAdmin = ({ product, token }) => {
             render: (text, item) => (
                 <Space size="middle">
                     <div className="product-img">
-                        <img src={item.image} alt="" />
+                        <img src={process.env.NEXT_PUBLIC_URL + item.image} alt="" />
                     </div>
                 </Space>
             ),
@@ -236,7 +294,6 @@ const ProductAdmin = ({ product, token }) => {
                 onFinish={onFinish}
             >
 
-
                 <Form.Item
                     name="name"
                     initialValue={useProduct.name}
@@ -254,8 +311,19 @@ const ProductAdmin = ({ product, token }) => {
                     <Input.TextArea />
                 </Form.Item>
 
-                <Form.Item name="image" label="Url de l'image" initialValue={useProduct.image}>
-                    <Input />
+                <Form.Item
+                    name="image"
+                    label="Image du produit"
+                    valuePropName="fileList"
+                    getValueFromEvent={normFile}
+                    hasFeedback
+                >
+                    <Dragger {...props}>
+                        <p className="ant-upload-drag-icon">
+                            <InboxOutlined />
+                        </p>
+                        <p className="ant-upload-text">Glisser et déposer un fichier dans cette zone pour uploader</p>
+                    </Dragger>
                 </Form.Item>
 
 

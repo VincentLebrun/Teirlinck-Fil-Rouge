@@ -41,7 +41,7 @@ module.exports = (server) => {
     ProductController.create(req, res);
   });
 
-  server.put("/products", checkAuth, checkAuthAdmin, async (req, res) => {
+  server.put("/products", checkAuth, checkAuthAdmin, upload.single('productImage'), async (req, res) => {
     ProductController.update(req, res);
   });
 

@@ -16,9 +16,9 @@ module.exports = {
             id: req.body.id,
             name: req.body.name,
             description: req.body.description,
-            image: req.file.path,
+            image: req.file ? req.file.path : req.body.productImage,
             categories: req.body.categories,
-            allergenes: req.body.allergenes,
+            allergenes: req.body.allergenes ? req.body.allergenes : [],
             price_type: req.body.price_type,
             price: req.body.price,
             promotion: req.body.promotion,
@@ -30,10 +30,11 @@ module.exports = {
         });
     },
     update(req, res) {
-        console.log(req.body);
+        const newProduct = { ...req.body, image: req.file ? req.file.path : req.body.productImage, allergenes: req.body.allergenes? req.body.allergenes : [] }
+        
         const id = req.body._id;
         if (id) {
-            Product.findByIdAndUpdate(id, req.body).then(product => {
+            Product.findByIdAndUpdate(id, newProduct).then(product => {
                 res.send(`Mise à jour du produit ${product.name}`);
             });
         } else {

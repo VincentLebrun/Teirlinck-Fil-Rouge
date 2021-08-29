@@ -39,8 +39,6 @@ const RegistrationForm = () => {
       validated: false,
     }
   
-
-
     const res = await fetch(process.env.NEXT_PUBLIC_API_USERS, {
       method: 'POST',
       headers: {
