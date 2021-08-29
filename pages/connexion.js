@@ -13,7 +13,7 @@ const ConnexionForm = ({ setToken }) => {
 
     const onFinish = async (values) => {
 
-        const res = await fetch("http://localhost:4000/login", {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_LOGIN, {
             method: "POST",
             headers: {
                 "Accept": "application/json",
