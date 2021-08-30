@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Row, Col, Form, Input, notification } from "antd";
 import Link from "next/link";
 import { useRouter } from 'next/router'
+import { isLogin } from "../middleware/isLogin"
 //Exemple d'utilisation com!parative de mot de passe
 //
 // (async ()=> {
@@ -21,7 +22,12 @@ import { useRouter } from 'next/router'
 const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
-const RegistrationForm = () => {
+const RegistrationForm = ({ token }) => {
+  useEffect(() => {
+    if (isLogin(token)) {
+      router.push("/")
+    }
+  }, [])
   const router = useRouter();
   const [form] = Form.useForm();
 

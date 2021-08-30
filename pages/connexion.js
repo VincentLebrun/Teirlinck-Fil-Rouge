@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Row, Col, Form, Input, Select, notification } from "antd";
 import Link from 'next/link'
 const { Option } = Select;
 import cookieCutter from 'cookie-cutter'
 import { Router, useRouter } from 'next/router'
+import { isLogin } from "../middleware/isLogin"
 
+const ConnexionForm = ({ setToken, token }) => {
 
+    useEffect(() => {
+        if (isLogin(token)) {
+          router.push("/")
+        }
+    }, [])
 
-const ConnexionForm = ({ setToken }) => {
     const router = useRouter();
     const [form] = Form.useForm();
 
