@@ -11,6 +11,8 @@ import {
 import { Button, Input } from 'antd';
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { admin } from "../../../middleware/admin"
+
 
 const Order = ({ token }) => {
     const { Header, Sider, Content } = Layout;
@@ -43,6 +45,9 @@ const Order = ({ token }) => {
 
 
     useEffect(() => {
+        if (!admin(token)){
+            router.push("/")
+        }
         const id = router.query.id
         console.log(id);
         getOrder(id);

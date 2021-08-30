@@ -2,6 +2,33 @@ const ProductController = require("../controllers/product");
 const UserController = require("../controllers/user");
 const OrderController = require("../controllers/order");
 const checkAuth = require("../middleware/check-auth");
+<<<<<<< HEAD
+=======
+const checkAuthAdmin = require("../middleware/check-auth-admin");
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString().replace(/:|\./g, '') + '-' + file.originalname)
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter
+});
+>>>>>>> 21da3d6110a1abd97dede226666b5db0eb67264f
 
 module.exports = (server) => {
   // PRODUITS
@@ -13,6 +40,7 @@ module.exports = (server) => {
     ProductController.get(req, res);
   });
 
+<<<<<<< HEAD
   server.post("/products", checkAuth, async (req, res) => {
     ProductController.create(req, res);
   });
@@ -22,12 +50,27 @@ module.exports = (server) => {
   });
 
   server.delete("/products", checkAuth, (req, res) => {
+=======
+  server.post("/products", checkAuth, checkAuthAdmin, upload.single('productImage'), async (req, res) => {
+    ProductController.create(req, res);
+  });
+
+  server.put("/products", checkAuth, checkAuthAdmin, upload.single('productImage'), async (req, res) => {
+    ProductController.update(req, res);
+  });
+
+  server.delete("/products", checkAuth, checkAuthAdmin, (req, res) => {
+>>>>>>> 21da3d6110a1abd97dede226666b5db0eb67264f
     ProductController.delete(req, res);
   });
 
   // UTILISATEURS
 
+<<<<<<< HEAD
   server.get("/users", checkAuth, (req, res, next) => {
+=======
+  server.get("/users", checkAuth, checkAuthAdmin, (req, res, next) => {
+>>>>>>> 21da3d6110a1abd97dede226666b5db0eb67264f
     UserController.getAll(req, res);
   });
 
@@ -39,17 +82,29 @@ module.exports = (server) => {
     UserController.create(req, res);
   });
 
+<<<<<<< HEAD
   server.put("/users", checkAuth, async (req, res) => {
     UserController.update(req, res);
   });
 
   server.delete("/users", checkAuth, (req, res) => {
+=======
+  server.put("/users", checkAuth, checkAuthAdmin, async (req, res) => {
+    UserController.update(req, res);
+  });
+
+  server.delete("/users", checkAuth, checkAuthAdmin, (req, res) => {
+>>>>>>> 21da3d6110a1abd97dede226666b5db0eb67264f
     UserController.delete(req, res);
   });
 
   // COMMANDES
 
+<<<<<<< HEAD
   server.get("/orders", checkAuth, (req, res) => {
+=======
+  server.get("/orders", checkAuth, checkAuthAdmin, (req, res) => {
+>>>>>>> 21da3d6110a1abd97dede226666b5db0eb67264f
     OrderController.getAll(req, res);
   });
 
@@ -57,6 +112,7 @@ module.exports = (server) => {
     OrderController.get(req, res);
   });
 
+<<<<<<< HEAD
   server.post("/orders", checkAuth, async (req, res) => {
     OrderController.create(req, res);
   });
@@ -66,6 +122,17 @@ module.exports = (server) => {
   });
 
   server.delete("/orders", checkAuth, (req, res) => {
+=======
+  server.post("/orders", checkAuth, checkAuthAdmin, async (req, res) => {
+    OrderController.create(req, res);
+  });
+
+  server.put("/orders", checkAuth, checkAuthAdmin, async (req, res) => {
+    OrderController.update(req, res);
+  });
+
+  server.delete("/orders", checkAuth, checkAuthAdmin, (req, res) => {
+>>>>>>> 21da3d6110a1abd97dede226666b5db0eb67264f
     OrderController.delete(req, res);
   });
 
@@ -75,7 +142,11 @@ module.exports = (server) => {
     UserController.login(req, res);
   });
 
+<<<<<<< HEAD
   server.post("reset-password", (req, res) => {
+=======
+  server.post("/resetpassword", (req, res) => {
+>>>>>>> 21da3d6110a1abd97dede226666b5db0eb67264f
     crypto.randomBytes(32, (err, buffer) => {
       if (err) {
         console.log(err);
@@ -93,7 +164,11 @@ module.exports = (server) => {
             from: "no-reply",
             subject: "password reset",
             html: `<p>Vous avez sollicité un changement de mot de passe</p>
+<<<<<<< HEAD
                     <h5>Cliquez sur ce <a href="http://localhost:3000/resetpassword${token}" >lien</a> pour le changer </h5>`,
+=======
+                          <h5>Cliquez sur ce <a href="http://localhost:3000/resetpassword${token}" >lien</a> pour le changer </h5>`,
+>>>>>>> 21da3d6110a1abd97dede226666b5db0eb67264f
           });
           res.json({ message: "Validez votre e-mail" });
         });

@@ -1,6 +1,5 @@
 import { Button, Row, Col, Form, Input } from "antd";
 import Link from "next/link";
-// import { Mailer } from "nodemailer-react";
 
 const ResetPassword = () => {
   const [form] = Form.useForm();

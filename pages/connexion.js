@@ -1,16 +1,23 @@
-import React, { useState } from "react";
-import { Button, Row, Col, Form, Input, Select } from "antd";
+import React, { useState, useEffect } from "react";
+import { Button, Row, Col, Form, Input, Select, notification } from "antd";
 import Link from "next/link";
 const { Option } = Select;
 import cookieCutter from "cookie-cutter";
 import { Router, useRouter } from "next/router";
+import { isLogin } from "../middleware/isLogin";
 
-const ConnexionForm = ({ setToken }) => {
+const ConnexionForm = ({ setToken, token }) => {
+  useEffect(() => {
+    if (isLogin(token)) {
+      router.push("/");
+    }
+  }, []);
+
   const router = useRouter();
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    const res = await fetch("http://localhost:4000/login", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_LOGIN, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -28,7 +35,22 @@ const ConnexionForm = ({ setToken }) => {
 
       setToken(res.token);
       router.push("/");
+    } else {
+      notification["error"]({
+        message: "Informations incorrectes",
+        description:
+          "Votre adresse mail ou votre mot de passe est incorrect, veuillez réessayer",
+        placement: "topRight",
+        duration: 15,
+        style: {
+          width: 500,
+          // fontSize: "larger"
+        },
+      });
     }
+
+    setToken(res.token);
+    router.push("/");
   };
 
   return (
@@ -42,7 +64,10 @@ const ConnexionForm = ({ setToken }) => {
               </Link>
             </Col>
             <div className="pastille-login">
-              <i className="fi-rr-spinner-alt"></i>
+              <i
+                onClick={() => router.push("/")}
+                className="fi-rr-cross-small"
+              ></i>
             </div>
             <Col xl={16}>
               <hr />

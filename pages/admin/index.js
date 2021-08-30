@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import AdminLayout from "../../components/AdminLayout"
-import { Tag, Space, Button, Popconfirm, Table, Input } from 'antd';
+import { Tag, Space, Button, Popconfirm, Table, Input, notification } from 'antd';
 import Link from "next/link";
+import { admin } from "../../middleware/admin"
+import { useRouter } from 'next/router'
+
 
 const index = ({ token }) => {
+    const router = useRouter();
 
+    const [data, setData] = useState();
     const [products, setProducts] = useState();
 
     const { Search } = Input;
@@ -12,33 +17,49 @@ const index = ({ token }) => {
 
     async function getProducts() {
         await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS)
-            .then(response => response.json()).then(json => { setProducts(json) });
+            .then(response => response.json()).then(json => { setProducts(json), setData(json) });
 
     }
 
     useEffect(() => {
-       getProducts();
+        if (!admin(token)){
+            router.push("/")
+        }
+        getProducts();
     }, [])
 
 
     async function deleteProduct(id) {
-        console.log("ok");
-        await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
+       const res = await fetch(process.env.NEXT_PUBLIC_API_PRODUCTS, {
             method: 'DELETE',
             headers: {
-                'Authorization': "Bearer" + token,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ _id: id })
         }).catch(error => console.log(error));
 
-        const allProducts = [...products];
-        const index = allProducts.findIndex((item) => item._id === id);
 
-        allProducts.splice(index, 1);
-        console.log(allProducts);
-        setProducts(allProducts);
+        if (res.status && res.status === 200) {
+            const allProducts = [...products];
+            const index = allProducts.findIndex((item) => item._id === id);
+    
+            allProducts.splice(index, 1);
+            console.log(allProducts);
+            setProducts(allProducts);
+        } else {
+            notification['error']({
+                message: "OUPS",
+                description: "Une erreur s'est produite, votre produit n'a pas été supprimé, veuillez réessayer",
+                placement: "topRight",
+                duration: 0,
+                style: {
+                    width: 500,
+                }
+            })
+        }
+        
 
     };
 
@@ -65,7 +86,7 @@ const index = ({ token }) => {
             render: (text, item) => (
                 <Space size="middle">
                     <div className="product-img">
-                        <img src={item.image} alt="" />
+                        <img src={process.env.NEXT_PUBLIC_URL + item.image} alt="" />
                     </div>
                 </Space>
             ),

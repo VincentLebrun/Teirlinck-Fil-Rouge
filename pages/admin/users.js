@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import AdminLayout from "../../components/AdminLayout"
 import { Space, Button, Switch, Popconfirm, Table, Input } from 'antd';
+import { admin } from "../../middleware/admin"
+import { useRouter } from 'next/router'
 
 
 const users = ({ token }) => {
-
+    const router = useRouter();
     console.log(token);
+    const [data, setData] = useState();
     const [users, setUsers] = useState();
 
     const { Search } = Input;
@@ -20,11 +23,14 @@ const users = ({ token }) => {
                 'Content-Type': 'application/json'
             },
         })
-            .then(response => response.json()).then(json => { setUsers(json) });
+            .then(response => response.json()).then(json => { setUsers(json) ,  setData(json)});
 
     }
 
     useEffect(() => {
+        if (!admin(token)){
+            router.push("/")
+        }
        getUsers();
     }, [])
 
