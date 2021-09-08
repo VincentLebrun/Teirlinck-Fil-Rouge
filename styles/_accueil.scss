@@ -5,7 +5,7 @@
     position: relative;
     img {
         width: auto;
-        transform : translate(0, -50px);
+        transform: translate(0, -50px);
     }
 
     .slogan {
@@ -122,7 +122,7 @@
     .contact {
         box-shadow: 22px 10px 42px -14px rgba(0, 0, 0, 0.69);
         height: 100%;
-        
+
         padding: 20px;
         background-color: $color-black;
         color: $color-white;
@@ -188,23 +188,19 @@
     }
 }
 
-
 @media screen and (max-width: 450px) {
- .descript{
-     margin-bottom: 320px;
- }
-
-
+    .descript {
+        margin-bottom: 320px;
+    }
 }
 
 @media screen and (max-width: 576px) {
-    
     .seemore {
         font-size: 1.2rem;
     }
     .home-content {
         img {
-            transform : translate(-600px, -450px);
+            transform: translate(-600px, -450px);
         }
         height: 35rem;
         .slogan-cart {
@@ -253,10 +249,9 @@
 }
 
 @media screen and (max-width: 768px) {
-.contact-section {
-    margin-left: 0px !important;
-}
-
+    .contact-section {
+        margin-left: 0px !important;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 992px) {
@@ -266,7 +261,7 @@
     .home-content {
         height: 35rem;
         img {
-            transform : translate(-600px, -450px);
+            transform: translate(-600px, -450px);
         }
         .slogan-cart {
             h1 {
@@ -317,7 +312,7 @@
     .home-content {
         height: 45rem;
         img {
-            transform : translate(-300px, -300px);
+            transform: translate(-300px, -300px);
         }
         .slogan-cart {
             h1 {
@@ -362,4 +357,8 @@
             }
         }
     }
+}
+
+.notDisplaying {
+    display: none;
 }

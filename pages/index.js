@@ -4,6 +4,7 @@ import products from "../product";
 import Footer from "../components/Footer";
 import Section from "../components/Section";
 import Seemore from "../components/Seemore";
+import Seeless from "../components/Seeless";
 import ProductElement from "../components/ProductElement";
 import { Row, Col } from "antd";
 import Link from "next/link";
@@ -25,7 +26,20 @@ export default function Home({ data }) {
   const SeeMore = (name) => {
     if (name == "sold") {
       setSoldSlice(soldSlice + 4);
-    } else setMomentSlice(momentSlice + 4);
+    } else if (name == "moment") {
+      setMomentSlice(momentSlice + 4);
+    }
+  };
+
+  const SeeLess = (name) => {
+    if (name == "sold") {
+      if (soldSlice > 4) {
+        setSoldSlice(soldSlice - 4);
+      }
+    } else if (name == "moment") {
+      if (momentSlice > 4)
+        setMomentSlice(momentSlice - 4);
+    }
   };
 
   const listMomentProducts = produits
@@ -59,6 +73,9 @@ export default function Home({ data }) {
         />
       );
     });
+
+  const numberSoldProducts = produits.filter((item) => item.promotion === true).length
+  const numberMomentProducts = produits.filter((item) => item.highlighted === true).length
 
   // if (loading) {
   //   return <p>Chargement en cours !</p>;
@@ -98,7 +115,8 @@ export default function Home({ data }) {
           <Row className="moment-section" gutter={[24, 24]} justify="center">
             {listMomentProducts}
           </Row>
-          <Seemore action={() => SeeMore("moment")} />
+          <Seemore action={() => SeeMore("moment")} display={numberMomentProducts} slice={momentSlice} />
+          <Seeless action={() => SeeLess("moment")} display={momentSlice} />
         </Row>
 
         <Row justify="center">
@@ -110,7 +128,8 @@ export default function Home({ data }) {
             {listSoldProducts}
           </Row>
 
-          <Seemore action={() => SeeMore("sold")} />
+          <Seemore action={() => SeeMore("sold")} display={numberSoldProducts} slice={soldSlice} />
+          <Seeless action={() => SeeLess("sold")} display={soldSlice} />
 
         </Row>
 
