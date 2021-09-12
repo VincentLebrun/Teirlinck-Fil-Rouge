@@ -4,15 +4,18 @@ const OrderController = require("../controllers/order");
 const checkAuth = require("../middleware/check-auth");
 const checkAuthAdmin = require("../middleware/check-auth-admin");
 const multer = require('multer');
+const sharp = require('sharp');
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, new Date().toISOString().replace(/:|\./g, '') + '-' + file.originalname)
-  }
-});
+const storage = multer.memoryStorage();
+
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './uploads/');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, new Date().toISOString().replace(/:|\./g, '') + '-' + file.originalname)
+//   }
+// });
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
@@ -38,7 +41,21 @@ module.exports = (server) => {
   });
 
   server.post("/products", checkAuth, checkAuthAdmin, upload.single('productImage'), async (req, res) => {
-    ProductController.create(req, res);
+    console.log(req.file);
+
+    const id = new Date().toISOString().replace(/:|\./g, '');
+
+    const path = 'uploads/' + id + '-' + req.file.originalname + '.webp';
+
+    try {
+      await sharp(req.file.buffer).webp({ quality: 80 })
+        .resize({ width: 350, height: 350 })
+        .toFile('./uploads/' + id + '-' + req.file.originalname + '.webp');
+    } catch (error) {
+      console.log('error while processing image', error)
+    }
+
+    ProductController.create(req, res, path);
   });
 
   server.put("/products", checkAuth, checkAuthAdmin, upload.single('productImage'), async (req, res) => {

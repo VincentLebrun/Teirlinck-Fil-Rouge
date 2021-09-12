@@ -11,12 +11,12 @@ module.exports = {
             res.send(product);
         });
     },
-    create(req, res) {
+    create(req, res, path) {
         const product = new Product({
             id: req.body.id,
             name: req.body.name,
             description: req.body.description,
-            image: req.file ? req.file.path : req.body.productImage,
+            image: path ? path : req.body.productImage,
             categories: req.body.categories,
             allergenes: req.body.allergenes ? req.body.allergenes : [],
             price_type: req.body.price_type,
