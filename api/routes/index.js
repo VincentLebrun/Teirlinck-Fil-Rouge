@@ -8,6 +8,8 @@ const sharp = require('sharp');
 
 const storage = multer.memoryStorage();
 
+// MULTER INITIALIZATION
+
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
 //     cb(null, './uploads/');
@@ -31,6 +33,7 @@ const upload = multer({
 });
 
 module.exports = (server) => {
+
   // PRODUITS
   server.get("/products", (req, res) => {
     ProductController.getAll(req, res);
@@ -59,7 +62,20 @@ module.exports = (server) => {
   });
 
   server.put("/products", checkAuth, checkAuthAdmin, upload.single('productImage'), async (req, res) => {
-    ProductController.update(req, res);
+
+    const id = new Date().toISOString().replace(/:|\./g, '');
+
+    const path = 'uploads/' + id + '-' + req.file.originalname + '.webp';
+
+    try {
+      await sharp(req.file.buffer).webp({ quality: 80 })
+        .resize({ width: 350, height: 350 })
+        .toFile('./uploads/' + id + '-' + req.file.originalname + '.webp');
+    } catch (error) {
+      console.log('error while processing image', error)
+    }
+
+    ProductController.update(req, res, path);
   });
 
   server.delete("/products", checkAuth, checkAuthAdmin, (req, res) => {

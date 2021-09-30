@@ -29,9 +29,9 @@ module.exports = {
             res.send({ result: `Création du produit ${product.name}` });
         });
     },
-    update(req, res) {
-        const newProduct = { ...req.body, image: req.file ? req.file.path : req.body.productImage, allergenes: req.body.allergenes? req.body.allergenes : [] }
-        
+    update(req, res, path) {
+        const newProduct = { ...req.body, image: path ? path : req.body.productImage, allergenes: req.body.allergenes ? req.body.allergenes : [] }
+
         const id = req.body._id;
         if (id) {
             Product.findByIdAndUpdate(id, newProduct).then(product => {
