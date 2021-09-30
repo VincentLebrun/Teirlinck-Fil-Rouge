@@ -37,7 +37,7 @@ const Products = ({ data }) => {
                 <Col key={item.id} sm={22} lg={12} xxl={8}>
                     <Link href={`/products/${item._id}`}>
                         <div className="product">
-                            <img src={item.image} alt="" />
+                            <img src={process.env.NEXT_PUBLIC_URL + item.image} alt="" />
                             <p>{item.name}</p>
                             <p>{item.price}€ {item.price_type === "/kg" ? "/kg" : "/pc"}</p>
                         </div>
@@ -99,25 +99,25 @@ const Products = ({ data }) => {
                                     </SubMenu>
                                     <Menu.Item key="6" onClick={() => renderFilteredProducts("volaille")}>
                                         Volaille
-                            </Menu.Item>
+                                    </Menu.Item>
                                     <Menu.Item key="7" onClick={() => renderFilteredProducts("abats")}>
                                         Abats
-                            </Menu.Item>
+                                    </Menu.Item>
                                     <Menu.Item key="8" onClick={() => renderFilteredProducts("barbecue")}>
                                         Barbecue
-                            </Menu.Item>
+                                    </Menu.Item>
                                     <Menu.Item key="9" onClick={() => renderFilteredProducts("charcuterie")}>
                                         Charcuterie
-                            </Menu.Item>
+                                    </Menu.Item>
                                     <Menu.Item key="10" onClick={() => renderFilteredProducts("traiteur")}>
                                         Traiteur
-                            </Menu.Item>
+                                    </Menu.Item>
                                     <Menu.Item key="11" onClick={() => renderFilteredProducts("promotions")}>
                                         Promotions
-                            </Menu.Item>
+                                    </Menu.Item>
                                     <Menu.Item className="mg-bt-0" key="12" onClick={() => renderFilteredProducts("news")}>
                                         Nouveautés
-                            </Menu.Item>
+                                    </Menu.Item>
                                 </Menu>
                             </Col>
                             <Col xl={18}>
