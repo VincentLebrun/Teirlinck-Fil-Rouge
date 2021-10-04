@@ -321,8 +321,8 @@
                           {{#each products}}
                           <tr style="text-align: center;">
                             <td style="text-align: start;">{{this.name}}</td>
-                            <td style="text-align: center;">{{this.quantity}}</td>
-                            <td style="text-align: end;">{{this.price}} €</td>
+                            <td style="text-align: center;">{{this.quantity}} {{this.price_type}}</td>
+                            <td style="text-align: end;">{{this.subPrice}} €</td>
                           </tr>
                           {{/each}}
                           <tr style="border-top: 1px solid red;">

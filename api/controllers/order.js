@@ -59,9 +59,21 @@ module.exports = {
                     let template = handlebars.compile(html);
                     let replacements = {
                         firstname: req.body.user_firstname,
-                        products: req.body.products,
+                        products: req.body.products.map(item => {
+                            const subPriceKg = Math.round(((item.quantity / 1000) * item.price) * 100) / 100;
+                            const subPricePc = item.quantity * item.price;
+                            return (
+                                {
+                                    ...item,
+                                    subPrice: item.price_type == "/kg" ? subPriceKg : subPricePc,
+                                    price_type: item.price_type == "/kg" ? "g" : "pc"
+                                }
+                            )
+
+                        }),
                         total: req.body.total
                     }
+                    console.log(replacements.products);
                     let htmlToSend = template(replacements);
                     transporter.sendMail({
                         from: `Boucherie Teirlinck <teirlinck.boucherie@gmail.com>`,
