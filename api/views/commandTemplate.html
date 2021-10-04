@@ -229,7 +229,7 @@
                               <div
                                 style="color: #e5eaf5; line-height: 140%; text-align: center; word-wrap: break-word;">
                                 <p style="font-size: 14px; line-height: 140%;"><span
-                                    style="font-size: 30px; line-height: 42px;"><strong>Bienvenue {{firstname}}
+                                    style="font-size: 30px; line-height: 42px;"><strong>Merci pour votre Commande
                                       !</strong></span></p>
                               </div>
 
@@ -289,37 +289,70 @@
                         <tbody>
                           <tr>
                             <td
-                              style="overflow-wrap:break-word;word-break:break-word;padding:33px 43px;font-family:'Cabin',sans-serif;"
+                              style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;font-family:'Cabin',sans-serif;"
                               align="left">
 
                               <div style="line-height: 160%; text-align: center; word-wrap: break-word;">
-                                <p style="font-size: 14px; line-height: 160%;"><strong><span
-                                      style="font-size: 22px; line-height: 35.2px;">Bonjour Tanguy, bienvenue sur le
-                                      site </span></strong></p>
-                                <p style="font-size: 14px; line-height: 160%;"><strong><span
-                                      style="font-size: 22px; line-height: 35.2px;">boucherie-teirlinck.fr.</span></strong><br />&nbsp;
-                                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>
-                                <p style="font-size: 14px; line-height: 160%;"><span
-                                    style="font-size: 16px; line-height: 25.6px;">Votre compte vient d'&ecirc;tre
-                                    cr&eacute;&eacute;, la prochaine &eacute;tape est de passer en boucherie pour faire
-                                    valider votre compte aupr&egrave;s de l'un de nos employ&eacute;s.</span><br /><span
-                                    style="font-size: 16px; line-height: 25.6px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
-                                <p style="font-size: 14px; line-height: 160%;"><span
-                                    style="font-size: 16px; line-height: 25.6px;">Apr&egrave;s cette &eacute;tape vous
-                                    pourrez alors commander sur le site et venir r&eacute;cup&eacute;rer votre
+                                <p style="line-height: 160%; font-size: 14px;"><span
+                                    style="font-size: 22px; line-height: 35.2px;">Bonjour {{firstname}}, notre
+                                    &eacute;quipe vous remercie d'avoir pass&eacute; commande sur
+                                    boucherie-teirlinck.fr.</span></p>
+                                <p style="line-height: 160%; font-size: 14px;">&nbsp;</p>
+                                <p style="line-height: 160%; font-size: 14px;"><span
+                                    style="font-size: 18px; line-height: 28.8px;">Vous recevrez un mail lorsque votre
+                                    commande sera pr&ecirc;te. </span></p>
+                                <p style="line-height: 160%; font-size: 14px;"><span
+                                    style="font-size: 18px; line-height: 28.8px;">Voici le r&eacute;capitulatif de votre
                                     commande.</span></p>
-                                <p style="font-size: 14px; line-height: 160%;">&nbsp;</p>
-                                <p style="font-size: 14px; line-height: 160%;"><span
-                                    style="font-size: 16px; line-height: 25.6px;">Si vous ne venez pas
-                                    r&eacute;cup&eacute;rer votre commande, nos &eacute;quipes se r&eacute;servent le
-                                    droit de supprimer votre compte.</span></p>
                               </div>
 
                             </td>
                           </tr>
                         </tbody>
                       </table>
+
+                      <table style="margin:auto; width: 60%;font-size: 20px;">
+                        <tbody>
+                          <tr style="border-bottom: 1px solid red;">
+                            <td style="text-align: start;">Produit(s)</td>
+                            <td style="text-align: center;">Quantité</td>
+                            <td style="text-align: end;">Prix</td>
+                          </tr>
+                          {{#each products}}
+                          <tr style="text-align: center;">
+                            <td style="text-align: start;">{{this.name}}</td>
+                            <td style="text-align: center;">{{this.quantity}}</td>
+                            <td style="text-align: end;">{{this.price}} €</td>
+                          </tr>
+                          {{/each}}
+                          <tr style="border-top: 1px solid red;">
+                            <td style="text-align: start;">Total estimé*</td>
+                            <td style="text-align: center;"></td>
+                            <td style="text-align: end;">{{total}}€</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0"
+                        width="100%" border="0">
+                        <tbody>
+                          <tr>
+                            <td
+                              style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;font-family:'Cabin',sans-serif;"
+                              align="left">
+
+                              <div style="line-height: 160%; text-align: center; word-wrap: break-word;">
+                                <p style="line-height: 160%; font-size: 14px;"><span
+                                    style="font-size: 13px; line-height: 35.2px;"> * Le prix peut légèrement varier lors
+                                    de la pesée.</span></p>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+
 
                       <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0"
                         width="100%" border="0">

@@ -55,18 +55,17 @@ module.exports = {
         });
         order.save().then(() => {
             User.findById(req.body.user_id).then(user => {
-                readHTMLFile(process.cwd() + '/views/createAccountTemplate.html', function (err, html) {
+                readHTMLFile(process.cwd() + '/views/commandTemplate.html', function (err, html) {
                     let template = handlebars.compile(html);
-                    const tableau = req.body.products.map(item => { `<p>hello</p>` })
                     let replacements = {
                         firstname: req.body.user_firstname,
-                        tableau
+                        products: req.body.products,
+                        total: req.body.total
                     }
                     let htmlToSend = template(replacements);
                     transporter.sendMail({
                         from: `Boucherie Teirlinck <teirlinck.boucherie@gmail.com>`,
-                        to: "tan.deshayes@gmail.com",
-                        // user.mail
+                        to: user.mail,
                         subject: 'Votre commande sur boucherie-teirlinck.fr',
                         html: htmlToSend,
                         attachments: [
