@@ -60,8 +60,8 @@ module.exports = {
                     let replacements = {
                         firstname: req.body.user_firstname,
                         products: req.body.products.map(item => {
-                            const subPriceKg = Math.round(((item.quantity / 1000) * item.price) * 100) / 100;
-                            const subPricePc = item.quantity * item.price;
+                            const subPriceKg = Number(((item.price * item.quantity) / 1000).toFixed(2));
+                            const subPricePc = Number(((item.price * item.quantity)).toFixed(2));
                             return (
                                 {
                                     ...item,
@@ -69,7 +69,6 @@ module.exports = {
                                     price_type: item.price_type == "/kg" ? "g" : "pc"
                                 }
                             )
-
                         }),
                         total: req.body.total
                     }
