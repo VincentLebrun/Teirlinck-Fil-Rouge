@@ -72,7 +72,6 @@ module.exports = {
                         }),
                         total: req.body.total
                     }
-                    console.log(replacements.products);
                     let htmlToSend = template(replacements);
                     transporter.sendMail({
                         from: `Boucherie Teirlinck <teirlinck.boucherie@gmail.com>`,
@@ -100,7 +99,33 @@ module.exports = {
         const id = req.body._id;
         if (id) {
             Order.findByIdAndUpdate(id, req.body).then(order => {
-                res.send(`Mise à jour de la commande n° ${order.numero}`);
+                User.findById(req.body.user_id).then(user => {
+                    if (req.body.ready) {
+                        readHTMLFile(process.cwd() + '/views/commandReadyTemplate.html', function (err, html) {
+                            let template = handlebars.compile(html);
+                            let replacements = {
+                                firstname: req.body.user_firstname
+                            }
+                            let htmlToSend = template(replacements);
+                            transporter.sendMail({
+                                from: `Boucherie Teirlinck <teirlinck.boucherie@gmail.com>`,
+                                to: user.mail,
+                                subject: 'Votre commande est prête, venez la récupérer en boutique !',
+                                html: htmlToSend,
+                                attachments: [
+                                    {
+                                        filename: 'teirlinck.png',
+                                        path: process.cwd() + '/views/images/teirlinck.png',
+                                        cid: "image"
+                                    }
+                                ]
+                            }).catch(err => {
+                                console.log(err);
+                            })
+                        })
+                    }
+                    res.send(`Mise à jour de la commande n° ${order.numero}`);
+                });
             });
         } else {
             res.send({ result: "Un id est nécessaire pour mettre à jour la commande" });
