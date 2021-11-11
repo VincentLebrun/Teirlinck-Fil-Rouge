@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 
 const users = ({ token }) => {
     const router = useRouter();
-    console.log(token);
     const [data, setData] = useState();
     const [users, setUsers] = useState();
 
@@ -15,37 +14,36 @@ const users = ({ token }) => {
 
 
     async function getUsers() {
-        await fetch(process.env.NEXT_PUBLIC_API_USERS,{
+        await fetch(process.env.NEXT_PUBLIC_API_USERS, {
             method: 'GET',
             headers: {
-                'Authorization' : `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
         })
-            .then(response => response.json()).then(json => { setUsers(json) ,  setData(json)});
+            .then(response => response.json()).then(json => { setUsers(json), setData(json) });
 
     }
 
     useEffect(() => {
-        if (!admin(token)){
+        if (!admin(token)) {
             router.push("/")
         }
-       getUsers();
+        getUsers();
     }, [])
 
-    const onSearch = (value) => { 
+    const onSearch = (value) => {
         value = value.toLowerCase();
         const filteredUsers = data.filter((item) => item.firstname.toLowerCase().includes(value) || item.lastname.toLowerCase().includes(value));
         setUsers(filteredUsers);
     }
 
     async function deleteUser(id) {
-        console.log("ok");
         await fetch(process.env.NEXT_PUBLIC_API_USERS, {
             method: 'DELETE',
             headers: {
-                'Authorization' : `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -76,20 +74,18 @@ const users = ({ token }) => {
             validated: allUsers[index].validated
         }
 
-        console.log(user);
-
 
         await fetch(process.env.NEXT_PUBLIC_API_USERS, {
             method: 'PUT',
             headers: {
-                'Authorization' : `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
         }).catch(error => console.log(error));
 
-        
+
 
     };
 
@@ -109,12 +105,12 @@ const users = ({ token }) => {
             ...allUsers[index],
             admin: allUsers[index].admin
         }
-        
+
 
         await fetch(process.env.NEXT_PUBLIC_API_USERS, {
             method: 'PUT',
             headers: {
-                'Authorization' : `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -214,7 +210,7 @@ async function getUsers() {
     const res = await fetch(process.env.NEXT_PUBLIC_API_USERS, {
         method: 'GET',
         headers: {
-            
+
         }
     })
         .then(response => response.json())
