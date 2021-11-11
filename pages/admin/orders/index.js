@@ -30,18 +30,16 @@ const index = ({ token }) => {
     }
 
     useEffect(() => {
-        if (!admin(token)){
+        if (!admin(token)) {
             router.push("/")
         }
         getOrders();
     }, [])
 
     function handleChange(value) {
-        console.log(`selected ${value}`);
 
         if (value === "readyNotDelivered") {
             const filteredOrders = data.filter((item) => item.ready && !item.delivered);
-            console.log(filteredOrders);
             setOrders(filteredOrders);
         }
         if (value === "notReady") {
@@ -113,8 +111,6 @@ const index = ({ token }) => {
             allOrders[index].delivered = true;
         }
 
-
-
         const order = {
             ...allOrders[index],
             delivered: allOrders[index].delivered
@@ -143,20 +139,32 @@ const index = ({ token }) => {
     }
 
     async function changeReadyStatus(id) {
-        const allOrders = [...orders];
-        const index = allOrders.findIndex((item) => item._id === id);
+        // const allOrders = [...orders];
+        const index = orders.findIndex((item) => item._id === id);
 
-        if (allOrders[index].ready) {
-            allOrders[index].ready = false;
-        } else {
-            allOrders[index].ready = true;
+        if (index === -1) {
+            return;
         }
 
+        const allOrders = orders.map(item => {
+            if (item._id === id) {
+                item.ready = !item.ready;
+            }
 
-        const order = {
-            ...allOrders[index],
-            ready: allOrders[index].ready
-        }
+            return item;
+        })
+
+        // if (allOrders[index].ready) {
+        //     allOrders[index].ready = false;
+        // } else {
+        //     allOrders[index].ready = true;
+        // }
+
+        // const order = {
+        //     ...allOrders[index],
+        //     ready: allOrders[index].ready
+        // }
+
 
         const res = await fetch(process.env.NEXT_PUBLIC_API_ORDERS, {
             method: 'PUT',
@@ -165,7 +173,7 @@ const index = ({ token }) => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(order)
+            body: JSON.stringify(allOrders[index])
 
         }).catch(error => console.log(error));
 
@@ -268,7 +276,7 @@ const index = ({ token }) => {
                     <Option value="notReady">Commandes non prêtes</Option>
                 </Select>
                 <Search className="search-input" placeholder="Chercher un client" onSearch={onSearch} style={{ width: 200 }}></Search>
-                <Table columns={columns} dataSource={orders} rowKey="id" />
+                <Table columns={columns} dataSource={orders} rowKey={order => order.numero} />
             </AdminLayout>
 
         </div>

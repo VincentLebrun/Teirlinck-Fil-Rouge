@@ -13,30 +13,30 @@ const Footer = () => {
               <img src="/logo.svg" alt="" />
             </Col>
 
-            <Col md={16}xs={22} align="middle">
+            <Col md={16} xs={22} align="middle">
               <p className="pCalendar">
                 <i className="fi-rr-calendar"> </i>Horaires
               </p>
-              <p>Lundi: 09h00 - 13h00, 16h00 - 18h45</p>
-              <p>Mardi: 09h00 - 14h00, 16h00 - 18h45</p>
+              <p>Lundi: 09h00 - 13h00, 16h00 - 19h30</p>
+              <p>Mardi: 09h00 - 13h00, 16h00 - 19h30</p>
               <p>Mercredi: Fermé</p>
-              <p>Jeudi: 09h00 - 14h00, 16h00 - 18h45</p>
-              <p>Vendredi: 09h00 - 14h00, 16h00 - 18h45</p>
-              <p>Samedi: 08h30 - 15h00</p>
-              <p>Dimanche: Fermé</p>
+              <p>Jeudi: 09h00 - 13h00, 16h00 - 19h30</p>
+              <p>Vendredi: 09h00 - 13h00, 16h00 - 19h30</p>
+              <p>Samedi: 08h30 - 14h30</p>
+              <p>Dimanche et jours feriés :  Fermé</p>
             </Col>
 
             <Col className="iconFooter" md={3} xs={7} >
-              
-                  <Link href="https://www.facebook.com/boucherie.teirlinck">
-                    <FacebookOutlined style={{ fontSize: "3rem" }} />
-                  </Link>
 
-                  <Link href="/api/hello">
-                    <InstagramOutlined style={{ fontSize: "3rem" }} />
-                  </Link>
-                
-             
+              <Link href="https://www.facebook.com/boucherie.teirlinck">
+                <FacebookOutlined style={{ fontSize: "3rem" }} />
+              </Link>
+
+              <Link href="/api/hello">
+                <InstagramOutlined style={{ fontSize: "3rem" }} />
+              </Link>
+
+
             </Col>
           </Row>
         </Col>

@@ -128,7 +128,7 @@ export default function Home({ data }) {
               <div className="tutorial">
                 <button><Link href="CreateAccount">Je me crée un compte</Link></button>
                 <hr />
-                <button>Je valide mon compte en boucherie</button>
+                <button>J'attends la validation de mon compte</button>
                 <hr />
                 <button>Je me connecte puis je passe commande</button>
                 <hr />
@@ -158,13 +158,14 @@ export default function Home({ data }) {
                 <p>
                   <i className="fi-rr-calendar"> </i>Horaires
                 </p>
-                <p>Lundi: 09h00 - 13h00, 16h00 - 18h45</p>
-                <p>Mardi: 09h00 - 14h00, 16h00 - 18h45</p>
+                <p>Lundi: 09h00 - 13h00, 16h00 - 19h30</p>
+                <p>Mardi: 09h00 - 13h00, 16h00 - 19h30</p>
                 <p>Mercredi: Fermé</p>
-                <p>Jeudi: 09h00 - 14h00, 16h00 - 18h45</p>
-                <p>Vendredi: 09h00 - 14h00, 16h00 - 18h45</p>
-                <p>Samedi: 08h30 - 15h00</p>
-                <p>Dimanche: Fermé</p>
+                <p>Jeudi: 09h00 - 13h00, 16h00 - 19h30</p>
+                <p>Vendredi: 09h00 - 13h00, 16h00 - 19h30</p>
+                <p>Samedi: 08h30 - 14h30</p>
+                <p>Dimanche et jours feriés :  Fermé</p>
+
               </div>
             </div>
           </Col>

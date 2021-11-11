@@ -88,10 +88,6 @@ module.exports = (server) => {
     UserController.getAll(req, res);
   });
 
-  // server.get("/users/:id", (req, res) => {
-  //     UserController.get(req, res);
-  // });
-
   server.post("/users", async (req, res) => {
     UserController.create(req, res);
   });

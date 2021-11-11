@@ -32,7 +32,7 @@ const Order = ({ token }) => {
 
 
     async function getOrder(orderId) {
-        await fetch("http://localhost:4000/orders/" + orderId, {
+        await fetch(process.env.NEXT_PUBLIC_API_ORDERS + "/" + orderId, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -45,7 +45,7 @@ const Order = ({ token }) => {
 
 
     useEffect(() => {
-        if (!admin(token)){
+        if (!admin(token)) {
             router.push("/")
         }
         const id = router.query.id

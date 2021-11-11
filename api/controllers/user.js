@@ -3,6 +3,31 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const { Result } = require("antd");
 const jwt = require("jsonwebtoken");
+const nodemailer = require('nodemailer');
+var handlebars = require('handlebars');
+let fs = require('fs');
+
+let readHTMLFile = function (path, callback) {
+    fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
+        if (err) {
+            throw err;
+            callback(err);
+        }
+        else {
+            callback(null, html);
+        }
+    });
+};
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    auth: {
+        user: 'teirlinck.boucherie@gmail.com',
+        pass: 'jxqikpgtlupqlqyd'
+    }
+});
+
 module.exports = {
     getAll(req, res) {
         User.find().then(users => {
@@ -34,8 +59,30 @@ module.exports = {
                     validated: req.body.validated,
                 });
                 user.save().then(() => {
-                    res.send({ result: `Création de l'utilisateur ${user.firstname}` });
-                });
+                    readHTMLFile(process.cwd() + '/views/createAccountTemplate.html', function (err, html) {
+                        let template = handlebars.compile(html);
+                        let replacements = {
+                            firstname: req.body.firstname
+                        }
+                        let htmlToSend = template(replacements);
+                        transporter.sendMail({
+                            from: `Boucherie Teirlinck <teirlinck.boucherie@gmail.com>`,
+                            to: req.body.mail,
+                            subject: 'Félicitation pour votre inscription sur boucherie-teirlinck.fr',
+                            html: htmlToSend,
+                            attachments: [
+                                {
+                                    filename: 'teirlinck.png',
+                                    path: process.cwd() + '/views/images/teirlinck.png',
+                                    cid: "image"
+                                }
+                            ]
+                        }).catch(err => {
+                            console.log(err);
+                        })
+                        res.send({ result: `Création de l'utilisateur ${user.firstname}` });
+                    });
+                })
             }
         })
 
@@ -81,10 +128,10 @@ module.exports = {
                             userPhone: user[0].phone,
                             userAdmin: user[0].admin,
                             userValidated: user[0].validated
-                        }, process.env.JWT_KEY, 
-                        {
-                            expiresIn: "2h"
-                        }
+                        }, process.env.JWT_KEY,
+                            {
+                                expiresIn: "2h"
+                            }
                         );
                         return res.status(200).json({
                             message: "Auth successful",
