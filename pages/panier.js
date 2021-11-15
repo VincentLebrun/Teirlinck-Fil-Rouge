@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
-import { Row, Col, notification } from 'antd';
+import { Row, Col, notification, Checkbox, Modal, Input } from 'antd';
 import Link from 'next/link'
 import jwt from "jsonwebtoken";
-
 
 const panier = ({ cart, setCart, token }) => {
 
@@ -21,6 +20,42 @@ const panier = ({ cart, setCart, token }) => {
     //     localStorage.setItem('cart', JSON.stringify(panier));
 
     // }, [panier]);
+
+    const [modal, setModal] = useState(false);
+
+    const { TextArea } = Input;
+
+    function verifyCommand() {
+        if (cart.items.length === 0) {
+            notification['warning']({
+                message: "Attention !",
+                description: "Vous devez remplir votre panier d'au moins un article avant de confirmer votre commande.",
+                placement: "topRight"
+            });
+        } else if (!token) {
+            notification['warning']({
+                message: "Attention !",
+                description: "Vous devez vous connecter avant de passer commande.",
+                placement: "topRight"
+            });
+        } else {
+
+            // fonction de décryptage du token 
+            const decryptedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_KEY);
+
+            if (decryptedToken.userValidated) {
+                setModal(true);
+
+            } else {
+                notification['warning']({
+                    message: "Attention !",
+                    description: "Vous devez attendre que votre compte soit validé avant de pouvoir passer commande sur notre site.",
+                    placement: "topRight"
+                });
+            }
+
+        }
+    }
 
 
     const itemPrice = (price, quantity, type) => {
@@ -46,6 +81,7 @@ const panier = ({ cart, setCart, token }) => {
                 total: 0
             });
     }
+
 
     async function addCommand() {
         if (cart.items.length === 0) {
@@ -97,7 +133,7 @@ const panier = ({ cart, setCart, token }) => {
                         placement: "topRight",
                         duration: 0
                     });
-    
+
                     let newPanier = cart;
                     newPanier = { items: [], total: 0 };
                     setCart({
@@ -111,7 +147,7 @@ const panier = ({ cart, setCart, token }) => {
                         placement: "topRight"
                     });
                 }
-                
+
             } else {
                 notification['warning']({
                     message: "Attention !",
@@ -155,13 +191,20 @@ const panier = ({ cart, setCart, token }) => {
         }
     }
 
+    const updateVacuum = (e, id) => {
 
+        const newCart = cart.items.map(item => {
+            if (item.id === id) {
+                item.vacuum = e.target.checked
+            }
+            return item;
+        })
 
-    // if (loading) {
-    //     return (
-    //         <p>Chargement en cours !</p>
-    //     )
-    // }
+        setCart({
+            ...cart,
+            items: newCart
+        })
+    }
 
     let testTotal = 0;
     const listPanier = cart.items.map(item => {
@@ -171,6 +214,7 @@ const panier = ({ cart, setCart, token }) => {
 
         return (
             <div key={item.id}>
+
                 <hr className="top-hr" />
 
                 <Row justify="space-between">
@@ -193,10 +237,16 @@ const panier = ({ cart, setCart, token }) => {
 
                             <Col className="nameAndPrice" xs={9} sm={10}>
                                 <h2>{item.name}</h2>
+
                                 <div className="input-weight">
                                     <input onChange={(e) => updateQuantity(e, item.price, item.price_type, item.name, item.quantity)} type="number" placeholder={item.quantity} step={item.price_type === "/kg" ? "25" : "1"} min={item.price_type === "/kg" ? "25" : "1"} value={item.quantity} />
                                     <p>{priceType(item.price_type)}</p>
                                 </div>
+                                <div>
+                                    Sous vide
+                                    <Checkbox onChange={(e) => updateVacuum(e, item.id)} checked={item.vacuum} />
+                                </div>
+
                             </Col>
                         </Row>
 
@@ -220,6 +270,21 @@ const panier = ({ cart, setCart, token }) => {
 
     return (
         <div>
+            <Modal
+                title="Quelque chose à rajouter?"
+                centered
+                visible={modal}
+                onOk={() => addCommand()}
+                onCancel={() => setModal(false)}
+                okText="Valider la commande"
+                cancelText="Annuler"
+            >
+                <TextArea
+                    placeholder="Rentrez ici votre commentaire, exemple `Tranches épaisses de jambon` "
+                    autoSize={{ minRows: 4, maxRows: 14 }}
+                    maxLength={500}
+                />
+            </Modal>
             {/* <Header
                 panier_length={cart.items.length}
             /> */}
@@ -261,14 +326,14 @@ const panier = ({ cart, setCart, token }) => {
 
                         <h1>Total ({cart.items.length} produits): ~{Number(testTotal.toFixed(2))}€</h1>
 
-                        <button onClick={() => addCommand()} >Valider la commande</button>
+                        <button onClick={() => verifyCommand()} >Valider la commande</button>
 
                     </Col>
                 </Row>
             </Col>
 
             <Footer />
-        </div>
+        </div >
     )
 }
 
