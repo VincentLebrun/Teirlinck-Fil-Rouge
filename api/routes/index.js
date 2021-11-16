@@ -146,7 +146,11 @@ module.exports = (server) => {
         console.log(err);
       }
       const token = buffer.toString("hex");
-      User.findOne({ email: req.body.email }).then((user) => {
+      const email = req.body.email
+      let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if(email.match(filter)) 
+      return 
+      User.findOne({email}).then((user) => {
         if (!user) {
           return res
             .status(422)
@@ -157,7 +161,7 @@ module.exports = (server) => {
         }
         user.resetToken = token;
         user.expireToken = Date.now() + 3600000;
-        user.save().then((result) => {
+        user.save().then((res) => {
           transporter.sendMail({
             to: user.email,
             from: "no-reply",
@@ -165,7 +169,9 @@ module.exports = (server) => {
             html: `<p>Vous avez sollicité un changement de mot de passe</p>
                           <h5>Cliquez sur ce <a href="http://localhost:3000/resetpassword${token}" >lien</a> pour le changer </h5>`,
           });
-          res.json({ message: "Validez votre e-mail" });
+          // res.json({ message: "Validez votre e-mail" });
+          res.json("ok")
+          console.log(res)
         });
         //
       });
