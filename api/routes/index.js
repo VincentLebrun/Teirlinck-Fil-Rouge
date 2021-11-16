@@ -3,8 +3,8 @@ const UserController = require("../controllers/user");
 const OrderController = require("../controllers/order");
 const checkAuth = require("../middleware/check-auth");
 const checkAuthAdmin = require("../middleware/check-auth-admin");
-const multer = require('multer');
-const sharp = require('sharp');
+const multer = require("multer");
+const sharp = require("sharp");
 
 const storage = multer.memoryStorage();
 
@@ -20,7 +20,7 @@ const storage = multer.memoryStorage();
 // });
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
     cb(null, true);
   } else {
     cb(null, false);
@@ -29,11 +29,10 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({
   storage: storage,
-  fileFilter: fileFilter
+  fileFilter: fileFilter,
 });
 
 module.exports = (server) => {
-
   // PRODUITS
   server.get("/products", (req, res) => {
     ProductController.getAll(req, res);
@@ -43,40 +42,53 @@ module.exports = (server) => {
     ProductController.get(req, res);
   });
 
-  server.post("/products", checkAuth, checkAuthAdmin, upload.single('productImage'), async (req, res) => {
-    console.log(req.file);
+  server.post(
+    "/products",
+    checkAuth,
+    checkAuthAdmin,
+    upload.single("productImage"),
+    async (req, res) => {
+      console.log(req.file);
 
-    const id = new Date().toISOString().replace(/:|\./g, '');
+      const id = new Date().toISOString().replace(/:|\./g, "");
 
-    const path = 'uploads/' + id + '-' + req.file.originalname + '.webp';
+      const path = "uploads/" + id + "-" + req.file.originalname + ".webp";
 
-    try {
-      await sharp(req.file.buffer).webp({ quality: 80 })
-        .resize({ width: 350, height: 350 })
-        .toFile('./uploads/' + id + '-' + req.file.originalname + '.webp');
-    } catch (error) {
-      console.log('error while processing image', error)
+      try {
+        await sharp(req.file.buffer)
+          .webp({ quality: 80 })
+          .resize({ width: 350, height: 350 })
+          .toFile("./uploads/" + id + "-" + req.file.originalname + ".webp");
+      } catch (error) {
+        console.log("error while processing image", error);
+      }
+
+      ProductController.create(req, res, path);
     }
+  );
 
-    ProductController.create(req, res, path);
-  });
+  server.put(
+    "/products",
+    checkAuth,
+    checkAuthAdmin,
+    upload.single("productImage"),
+    async (req, res) => {
+      const id = new Date().toISOString().replace(/:|\./g, "");
 
-  server.put("/products", checkAuth, checkAuthAdmin, upload.single('productImage'), async (req, res) => {
+      const path = "uploads/" + id + "-" + req.file.originalname + ".webp";
 
-    const id = new Date().toISOString().replace(/:|\./g, '');
+      try {
+        await sharp(req.file.buffer)
+          .webp({ quality: 80 })
+          .resize({ width: 350, height: 350 })
+          .toFile("./uploads/" + id + "-" + req.file.originalname + ".webp");
+      } catch (error) {
+        console.log("error while processing image", error);
+      }
 
-    const path = 'uploads/' + id + '-' + req.file.originalname + '.webp';
-
-    try {
-      await sharp(req.file.buffer).webp({ quality: 80 })
-        .resize({ width: 350, height: 350 })
-        .toFile('./uploads/' + id + '-' + req.file.originalname + '.webp');
-    } catch (error) {
-      console.log('error while processing image', error)
+      ProductController.update(req, res, path);
     }
-
-    ProductController.update(req, res, path);
-  });
+  );
 
   server.delete("/products", checkAuth, checkAuthAdmin, (req, res) => {
     ProductController.delete(req, res);
@@ -136,7 +148,12 @@ module.exports = (server) => {
       const token = buffer.toString("hex");
       User.findOne({ email: req.body.email }).then((user) => {
         if (!user) {
-          return res.status(422).json({ error: "Cet e-mail n'existe pas " });
+          return res
+            .status(422)
+            .json({
+              error:
+                "Votre demande a été prise en compte, veuillez vérifier votre boite mail",
+            });
         }
         user.resetToken = token;
         user.expireToken = Date.now() + 3600000;

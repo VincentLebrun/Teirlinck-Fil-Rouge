@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Row, Col, Form, Input, notification } from "antd";
 import Link from "next/link";
-import { useRouter } from 'next/router'
-import { isLogin } from "../middleware/isLogin"
+import { useRouter } from "next/router";
+import { isLogin } from "../middleware/isLogin";
 //Exemple d'utilisation com!parative de mot de passe
 //
 // (async ()=> {
@@ -25,9 +25,9 @@ const saltRounds = 10;
 const RegistrationForm = ({ token }) => {
   useEffect(() => {
     if (isLogin(token)) {
-      router.push("/")
+      router.push("/");
     }
-  }, [])
+  }, []);
   const router = useRouter();
   const [form] = Form.useForm();
 
@@ -43,64 +43,73 @@ const RegistrationForm = ({ token }) => {
       phone: values.phone,
       admin: false,
       validated: false,
-    }
-  
+    };
+
     const res = await fetch(process.env.NEXT_PUBLIC_API_USERS, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(sendAccount)
-    }).catch(error => console.log(error));
+      body: JSON.stringify(sendAccount),
+    }).catch((error) => console.log(error));
 
-    if(res.status && res.status === 200){
-      notification['success']({
+    if (res.status && res.status === 200) {
+      notification["success"]({
         message: "BRAVO",
-        description: "BRAVO, vous venez de créer votre compte sur boucherie-teirlinck.fr, vous pouvez maintenant vous connecter. Il ne vous reste plus qu'à vous rendre en boucherie pour faire valider votre compte avant de pouvoir passer commande ! ",
+        description:
+          "BRAVO, vous venez de créer votre compte sur boucherie-teirlinck.fr, vous pouvez maintenant vous connecter. Il ne vous reste plus qu'à vous rendre en boucherie pour faire valider votre compte avant de pouvoir passer commande ! ",
         placement: "topRight",
         duration: 0,
         style: {
           width: 500,
           // fontSize: "larger"
-        }
-    });
-    router.push("/connexion");
+        },
+      });
+      router.push("/connexion");
     } else if (res.status && res.status === 409) {
-      notification['warning']({
+      notification["warning"]({
         message: "Erreur",
-        description: "L'adresse e-mail que vous avez saisie est utilisée pour un compte déjà existant",
+        description:
+          "L'adresse e-mail que vous avez saisie est utilisée pour un compte déjà existant",
         placement: "topRight",
         duration: 0,
         style: {
           width: 500,
           // fontSize: "larger"
-        }
-    });
+        },
+      });
     } else {
-      notification['error']({
+      notification["error"]({
         message: "OUPS",
-        description: "Une erreur s'est produite, votre compte n'a pas pu être créé, veuillez réessayer",
+        description:
+          "Une erreur s'est produite, votre compte n'a pas pu être créé, veuillez réessayer",
         placement: "topRight",
         duration: 0,
         style: {
           width: 500,
           // fontSize: "larger"
-        }
-    });
+        },
+      });
     }
-
   };
 
   return (
     <main>
       <Row justify="center" align="middle" className="container1">
-        <Col xl={16}  xs={22}>
+        <Col xl={16} xs={22}>
           <Row className="black-container" justify="center" align="middle">
             <Col span={24}>
-              <Link href="/"><img src="/logo.svg" alt="" /></Link>
+              <Link href="/">
+                <img src="/logo.svg" alt="" />
+              </Link>
             </Col>
-            <div className="pastille-login"><i onClick={() => router.push("/")} className="fi-rr-cross-small"></i></div>
+            <div className="pastille-login">
+              <i
+                onClick={() => router.push("/")}
+                className="fi-rr-cross-small"
+              ></i>
+            </div>
             <Col xl={16}>
               <hr />
               <Form
@@ -109,41 +118,38 @@ const RegistrationForm = ({ token }) => {
                 onFinish={onFinish}
                 scrollToFirstError
               >
-                
-                  {/* <Row className="contain" justify="space-around" xs={16} xl={5}> */}
-                  <div className="input75">
-                    <Form.Item
-                      className="formInputStyle"
-                      label="Prénom"
-                      name="firstname"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Veuillez entrer votre prénom",
-                          whitespace: true,
-                        },
-                      ]}
-                    >
-                      <Input maxLength="90" />
-                    </Form.Item>
+                {/* <Row className="contain" justify="space-around" xs={16} xl={5}> */}
+                <div className="input75">
+                  <Form.Item
+                    className="formInputStyle"
+                    label="Prénom"
+                    name="firstname"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Veuillez entrer votre prénom",
+                        whitespace: true,
+                      },
+                    ]}
+                  >
+                    <Input maxLength="90" />
+                  </Form.Item>
 
-                    <Form.Item
-                      label="Nom"
-                      className="formInputStyle"
-                      name="lastname"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Veuillez entrez votre nom",
-                          whitespace: true,
-                        },
-                      ]}
-                    >
-                      <Input maxLength="90"/>
-                    </Form.Item>
-                  
-             
-                
+                  <Form.Item
+                    label="Nom"
+                    className="formInputStyle"
+                    name="lastname"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Veuillez entrez votre nom",
+                        whitespace: true,
+                      },
+                    ]}
+                  >
+                    <Input maxLength="90" />
+                  </Form.Item>
+
                   <Form.Item
                     label="Numéro de téléphone"
                     className="formInputStyle"
@@ -172,7 +178,7 @@ const RegistrationForm = ({ token }) => {
                       },
                     ]}
                   >
-                    <Input maxLength="90"/>
+                    <Input maxLength="90" />
                   </Form.Item>
 
                   <Form.Item
@@ -183,7 +189,7 @@ const RegistrationForm = ({ token }) => {
                     rules={[
                       {
                         message:
-                          "Le mot de passe doit contenir au minimum 8 caractères, une majuscule et un chiffre",
+                          "Le mot de passe doit contenir au minimum 8 caractères, une majuscule un chiffre et un caractère spécial ex ^*$ etc",
                         pattern: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}/,
                         required: true,
                       },
@@ -219,7 +225,7 @@ const RegistrationForm = ({ token }) => {
                     ]}
                   >
                     {/* <label>Confirmez le mot de passe</label> */}
-                    <Input.Password  maxLength="90"/>
+                    <Input.Password maxLength="90" />
                   </Form.Item>
                 </div>
                 <Form.Item>
@@ -228,7 +234,9 @@ const RegistrationForm = ({ token }) => {
                   </Button>
                 </Form.Item>
                 <p>
-                  <i className="fi-rr-info"></i>Avant de pouvoir passer commande sur notre site, il faudra au préalable valider votre compte en boucherie.
+                  <i className="fi-rr-info"></i>Avant de pouvoir passer commande
+                  sur notre site, il faudra au préalable valider votre compte en
+                  boucherie.
                 </p>
                 <hr />
               </Form>
