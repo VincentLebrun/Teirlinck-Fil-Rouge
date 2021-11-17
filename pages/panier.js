@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
-import { Row, Col, notification, Checkbox, Modal, Input } from 'antd';
+import { Row, Col, notification, Checkbox, Modal, Input, DatePicker, Select } from 'antd';
 import Link from 'next/link'
 import jwt from "jsonwebtoken";
+// import 'moment/locale/fr';
+// import locale from 'antd/es/date-picker/locale/fr_FR';
+
 
 const panier = ({ cart, setCart, token }) => {
 
@@ -23,7 +26,10 @@ const panier = ({ cart, setCart, token }) => {
 
     const [modal, setModal] = useState(false);
 
+
     const { TextArea } = Input;
+    const { Option } = Select;
+    const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 
     function verifyCommand() {
         if (cart.items.length === 0) {
@@ -284,6 +290,31 @@ const panier = ({ cart, setCart, token }) => {
                     autoSize={{ minRows: 4, maxRows: 14 }}
                     maxLength={500}
                 />
+
+                <DatePicker
+                    format={dateFormatList}
+                    showToday={false}
+                    disabledDate={(date) => {
+                        if (date != null) {
+                            const today = new Date();
+                            let yesterday = new Date(date._d);
+                            yesterday.setDate(yesterday.getDate() - 1);
+
+                            if (date._d < new Date()) return true;
+                            if (today.getHours() > 18 && yesterday.getDate() == today.getDate() && yesterday.getMonth() == today.getMonth()) return true;
+                            if (date._d.getDay() === 2 || date._d.getDay() === 4) {
+                                return false;
+                            } else {
+                                return true;
+                            };
+                        };
+                    }}
+                />
+
+                <Select defaultValue="matin">
+                    <Option value="matin">Matin</Option>
+                    <Option value="apres-midi">Après-Midi</Option>
+                </Select>
             </Modal>
             {/* <Header
                 panier_length={cart.items.length}
