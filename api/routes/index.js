@@ -5,8 +5,20 @@ const checkAuth = require("../middleware/check-auth");
 const checkAuthAdmin = require("../middleware/check-auth-admin");
 const multer = require("multer");
 const sharp = require("sharp");
-
 const storage = multer.memoryStorage();
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
+const User = require("../models/user");
+
+let transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: "teirlinck.boucherie@gmail.com",
+    pass: "jxqikpgtlupqlqyd",
+  },
+});
 
 // MULTER INITIALIZATION
 
@@ -140,39 +152,42 @@ module.exports = (server) => {
     UserController.login(req, res);
   });
 
-  server.post("/resetpassword", (req, res) => {
+  server.post("/resetpassword", (req, res, err) => {
+    console.log(req.body);
+
     crypto.randomBytes(32, (err, buffer) => {
       if (err) {
         console.log(err);
       }
       const token = buffer.toString("hex");
-      const email = req.body.email
-      let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-      if(email.match(filter)) 
-      return 
-      User.findOne({email}).then((user) => {
+
+      const email = req.body.mail;
+
+      console.log(email);
+      // let filter =
+      //   /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      // if (email.match(filter)) return;
+      User.findOne({ mail: email }).then((user) => {
+        console.log(user);
         if (!user) {
-          return res
-            .status(422)
-            .json({
-              error:
-                "Votre demande a été prise en compte, veuillez vérifier votre boite mail",
-            });
+          return res.status(422).json({
+            error:
+              "Votre demande a été prise en compte, veuillez vérifier votre boite mail",
+          });
         }
         user.resetToken = token;
-        user.expireToken = Date.now() + 3600000;
+
         user.save().then((res) => {
           transporter.sendMail({
-            to: user.email,
-            from: "no-reply",
-            subject: "password reset",
+            to: email,
+            from: `Boucherie Teirlinck <teirlinck.boucherie@gmail.com>`,
+            subject: "Changement de mot de passe",
             html: `<p>Vous avez sollicité un changement de mot de passe</p>
                           <h5>Cliquez sur ce <a href="http://localhost:3000/resetpassword${token}" >lien</a> pour le changer </h5>`,
           });
           // res.json({ message: "Validez votre e-mail" });
-          res.json("ok")
-          console.log(res)
         });
+
         //
       });
     });

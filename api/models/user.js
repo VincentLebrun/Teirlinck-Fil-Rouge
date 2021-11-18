@@ -11,7 +11,7 @@ const UserSchema = new Schema({
   phone: String,
   admin: Boolean,
   validated: Boolean,
-  resetPassword: String,
+  resetToken: String,
 });
 
 const User = mongoose.model("user", UserSchema);
