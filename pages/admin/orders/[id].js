@@ -74,6 +74,13 @@ const Order = ({ token }) => {
         return result;
     }
 
+    const convertToDateCommand = (timestamp) => {
+        const date = new Date(timestamp);
+        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        const result = date.toLocaleDateString('fr-FR', options);
+        return result;
+    }
+
 
     if (isLoading) {
         return <p>Chargement en cours ...</p>
@@ -130,6 +137,8 @@ const Order = ({ token }) => {
                         {listOrderProducts}
                         <p>Total estimé de la commande : {order.total} €</p>
                         <p>Numéro de téléphone du client : {order.user_phone}</p>
+                        <p>Commande à préparer pour le  : {convertToDateCommand(order.commandDate)} {order.commandPeriod}</p>
+                        <p>Commentaire additionnel  : {order.commandComment}</p>
                         <p>Statut de la commande : {order.ready ? "prête" : "non prête"} et {order.delivered ? "délivrée" : "non délivrée"}</p>
                     </div>
 

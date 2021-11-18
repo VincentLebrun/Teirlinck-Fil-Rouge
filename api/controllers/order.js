@@ -38,61 +38,75 @@ module.exports = {
         });
     },
     create(req, res) {
-        console.log(req.body);
-        const order = new Order({
-            numero: req.body.numero,
-            products: req.body.products,
-            // req.body.cart.items,
-            total: req.body.total,
-            // req.body.cart.total,
-            date: req.body.date,
-            user_id: req.body.user_id,
-            user_firstname: req.body.user_firstname,
-            user_lastname: req.body.user_lastname,
-            user_phone: req.body.user_phone,
-            delivered: req.body.delivered,
-            ready: req.body.ready
-        });
-        order.save().then(() => {
-            User.findById(req.body.user_id).then(user => {
-                readHTMLFile(process.cwd() + '/views/commandTemplate.html', function (err, html) {
-                    let template = handlebars.compile(html);
-                    let replacements = {
-                        firstname: req.body.user_firstname,
-                        products: req.body.products.map(item => {
-                            const subPriceKg = Number(((item.price * item.quantity) / 1000).toFixed(2));
-                            const subPricePc = Number(((item.price * item.quantity)).toFixed(2));
-                            return (
-                                {
-                                    ...item,
-                                    subPrice: item.price_type == "/kg" ? subPriceKg : subPricePc,
-                                    price_type: item.price_type == "/kg" ? "g" : "pc"
-                                }
-                            )
-                        }),
-                        total: req.body.total
-                    }
-                    let htmlToSend = template(replacements);
-                    transporter.sendMail({
-                        from: `Boucherie Teirlinck <teirlinck.boucherie@gmail.com>`,
-                        to: user.mail,
-                        subject: 'Votre commande sur boucherie-teirlinck.fr',
-                        html: htmlToSend,
-                        attachments: [
-                            {
-                                filename: 'teirlinck.png',
-                                path: process.cwd() + '/views/images/teirlinck.png',
-                                cid: "image"
+        const commandDate = new Date(req.body.commandDate);
+        console.log(commandDate);
+        console.log(new Date());
+        if (commandDate && commandDate > new Date()) {
+            if (commandDate.getDay() === 2 || commandDate.getDay() === 4) {
+                console.log(req.body);
+                const order = new Order({
+                    numero: req.body.numero,
+                    products: req.body.products,
+                    total: req.body.total,
+                    date: req.body.date,
+                    commandDate: req.body.commandDate,
+                    commandPeriod: req.body.commandPeriod,
+                    commandComment: req.body.commandComment,
+                    user_id: req.body.user_id,
+                    user_firstname: req.body.user_firstname,
+                    user_lastname: req.body.user_lastname,
+                    user_phone: req.body.user_phone,
+                    delivered: req.body.delivered,
+                    ready: req.body.ready
+                });
+                order.save().then(() => {
+                    User.findById(req.body.user_id).then(user => {
+                        readHTMLFile(process.cwd() + '/views/commandTemplate.html', function (err, html) {
+                            let template = handlebars.compile(html);
+                            let replacements = {
+                                firstname: req.body.user_firstname,
+                                products: req.body.products.map(item => {
+                                    const subPriceKg = Number(((item.price * item.quantity) / 1000).toFixed(2));
+                                    const subPricePc = Number(((item.price * item.quantity)).toFixed(2));
+                                    return (
+                                        {
+                                            ...item,
+                                            subPrice: item.price_type == "/kg" ? subPriceKg : subPricePc,
+                                            price_type: item.price_type == "/kg" ? "g" : "pc"
+                                        }
+                                    )
+                                }),
+                                total: req.body.total
                             }
-                        ]
-                    }).catch(err => {
-                        console.log(err);
+                            let htmlToSend = template(replacements);
+                            transporter.sendMail({
+                                from: `Boucherie Teirlinck <teirlinck.boucherie@gmail.com>`,
+                                to: user.mail,
+                                subject: 'Votre commande sur boucherie-teirlinck.fr',
+                                html: htmlToSend,
+                                attachments: [
+                                    {
+                                        filename: 'teirlinck.png',
+                                        path: process.cwd() + '/views/images/teirlinck.png',
+                                        cid: "image"
+                                    }
+                                ]
+                            }).catch(err => {
+                                console.log(err);
+                            })
+                        })
+                        res.send({ result: `Création de la commande n° ${order.numero}` });
                     })
-                })
-                res.send({ result: `Création de la commande n° ${order.numero}` });
-            })
 
-        });
+                });
+            }
+            else {
+                res.send({ result: "Vous ne pouvez pas rentrer une date qui n'est pas mardi ni jeudi" });
+            }
+        } else {
+            res.send({ result: "Vous ne pouvez pas rentrer une date antérieure à la date du jour" });
+        }
+
     },
     update(req, res) {
         console.log(req.body);

@@ -4,8 +4,8 @@ import Hero from "../components/Hero";
 import { Row, Col, notification, Checkbox, Modal, Input, DatePicker, Select } from 'antd';
 import Link from 'next/link'
 import jwt from "jsonwebtoken";
-// import 'moment/locale/fr';
-// import locale from 'antd/es/date-picker/locale/fr_FR';
+import 'moment/locale/fr';
+import locale from 'antd/lib/date-picker/locale/fr_FR';
 
 
 const panier = ({ cart, setCart, token }) => {
@@ -25,11 +25,15 @@ const panier = ({ cart, setCart, token }) => {
     // }, [panier]);
 
     const [modal, setModal] = useState(false);
+    const [commandDate, setCommandDate] = useState();
+    const [commandComment, setCommandComment] = useState("");
+    const [commandPeriod, setCommandPeriod] = useState("matin");
 
 
     const { TextArea } = Input;
     const { Option } = Select;
     const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+
 
     function verifyCommand() {
         if (cart.items.length === 0) {
@@ -102,7 +106,20 @@ const panier = ({ cart, setCart, token }) => {
                 description: "Vous devez vous connecter avant de passer commande.",
                 placement: "topRight"
             });
-        } else {
+        } else if (!commandDate) {
+            notification['warning']({
+                message: "Attention !",
+                description: "Vous devez remplir une date de récupération de votre commande.",
+                placement: "topRight"
+            });
+        } else if (!commandPeriod) {
+            notification['warning']({
+                message: "Attention !",
+                description: "Vous devez choisir de récupérer votre commande le matin ou l'après midi",
+                placement: "topRight"
+            });
+        }
+        else {
 
             // fonction de décryptage du token 
             const decryptedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_KEY);
@@ -114,6 +131,9 @@ const panier = ({ cart, setCart, token }) => {
                     products: cart.items,
                     total: cart.total,
                     date: Date.now(),
+                    commandDate: commandDate,
+                    commandPeriod: commandPeriod,
+                    commandComment: commandComment,
                     user_id: decryptedToken.userId,
                     user_firstname: decryptedToken.userFirstName,
                     user_lastname: decryptedToken.userLastname,
@@ -135,7 +155,7 @@ const panier = ({ cart, setCart, token }) => {
                 if (res.status == 200) {
                     notification['info']({
                         message: `Votre commande n°${order.numero} a bien été prise en compte !`,
-                        description: "Merci pour votre commande, celle-ci a bien été enregistrée, vous pourrez la récupérer dans notre boutique dans 48h.",
+                        description: "Merci pour votre commande, celle-ci a bien été enregistrée, vous pourrez la récupérer à la date indiquée.",
                         placement: "topRight",
                         duration: 0
                     });
@@ -146,6 +166,7 @@ const panier = ({ cart, setCart, token }) => {
                         items: [...newPanier.items],
                         total: 0
                     })
+                    setModal(false);
                 } else {
                     notification['error']({
                         message: "Attention !",
@@ -157,7 +178,7 @@ const panier = ({ cart, setCart, token }) => {
             } else {
                 notification['warning']({
                     message: "Attention !",
-                    description: "Vous devez valider votre compte dans notre boucherie avant de pouvoir passer commande sur notre site.",
+                    description: "Vous attendre que votre compte soit validé avant de pouvoir passer commande sur notre site.",
                     placement: "topRight"
                 });
             }
@@ -286,14 +307,21 @@ const panier = ({ cart, setCart, token }) => {
                 cancelText="Annuler"
             >
                 <TextArea
+                    onChange={(e) => setCommandComment(e.target.value)}
+                    value={commandComment}
                     placeholder="Rentrez ici votre commentaire, exemple `Tranches épaisses de jambon` "
                     autoSize={{ minRows: 4, maxRows: 14 }}
                     maxLength={500}
                 />
 
+                <p> A quel moment souhaitez vous venir récupérer votre commande? </p>
+                <p> Nous préparons les commandes uniquement le mardi et le jeudi.</p>
+
                 <DatePicker
                     format={dateFormatList}
+                    onChange={(e) => setCommandDate(e ? e._d : null)}
                     showToday={false}
+                    locale={locale}
                     disabledDate={(date) => {
                         if (date != null) {
                             const today = new Date();
@@ -311,7 +339,7 @@ const panier = ({ cart, setCart, token }) => {
                     }}
                 />
 
-                <Select defaultValue="matin">
+                <Select value={commandPeriod} onChange={(e) => setCommandPeriod(e)}>
                     <Option value="matin">Matin</Option>
                     <Option value="apres-midi">Après-Midi</Option>
                 </Select>
