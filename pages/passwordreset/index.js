@@ -1,15 +1,17 @@
 import { Button, Row, Col, Form, Input } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const ResetPassword = () => {
   const [form] = Form.useForm();
+  const router = useRouter();
 
   const onFinish = async (values) => {
     const resetPass = {
       mail: values.email,
     };
 
-    await fetch(process.env.NEXT_PUBLIC_API_RESET_PASSWORD, {
+    await fetch(process.env.NEXT_PUBLIC_API_RESET_PASSWORD + "/", {
       method: "POST",
       headers: {
         Accept: "application/json",
