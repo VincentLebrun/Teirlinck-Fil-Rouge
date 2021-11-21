@@ -165,7 +165,6 @@ function MyApp({ Component, pageProps }) {
           description: "Les commandes sont désactivées sur le site actuellement, vous pouvez néanmoins consulter nos produits et remplir votre panier pour une prochaine fois.",
           placement: "bottomRight",
           duration: 0,
-          closeIcon: (<div></div>),
           style: {
             width: 500,
           }
@@ -214,6 +213,7 @@ function MyApp({ Component, pageProps }) {
         token={token}
         setToken={setToken}
         manager={manager}
+        setManager={setManager}
       />
     </Fragment>
   );

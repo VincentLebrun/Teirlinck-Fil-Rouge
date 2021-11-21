@@ -3,7 +3,7 @@ import AdminLayout from "../../components/AdminLayout"
 import { Popconfirm, Input, Switch, Form, Button, notification } from 'antd';
 import { admin } from "../../middleware/admin"
 
-const index = ({ token, manager }) => {
+const index = ({ token, manager, setManager }) => {
 
     const [notifForm] = Form.useForm();
 
@@ -31,6 +31,7 @@ const index = ({ token, manager }) => {
         });
 
         if (res.status && res.status === 200) {
+            setManager(newAdmin);
             notification['success']({
                 message: "BRAVO",
                 description: "BRAVO, vous venez de modifier le message de notification sur le site, il s'affichera maintenant lorsque vous accédrez au site. ",
@@ -86,6 +87,7 @@ const index = ({ token, manager }) => {
         });
 
         if (res.status && res.status === 200) {
+            setManager(newHoraires);
             notification['success']({
                 message: "BRAVO",
                 description: "BRAVO, vous venez de modifier les horaires, vos clients n'auront maintenant plus d'excuse.",
@@ -113,7 +115,7 @@ const index = ({ token, manager }) => {
     async function updateValidCommands() {
         const newManager = { ...manager, validCommands: !manager.validCommands };
 
-        await fetch(process.env.NEXT_PUBLIC_API_MANAGER, {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_MANAGER, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -122,13 +124,36 @@ const index = ({ token, manager }) => {
             },
             body: JSON.stringify(newManager)
         }).catch(error => console.log(error));
+
+        if (res.status && res.status === 200) {
+            setManager(newManager);
+            notification['success']({
+                message: "BRAVO",
+                description: "BRAVO, vous venez modifier l'activation des commandes",
+                placement: "topRight",
+                duration: 0,
+                style: {
+                    width: 500,
+                }
+            })
+        } else {
+            notification['error']({
+                message: "OUPS",
+                description: "Une erreur s'est produite, votre modification n'a pas été prise en compte",
+                placement: "topRight",
+                duration: 0,
+                style: {
+                    width: 500,
+                }
+            })
+        }
 
     };
 
     async function updateMaintenance() {
         const newManager = { ...manager, maintenance: !manager.maintenance };
 
-        await fetch(process.env.NEXT_PUBLIC_API_MANAGER, {
+        const res = await fetch(process.env.NEXT_PUBLIC_API_MANAGER, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -137,6 +162,30 @@ const index = ({ token, manager }) => {
             },
             body: JSON.stringify(newManager)
         }).catch(error => console.log(error));
+
+
+        if (res.status && res.status === 200) {
+            setManager(newManager);
+            notification['success']({
+                message: "BRAVO",
+                description: "BRAVO, vous venez modifier la mise en maintenance du site",
+                placement: "topRight",
+                duration: 0,
+                style: {
+                    width: 500,
+                }
+            })
+        } else {
+            notification['error']({
+                message: "OUPS",
+                description: "Une erreur s'est produite, votre modification n'a pas été prise en compte",
+                placement: "topRight",
+                duration: 0,
+                style: {
+                    width: 500,
+                }
+            })
+        }
     }
 
     useEffect(() => {
