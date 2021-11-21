@@ -8,7 +8,7 @@ import 'moment/locale/fr';
 import locale from 'antd/lib/date-picker/locale/fr_FR';
 
 
-const panier = ({ cart, setCart, token }) => {
+const panier = ({ cart, setCart, token, manager }) => {
 
     // const [panier, setPanier] = useState();
     // const [loading, setLoading] = useState(true);
@@ -36,35 +36,44 @@ const panier = ({ cart, setCart, token }) => {
 
 
     function verifyCommand() {
-        if (cart.items.length === 0) {
-            notification['warning']({
-                message: "Attention !",
-                description: "Vous devez remplir votre panier d'au moins un article avant de confirmer votre commande.",
-                placement: "topRight"
-            });
-        } else if (!token) {
-            notification['warning']({
-                message: "Attention !",
-                description: "Vous devez vous connecter avant de passer commande.",
-                placement: "topRight"
-            });
-        } else {
-
-            // fonction de décryptage du token 
-            const decryptedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_KEY);
-
-            if (decryptedToken.userValidated) {
-                setModal(true);
-
-            } else {
+        if (manager?.validCommands) {
+            if (cart.items.length === 0) {
                 notification['warning']({
                     message: "Attention !",
-                    description: "Vous devez attendre que votre compte soit validé avant de pouvoir passer commande sur notre site.",
+                    description: "Vous devez remplir votre panier d'au moins un article avant de confirmer votre commande.",
                     placement: "topRight"
                 });
-            }
+            } else if (!token) {
+                notification['warning']({
+                    message: "Attention !",
+                    description: "Vous devez vous connecter avant de passer commande.",
+                    placement: "topRight"
+                });
+            } else {
 
+                // fonction de décryptage du token 
+                const decryptedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_KEY);
+
+                if (decryptedToken.userValidated) {
+                    setModal(true);
+
+                } else {
+                    notification['warning']({
+                        message: "Attention !",
+                        description: "Vous devez attendre que votre compte soit validé avant de pouvoir passer commande sur notre site.",
+                        placement: "topRight"
+                    });
+                }
+
+            }
+        } else {
+            notification['warning']({
+                message: "Attention !",
+                description: "Les commandes sont actuellement désactivées sur le site veuillez réessayer ultérieurement",
+                placement: "topRight"
+            });
         }
+
     }
 
 
@@ -391,7 +400,7 @@ const panier = ({ cart, setCart, token }) => {
                 </Row>
             </Col>
 
-            <Footer />
+            <Footer manager={manager} />
         </div >
     )
 }

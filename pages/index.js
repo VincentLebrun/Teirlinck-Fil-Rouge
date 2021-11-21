@@ -8,7 +8,7 @@ import ProductElement from "../components/ProductElement";
 import { Row, Col } from "antd";
 import Link from "next/link";
 
-export default function Home({ data }) {
+export default function Home({ data, manager }) {
   const [produits, setProduits] = useState(data);
 
   const [momentSlice, setMomentSlice] = useState(4);
@@ -158,13 +158,13 @@ export default function Home({ data }) {
                 <p>
                   <i className="fi-rr-calendar"> </i>Horaires
                 </p>
-                <p>Lundi: 09h00 - 13h00, 16h00 - 19h30</p>
-                <p>Mardi: 09h00 - 13h00, 16h00 - 19h30</p>
-                <p>Mercredi: Fermé</p>
-                <p>Jeudi: 09h00 - 13h00, 16h00 - 19h30</p>
-                <p>Vendredi: 09h00 - 13h00, 16h00 - 19h30</p>
-                <p>Samedi: 08h30 - 14h30</p>
-                <p>Dimanche et jours feriés :  Fermé</p>
+                <p>Lundi: {manager?.lundi}</p>
+                <p>Mardi: {manager?.mardi}</p>
+                <p>Mercredi: {manager?.mercredi}</p>
+                <p>Jeudi: {manager?.jeudi}</p>
+                <p>Vendredi: {manager?.vendredi}</p>
+                <p>Samedi: {manager?.samedi}</p>
+                <p>Dimanche et jours feriés : {manager?.dimanche}</p>
 
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function Home({ data }) {
         </Row>
       </Col>
 
-      <Footer />
+      <Footer manager={manager} />
     </div>
   );
 }

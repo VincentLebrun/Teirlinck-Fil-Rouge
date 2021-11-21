@@ -1,6 +1,7 @@
 const ProductController = require("../controllers/product");
 const UserController = require("../controllers/user");
 const OrderController = require("../controllers/order");
+const ManagerController = require("../controllers/manager");
 const checkAuth = require("../middleware/check-auth");
 const checkAuthAdmin = require("../middleware/check-auth-admin");
 const multer = require('multer');
@@ -154,4 +155,21 @@ module.exports = (server) => {
       });
     });
   });
+
+
+  // MANAGER
+
+  server.get("/manager/:id", (req, res) => {
+    ManagerController.get(req, res);
+  });
+
+
+  server.put("/manager", checkAuth, checkAuthAdmin, async (req, res) => {
+    ManagerController.update(req, res);
+  });
+
 };
+
+
+
+

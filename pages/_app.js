@@ -5,32 +5,10 @@ import Header from "../components/Header";
 import { useRouter } from "next/router";
 import cookieCutter from 'cookie-cutter'
 import jwt from "jsonwebtoken";
-import { Menu, Dropdown, Button } from 'antd';
+import { Menu, Dropdown, Button, notification } from 'antd';
 import Link from 'next/link';
 import { DownOutlined } from '@ant-design/icons';
 import CookieConsent from "react-cookie-consent";
-
-
-// function MyApp({ Component, pageProps }) {
-//   const [loading, setLoading] = useState(true);
-
-//   let cart = { items: [], total: 0 };
-
-//   useEffect(() => {
-//     if (!localStorage.getItem("cart")) {
-//       localStorage.setItem("cart", JSON.stringify(cart));
-//     }
-//     setLoading(false);
-//   });
-
-//   if (loading) {
-//     return <p>Chargement en cours...</p>;
-//   }
-
-//   return <Component {...pageProps} />;
-// }
-
-// export default MyApp;
 
 function MyApp({ Component, pageProps }) {
 
@@ -38,7 +16,22 @@ function MyApp({ Component, pageProps }) {
   const [cart, setCart] = useState({ items: [], total: 0 })
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState();
+  const [notif, setNotif] = useState(false);
+  const [manager, setManager] = useState();
 
+  const id = "61964283500214bbcde28d12";
+
+  async function getManager() {
+    await fetch(process.env.NEXT_PUBLIC_API_MANAGER + "/" + id, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => response.json()).then(json => { setManager(json); setLoading(false); });
+
+  }
 
   const logout = () => {
     // Supprimer les cookies
@@ -89,7 +82,7 @@ function MyApp({ Component, pageProps }) {
         }
       });
     }
-    setLoading(false)
+    getManager();
   }, []);
 
   let decryptedToken = {};
@@ -132,21 +125,21 @@ function MyApp({ Component, pageProps }) {
   }
 
   const cookieBar = () => {
-    if(token){
+    if (token) {
       return (
         <CookieConsent
-        location="bottom"
-        buttonText="Accepter"
-        setDeclineCookie={false}
-        enableDeclineButton
-        declineButtonText="Refuser"
-        style={{ background: "#222222" }}
-        onDecline={() => {
-          cookieCutter.set('token', '', { expires: new Date(0) })
-          setToken()
-        }}
-      >
-        Ce site utilise un cookie de connexion nécessaire, si vous refusez celui ci vous serez alors déconnecté ! </CookieConsent>
+          location="bottom"
+          buttonText="Accepter"
+          setDeclineCookie={false}
+          enableDeclineButton
+          declineButtonText="Refuser"
+          style={{ background: "#222222" }}
+          onDecline={() => {
+            cookieCutter.set('token', '', { expires: new Date(0) })
+            setToken()
+          }}
+        >
+          Ce site utilise un cookie de connexion nécessaire, si vous refusez celui ci vous serez alors déconnecté ! </CookieConsent>
       )
     }
   }
@@ -156,7 +149,6 @@ function MyApp({ Component, pageProps }) {
       return (
         <Header
           panier_length={cart.items.length}
-        //userName={decryptedToken.userFirstName}
         >
           {renderDropdown()}
           {cookieBar()}
@@ -165,24 +157,63 @@ function MyApp({ Component, pageProps }) {
     }
   }
 
+  const desactivateCommands = () => {
+    if (!notif) {
+      if (!manager?.validCommands) {
+        notification['info']({
+          message: "Information",
+          description: "Les commandes sont désactivées sur le site actuellement, vous pouvez néanmoins consulter nos produits et remplir votre panier pour une prochaine fois.",
+          placement: "bottomRight",
+          duration: 0,
+          closeIcon: (<div></div>),
+          style: {
+            width: 500,
+          }
+        })
+      }
+      if (manager?.principalMessage != "") {
+        notification['info']({
+          message: "Information",
+          description: `${manager?.principalMessage}`,
+          placement: "bottomRight",
+          duration: 0,
+          style: {
+            width: 500,
+          }
+        })
+      }
+      setNotif(true);
+    }
+  }
+
+
   if (loading) {
     return <p>Chargement en cours...</p>;
   }
 
+  if (manager?.maintenance) {
+    if (router.pathname != "/connexion" && !router.pathname.startsWith("/admin")) {
+      return <p>Site en maintenance ...</p>
+    }
+  }
+
+
   return (
     <Fragment>
-      
+
       <Head>
         <title>Boucherie Teirlinck</title>
         <link rel="icon" href="/favicon.ico"></link>
       </Head>
       {renderHeader()}
+      {desactivateCommands()}
       <Component
         {...pageProps}
         cart={cart}
         setCart={setCart}
         token={token}
         setToken={setToken}
+        manager={manager}
       />
     </Fragment>
   );

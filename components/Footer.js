@@ -3,7 +3,7 @@ import { Col, Row } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { FacebookOutlined, InstagramOutlined } from "@ant-design/icons";
-const Footer = () => {
+const Footer = ({ manager }) => {
   return (
     <footer>
       <Row justify="center" align="middle" >
@@ -17,13 +17,13 @@ const Footer = () => {
               <p className="pCalendar">
                 <i className="fi-rr-calendar"> </i>Horaires
               </p>
-              <p>Lundi: 09h00 - 13h00, 16h00 - 19h30</p>
-              <p>Mardi: 09h00 - 13h00, 16h00 - 19h30</p>
-              <p>Mercredi: Fermé</p>
-              <p>Jeudi: 09h00 - 13h00, 16h00 - 19h30</p>
-              <p>Vendredi: 09h00 - 13h00, 16h00 - 19h30</p>
-              <p>Samedi: 08h30 - 14h30</p>
-              <p>Dimanche et jours feriés :  Fermé</p>
+              <p>Lundi: {manager?.lundi}</p>
+              <p>Mardi: {manager?.mardi}</p>
+              <p>Mercredi: {manager?.mercredi}</p>
+              <p>Jeudi: {manager?.jeudi}</p>
+              <p>Vendredi: {manager?.vendredi}</p>
+              <p>Samedi: {manager?.samedi}</p>
+              <p>Dimanche et jours feriés: {manager?.dimanche}</p>
             </Col>
 
             <Col className="iconFooter" md={3} xs={7} >

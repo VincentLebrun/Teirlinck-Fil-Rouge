@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import Section from "../../components/Section";
 import { Row, Col, Checkbox } from "antd";
 
-const Product = ({ product, cart, setCart }) => {
+const Product = ({ product, cart, setCart, manager }) => {
 
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(0);
@@ -162,7 +162,7 @@ const Product = ({ product, cart, setCart }) => {
                     </Row>
                 </Row>
             </div>
-            <Footer />
+            <Footer manager={manager} />
         </div >
     );
 };

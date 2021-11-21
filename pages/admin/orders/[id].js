@@ -1,35 +1,18 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Layout, Menu, Row, Col } from 'antd';
-import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-} from '@ant-design/icons';
-import { Button, Input } from 'antd';
-import Link from 'next/link'
+import { Layout, Row } from 'antd';
+import { Input } from 'antd';
 import { useRouter } from 'next/router'
 import { admin } from "../../../middleware/admin"
+import AdminLayout from "../../../components/AdminLayout"
 
 
 const Order = ({ token }) => {
-    const { Header, Sider, Content } = Layout;
     const router = useRouter();
-
-
-
-    const { Search } = Input;
-
-    const onSearch = value => console.log(value);
-
     const [collapsed, setCollapsed] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     const [order, setOrder] = useState();
-
-
 
     async function getOrder(orderId) {
         await fetch(process.env.NEXT_PUBLIC_API_ORDERS + "/" + orderId, {
@@ -43,7 +26,6 @@ const Order = ({ token }) => {
             .then(response => response.json()).then(json => { setOrder(json) });
     }
 
-
     useEffect(() => {
         if (!admin(token)) {
             router.push("/")
@@ -54,14 +36,11 @@ const Order = ({ token }) => {
 
     }, [])
 
-
     useEffect(() => {
         if (order) {
             setIsLoading(false)
         }
     }, [order])
-
-
 
     const toggle = () => {
         setCollapsed(!collapsed);
@@ -81,12 +60,10 @@ const Order = ({ token }) => {
         return result;
     }
 
-
     if (isLoading) {
         return <p>Chargement en cours ...</p>
 
     }
-
 
     const listOrderProducts = order.products.map((item) => {
         return (
@@ -96,56 +73,25 @@ const Order = ({ token }) => {
         )
     })
     return (
-        <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className="logo"> <Link href="/"><img src="/logo.svg" alt="" /></Link></div>
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1" icon={<UserOutlined />}>
-                        Produits
-                    </Menu.Item>
-                    <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                        Ajouter un produit
-                    </Menu.Item>
-                    <Menu.Item key="3" icon={<UploadOutlined />}>
-                        Utilisateurs
-                    </Menu.Item>
-                </Menu>
-            </Sider>
-            <Layout className="site-layout">
-                <Header className="site-layout-background header-admin" style={{ padding: 0 }}>
-                    {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                        className: 'trigger',
-                        onClick: () => toggle(),
-                    })}
-                    <Button type="primary" > Ajouter un produit</Button>
-                    <Search className="search-input" placeholder="Chercher un produit" onSearch={onSearch} style={{ width: 200 }}></Search>
-                </Header>
+        <AdminLayout>
 
-                <Content
-                    className="site-layout-background"
-                    style={{
-                        margin: '24px 16px',
-                        padding: 24,
-                        minHeight: 280,
-                    }}
-                >
+            <div className="orderDetail">
+                <Row>
+                    <p>Commande numéro {order.numero} passée le {convertToDate(order.date)} par {order.user_firstname} {order.user_lastname} :</p>
+                </Row>
+                {listOrderProducts}
+                <p>Total estimé de la commande : {order.total} €</p>
+                <p>Commentaire additionnel  : {order.commandComment}</p>
+                <p>Numéro de téléphone du client : {order.user_phone}</p>
+                <p>Commande à préparer pour le  : {convertToDateCommand(order.commandDate)} {order.commandPeriod}</p>
+                <p>Statut de la commande : {order.ready ? "prête" : "non prête"} et {order.delivered ? "délivrée" : "non délivrée"}</p>
+            </div>
 
-                    <div className="orderDetail">
-                        <Row>
-                            <p>Commande numéro {order.numero} passée le {convertToDate(order.date)} par {order.user_firstname} {order.user_lastname} :</p>
-                        </Row>
-                        {listOrderProducts}
-                        <p>Total estimé de la commande : {order.total} €</p>
-                        <p>Numéro de téléphone du client : {order.user_phone}</p>
-                        <p>Commande à préparer pour le  : {convertToDateCommand(order.commandDate)} {order.commandPeriod}</p>
-                        <p>Commentaire additionnel  : {order.commandComment}</p>
-                        <p>Statut de la commande : {order.ready ? "prête" : "non prête"} et {order.delivered ? "délivrée" : "non délivrée"}</p>
-                    </div>
+        </AdminLayout>
 
-                </Content>
 
-            </Layout>
-        </Layout>
+
+
     )
 }
 

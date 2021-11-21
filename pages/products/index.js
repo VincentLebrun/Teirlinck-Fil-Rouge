@@ -9,7 +9,7 @@ import Seemore from '../../components/Seemore';
 const { SubMenu } = Menu;
 
 
-const Products = ({ data }) => {
+const Products = ({ data, manager }) => {
 
     const { Search } = Input;
     const [message, setMessage] = useState('')
@@ -133,7 +133,7 @@ const Products = ({ data }) => {
                     </Col>
                 </Row>
             </div>
-            <Footer />
+            <Footer manager={manager} />
         </div>
     )
 }

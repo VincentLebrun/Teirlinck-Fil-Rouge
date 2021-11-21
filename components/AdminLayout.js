@@ -44,6 +44,9 @@ const AdminLayout = (props) => {
                     <Menu.Item key="4" icon={<ShoppingOutlined />}>
                         <Link href="/admin/orders">Commandes</Link>
                     </Menu.Item>
+                    <Menu.Item key="5" icon={<ShoppingOutlined />}>
+                        <Link href="/admin/manage">Administration</Link>
+                    </Menu.Item>
                 </Menu>
             </Sider>
             <Layout className="site-layout">
