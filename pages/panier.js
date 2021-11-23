@@ -272,15 +272,16 @@ const panier = ({ cart, setCart, token, manager }) => {
                             </Col>
 
                             <Col className="nameAndPrice" xs={9} sm={10}>
-                                <h2>{item.name}</h2>
+                                <div>
+                                    <h2>{item.name}</h2>
 
-                                <div className="input-weight">
-                                    <input onChange={(e) => updateQuantity(e, item.price, item.price_type, item.name, item.quantity)} type="number" placeholder={item.quantity} step={item.price_type === "/kg" ? "25" : "1"} min={item.price_type === "/kg" ? "25" : "1"} value={item.quantity} />
-                                    <p>{priceType(item.price_type)}</p>
+                                    <div className="input-weight">
+                                        <input onChange={(e) => updateQuantity(e, item.price, item.price_type, item.name, item.quantity)} type="number" placeholder={item.quantity} step={item.price_type === "/kg" ? "25" : "1"} min={item.price_type === "/kg" ? "25" : "1"} value={item.quantity} />
+                                        <p>{priceType(item.price_type)}</p>
+                                    </div>
                                 </div>
                                 <div>
-                                    Sous vide
-                                    <Checkbox onChange={(e) => updateVacuum(e, item.id)} checked={item.vacuum} />
+                                    <Checkbox onChange={(e) => updateVacuum(e, item.id)} checked={item.vacuum}><h2>Sous vide</h2></Checkbox>
                                 </div>
 
                             </Col>

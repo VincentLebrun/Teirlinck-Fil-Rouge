@@ -4,7 +4,7 @@
     overflow: hidden;
     position: relative;
     img {
-        width: auto;
+        width: 100%;
         transform : translate(0, -50px);
     }
 
@@ -204,6 +204,7 @@
     }
     .home-content {
         img {
+            width: auto;
             transform : translate(-600px, -450px);
         }
         height: 35rem;
@@ -266,6 +267,7 @@
     .home-content {
         height: 35rem;
         img {
+            width: auto;
             transform : translate(-600px, -450px);
         }
         .slogan-cart {
@@ -317,6 +319,7 @@
     .home-content {
         height: 45rem;
         img {
+            width: auto;
             transform : translate(-300px, -300px);
         }
         .slogan-cart {

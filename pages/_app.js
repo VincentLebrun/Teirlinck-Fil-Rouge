@@ -9,6 +9,7 @@ import { Menu, Dropdown, Button, notification } from 'antd';
 import Link from 'next/link';
 import { DownOutlined } from '@ant-design/icons';
 import CookieConsent from "react-cookie-consent";
+import Maintenance from "../components/Maintenance";
 
 function MyApp({ Component, pageProps }) {
 
@@ -192,7 +193,7 @@ function MyApp({ Component, pageProps }) {
 
   if (manager?.maintenance) {
     if (router.pathname != "/connexion" && !router.pathname.startsWith("/admin")) {
-      return <p>Site en maintenance ...</p>
+      return <Maintenance manager={manager} />
     }
   }
 

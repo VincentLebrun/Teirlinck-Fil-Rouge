@@ -2,7 +2,6 @@ import { React, useState } from 'react'
 import Link from 'next/link'
 import { Row, Col } from 'antd';
 import { Drawer, Button } from 'antd';
-import { WindowsFilled } from '@ant-design/icons';
 // import { AiOutlineMenuFold } from "react-icons/ai";
 
 const Header = (props) => {
@@ -48,6 +47,7 @@ const Header = (props) => {
                                 <Link href="/panier"><a href="" className="shop"><i className="fi-rr-shopping-cart shop-cart"><div className="num-articles-header"><p>{props.panier_length}</p></div></i></a></Link>
                                 <Button className="burgerMenu" onClick={showDrawer}>
                                     <i className="fi-rr-align-justify"></i>
+
                                 </Button>
 
                                 <Drawer
@@ -60,9 +60,9 @@ const Header = (props) => {
 
                                     <nav>
                                         <ul>
-                                            <Link href="/"><li>Accueil</li></Link>
-                                            <Link href="/products/"><li>Nos produits</li></Link>
-                                            <Link href="/notrehistoire"><li>Notre histoire</li></Link>
+                                            <Link href="/"><li onClick={() => setVisible(false)}>Accueil</li></Link>
+                                            <Link href="/products/"><li onClick={() => setVisible(false)}>Nos produits</li></Link>
+                                            <Link href="/notrehistoire"><li onClick={() => setVisible(false)}>Notre histoire</li></Link>
                                         </ul>
                                     </nav>
                                 </Drawer>

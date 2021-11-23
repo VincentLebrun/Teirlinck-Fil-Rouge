@@ -65,6 +65,7 @@ module.exports = {
                             let template = handlebars.compile(html);
                             let replacements = {
                                 firstname: req.body.user_firstname,
+                                numero: req.body.numero,
                                 products: req.body.products.map(item => {
                                     const subPriceKg = Number(((item.price * item.quantity) / 1000).toFixed(2));
                                     const subPricePc = Number(((item.price * item.quantity)).toFixed(2));

@@ -91,6 +91,7 @@ const Product = ({ product, cart, setCart, manager }) => {
         }
     }
 
+
     return (
         <div className="productDetails">
             <Hero
@@ -122,7 +123,7 @@ const Product = ({ product, cart, setCart, manager }) => {
                                     </li>
                                     <li className="title">
                                         Sous vide
-                                        <Checkbox onChange={(e) => setVacuum(e.target.checked)} checked={vacuum} />
+                                        <Checkbox className="vacuum" onChange={(e) => setVacuum(e.target.checked)} checked={vacuum} />
                                     </li>
                                     ! Supplément
                                     <hr />

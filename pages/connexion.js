@@ -10,7 +10,7 @@ const ConnexionForm = ({ setToken, token }) => {
 
     useEffect(() => {
         if (isLogin(token)) {
-          router.push("/")
+            router.push("/")
         }
     }, [])
 
@@ -101,7 +101,7 @@ const ConnexionForm = ({ setToken, token }) => {
                                     rules={[
                                         {
                                             message:
-                                                "Le mot de passe doit contenir au minimum 6 caractères et une majuscule",
+                                                "Le mot de passe doit contenir au minimum 8 caractères et une majuscule",
                                             pattern: /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}/,
                                             required: true,
                                         },
