@@ -50,6 +50,7 @@ export const OurStory = ({ manager }) => {
 
     return (
         <div className="ourstory">
+            <div className="top-color"></div>
             {/* <Header
                 panier_length={cart.items.length}
             /> */}

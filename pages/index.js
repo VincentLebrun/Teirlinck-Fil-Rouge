@@ -69,6 +69,7 @@ export default function Home({ data, manager }) {
       {/* <Header
         panier_length={cart.items.length}
       /> */}
+      <div className="top-color"></div>
       <div className="home-content">
         <img src="/img/homepicture.webp" alt="" />
         <div className="test">

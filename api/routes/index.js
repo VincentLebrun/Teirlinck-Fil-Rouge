@@ -64,17 +64,23 @@ module.exports = (server) => {
 
   server.put("/products", checkAuth, checkAuthAdmin, upload.single('productImage'), async (req, res) => {
 
-    const id = new Date().toISOString().replace(/:|\./g, '');
+    let path = req.body.image;
 
-    const path = 'uploads/' + id + '-' + req.file.originalname + '.webp';
+    if (req.file) {
+      const id = new Date().toISOString().replace(/:|\./g, '');
 
-    try {
-      await sharp(req.file.buffer).webp({ quality: 80 })
-        .resize({ width: 350, height: 350 })
-        .toFile('./uploads/' + id + '-' + req.file.originalname + '.webp');
-    } catch (error) {
-      console.log('error while processing image', error)
+      path = 'uploads/' + id + '-' + req.file.originalname + '.webp';
+
+      try {
+        await sharp(req.file.buffer).webp({ quality: 80 })
+          .resize({ width: 350, height: 350 })
+          .toFile('./uploads/' + id + '-' + req.file.originalname + '.webp');
+      } catch (error) {
+        console.log('error while processing image', error)
+      }
     }
+
+
 
     ProductController.update(req, res, path);
   });

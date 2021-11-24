@@ -94,6 +94,7 @@ const Product = ({ product, cart, setCart, manager }) => {
 
     return (
         <div className="productDetails">
+            <div className="top-color"></div>
             <Hero
                 title={product.name}
                 image="ourproducts.webp"

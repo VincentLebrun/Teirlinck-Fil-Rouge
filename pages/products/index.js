@@ -70,6 +70,7 @@ const Products = ({ data, manager }) => {
 
     return (
         <div className="ourproducts">
+            <div className="top-color"></div>
             <Hero
                 title="Nos produits"
                 image="ourproducts.webp"

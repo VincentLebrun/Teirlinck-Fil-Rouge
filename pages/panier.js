@@ -307,6 +307,7 @@ const panier = ({ cart, setCart, token, manager }) => {
 
     return (
         <div>
+            <div className="top-color"></div>
             <Modal
                 title="Quelque chose à rajouter?"
                 centered
