@@ -30,7 +30,7 @@ module.exports = {
         });
     },
     update(req, res, path) {
-        const newProduct = { ...req.body, image: path ? path : req.body.productImage, allergenes: req.body.allergenes ? req.body.allergenes : [] }
+        const newProduct = { ...req.body, image: path, allergenes: req.body.allergenes ? req.body.allergenes : [] }
 
         const id = req.body._id;
         if (id) {

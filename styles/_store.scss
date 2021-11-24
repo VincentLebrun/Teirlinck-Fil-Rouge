@@ -55,6 +55,12 @@
     }
 }
 
+.nameAndPrice {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .total-store {
     background-color: $color-black;
     border-radius: 10px;

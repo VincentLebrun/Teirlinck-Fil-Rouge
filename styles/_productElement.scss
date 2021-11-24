@@ -6,7 +6,7 @@
         width: 100%;
         box-shadow: 6px 6px 8px 0px rgba(0, 0, 0, 0.45);
     }
-    font-family: 'Seaweed Script', cursive;
+    font-family: Seaweed Script;
 
     .element-name {
         position: absolute;
@@ -58,6 +58,12 @@
             filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.3));
             width: 93%;
             height: 93%;
+
+            &:hover {
+                width: 90%;
+                height: 90%;
+                transition: width 0.2s ease-out, height 0.2s ease-out;
+            }
         }
     }
 }

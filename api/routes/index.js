@@ -1,6 +1,7 @@
 const ProductController = require("../controllers/product");
 const UserController = require("../controllers/user");
 const OrderController = require("../controllers/order");
+const ManagerController = require("../controllers/manager");
 const checkAuth = require("../middleware/check-auth");
 const checkAuthAdmin = require("../middleware/check-auth-admin");
 const multer = require('multer');
@@ -63,17 +64,23 @@ module.exports = (server) => {
 
   server.put("/products", checkAuth, checkAuthAdmin, upload.single('productImage'), async (req, res) => {
 
-    const id = new Date().toISOString().replace(/:|\./g, '');
+    let path = req.body.image;
 
-    const path = 'uploads/' + id + '-' + req.file.originalname + '.webp';
+    if (req.file) {
+      const id = new Date().toISOString().replace(/:|\./g, '');
 
-    try {
-      await sharp(req.file.buffer).webp({ quality: 80 })
-        .resize({ width: 350, height: 350 })
-        .toFile('./uploads/' + id + '-' + req.file.originalname + '.webp');
-    } catch (error) {
-      console.log('error while processing image', error)
+      path = 'uploads/' + id + '-' + req.file.originalname + '.webp';
+
+      try {
+        await sharp(req.file.buffer).webp({ quality: 80 })
+          .resize({ width: 350, height: 350 })
+          .toFile('./uploads/' + id + '-' + req.file.originalname + '.webp');
+      } catch (error) {
+        console.log('error while processing image', error)
+      }
     }
+
+
 
     ProductController.update(req, res, path);
   });
@@ -154,4 +161,21 @@ module.exports = (server) => {
       });
     });
   });
+
+
+  // MANAGER
+
+  server.get("/manager/:id", (req, res) => {
+    ManagerController.get(req, res);
+  });
+
+
+  server.put("/manager", checkAuth, checkAuthAdmin, async (req, res) => {
+    ManagerController.update(req, res);
+  });
+
 };
+
+
+
+

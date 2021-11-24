@@ -7,6 +7,7 @@ import { Drawer, Button } from 'antd';
 const Header = (props) => {
 
     const [visible, setVisible] = useState(false);
+    const [scroll, setScroll] = useState(scrollY);
     const showDrawer = () => {
         setVisible(true);
     };
@@ -14,9 +15,14 @@ const Header = (props) => {
         setVisible(false);
     };
 
+    window.onscroll = function () {
+        setScroll(scrollY)
+    }
+
+
     return (
         <header>
-            <Row justify="center" align="middle" className="header">
+            <Row justify="center" align="middle" className={`header ${scroll > 200 ? "headerHeightDown" : "headerHeightTop"}`}>
                 <Col xs={21} sm={20} lg={16} >
                     <Row justify="space-between" align="middle">
 
@@ -41,6 +47,7 @@ const Header = (props) => {
                                 <Link href="/panier"><a href="" className="shop"><i className="fi-rr-shopping-cart shop-cart"><div className="num-articles-header"><p>{props.panier_length}</p></div></i></a></Link>
                                 <Button className="burgerMenu" onClick={showDrawer}>
                                     <i className="fi-rr-align-justify"></i>
+
                                 </Button>
 
                                 <Drawer
@@ -53,9 +60,9 @@ const Header = (props) => {
 
                                     <nav>
                                         <ul>
-                                        <Link href="/"><li>Accueil</li></Link>
-                                        <Link href="/products/"><li>Nos produits</li></Link>
-                                        <Link href="/notrehistoire"><li>Notre histoire</li></Link>
+                                            <Link href="/"><li onClick={() => setVisible(false)}>Accueil</li></Link>
+                                            <Link href="/products/"><li onClick={() => setVisible(false)}>Nos produits</li></Link>
+                                            <Link href="/notrehistoire"><li onClick={() => setVisible(false)}>Notre histoire</li></Link>
                                         </ul>
                                     </nav>
                                 </Drawer>

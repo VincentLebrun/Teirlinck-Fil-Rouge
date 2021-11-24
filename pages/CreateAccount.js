@@ -44,7 +44,7 @@ const RegistrationForm = ({ token }) => {
       admin: false,
       validated: false,
     }
-  
+
     const res = await fetch(process.env.NEXT_PUBLIC_API_USERS, {
       method: 'POST',
       headers: {
@@ -54,18 +54,18 @@ const RegistrationForm = ({ token }) => {
       body: JSON.stringify(sendAccount)
     }).catch(error => console.log(error));
 
-    if(res.status && res.status === 200){
+    if (res.status && res.status === 200) {
       notification['success']({
         message: "BRAVO",
-        description: "BRAVO, vous venez de créer votre compte sur boucherie-teirlinck.fr, vous pouvez maintenant vous connecter. Il ne vous reste plus qu'à vous rendre en boucherie pour faire valider votre compte avant de pouvoir passer commande ! ",
+        description: "BRAVO, vous venez de créer votre compte sur boucherie-teirlinck.fr, vous pouvez maintenant vous connecter. Il ne vous reste plus qu'à attendre que votre compte soit validé avant de pouvoir passer commande ! ",
         placement: "topRight",
         duration: 0,
         style: {
           width: 500,
           // fontSize: "larger"
         }
-    });
-    router.push("/connexion");
+      });
+      router.push("/connexion");
     } else if (res.status && res.status === 409) {
       notification['warning']({
         message: "Erreur",
@@ -76,7 +76,7 @@ const RegistrationForm = ({ token }) => {
           width: 500,
           // fontSize: "larger"
         }
-    });
+      });
     } else {
       notification['error']({
         message: "OUPS",
@@ -87,7 +87,7 @@ const RegistrationForm = ({ token }) => {
           width: 500,
           // fontSize: "larger"
         }
-    });
+      });
     }
 
   };
@@ -95,7 +95,7 @@ const RegistrationForm = ({ token }) => {
   return (
     <main>
       <Row justify="center" align="middle" className="container1">
-        <Col xl={16}  xs={22}>
+        <Col xl={16} xs={22}>
           <Row className="black-container" justify="center" align="middle">
             <Col span={24}>
               <Link href="/"><img src="/logo.svg" alt="" /></Link>
@@ -109,41 +109,41 @@ const RegistrationForm = ({ token }) => {
                 onFinish={onFinish}
                 scrollToFirstError
               >
-                
-                  {/* <Row className="contain" justify="space-around" xs={16} xl={5}> */}
-                  <div className="input75">
-                    <Form.Item
-                      className="formInputStyle"
-                      label="Prénom"
-                      name="firstname"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Veuillez entrer votre prénom",
-                          whitespace: true,
-                        },
-                      ]}
-                    >
-                      <Input maxLength="90" />
-                    </Form.Item>
 
-                    <Form.Item
-                      label="Nom"
-                      className="formInputStyle"
-                      name="lastname"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Veuillez entrez votre nom",
-                          whitespace: true,
-                        },
-                      ]}
-                    >
-                      <Input maxLength="90"/>
-                    </Form.Item>
-                  
-             
-                
+                {/* <Row className="contain" justify="space-around" xs={16} xl={5}> */}
+                <div className="input75">
+                  <Form.Item
+                    className="formInputStyle"
+                    label="Prénom"
+                    name="firstname"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Veuillez entrer votre prénom",
+                        whitespace: true,
+                      },
+                    ]}
+                  >
+                    <Input maxLength="90" />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Nom"
+                    className="formInputStyle"
+                    name="lastname"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Veuillez entrez votre nom",
+                        whitespace: true,
+                      },
+                    ]}
+                  >
+                    <Input maxLength="90" />
+                  </Form.Item>
+
+
+
                   <Form.Item
                     label="Numéro de téléphone"
                     className="formInputStyle"
@@ -172,7 +172,7 @@ const RegistrationForm = ({ token }) => {
                       },
                     ]}
                   >
-                    <Input maxLength="90"/>
+                    <Input maxLength="90" />
                   </Form.Item>
 
                   <Form.Item
@@ -219,7 +219,7 @@ const RegistrationForm = ({ token }) => {
                     ]}
                   >
                     {/* <label>Confirmez le mot de passe</label> */}
-                    <Input.Password  maxLength="90"/>
+                    <Input.Password maxLength="90" />
                   </Form.Item>
                 </div>
                 <Form.Item>

@@ -3,12 +3,13 @@ import Hero from "../../components/Hero";
 import Footer from "../../components/Footer";
 
 import Section from "../../components/Section";
-import { Row, Col } from "antd";
+import { Row, Col, Checkbox } from "antd";
 
-const Product = ({ product, cart, setCart }) => {
+const Product = ({ product, cart, setCart, manager }) => {
 
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(0);
+    const [vacuum, setVacuum] = useState(false);
 
     const addToCart = () => {
         if (price != 0) {
@@ -20,6 +21,7 @@ const Product = ({ product, cart, setCart }) => {
                 price_type: product.price_type,
                 price: product.price,
                 quantity,
+                vacuum
             };
             // item.quantity = quantity;
             // item.id = `${item.id}-${Date.now()}`;
@@ -48,6 +50,7 @@ const Product = ({ product, cart, setCart }) => {
         setQuantity(Math.abs(e.target.value));
     };
 
+
     const updateQuantity = () => {
         const cart_item = cart.items.find((item) => item.name == product.name);
         const previous_price = Number(
@@ -57,11 +60,14 @@ const Product = ({ product, cart, setCart }) => {
         const new_price = Number(
             ((cart_item.quantity * cart_item.price) / 1000).toFixed(2)
         );
-        let items = cart.items;
-        const index_item = cart.items.indexOf(product.name);
-        items[index_item] = cart_item;
-        // items = cart.items.splice(index_item, 1);
-        // items = items.push(cart_item);
+
+        const items = cart.items.map(item => {
+            if (item.id == product._id) {
+                item = { ...cart_item, vacuum }
+            }
+            return item;
+        })
+
         setCart({
             items: items,
             total: Number((cart.total - previous_price + new_price).toFixed(2)),
@@ -70,6 +76,7 @@ const Product = ({ product, cart, setCart }) => {
 
     const renderButton = () => {
         if (!cart.items.find((item) => item.name == product.name)) {
+            // item.vacuum && setVacuum(true);
             return <button onClick={() => addToCart()}>Ajouter au panier</button>;
         } else {
             return (
@@ -84,8 +91,10 @@ const Product = ({ product, cart, setCart }) => {
         }
     }
 
+
     return (
         <div className="productDetails">
+            <div className="top-color"></div>
             <Hero
                 title={product.name}
                 image="ourproducts.webp"
@@ -113,6 +122,12 @@ const Product = ({ product, cart, setCart }) => {
                                         <input onChange={(e) => renderPrice(e)} className={product.price_type === "/pc" ? "hidden" : ""} type="number" name="weight" id="inputWeight" placeholder="(en grammes)" step="50" min="0" />
                                         <input onChange={(e) => renderPrice(e)} className={product.price_type === "/kg" ? "hidden" : ""} type="number" name="numberOfPieces" id="inputNumberOfPieces" placeholder="(nombre de pièces)" step="1" min="0" />
                                     </li>
+                                    <li className="title">
+                                        Sous vide
+                                        <Checkbox className="vacuum" onChange={(e) => setVacuum(e.target.checked)} checked={vacuum} />
+                                    </li>
+                                    ! Supplément
+                                    <hr />
                                     <li className="title">Prix à régler</li>
                                     <hr />
                                     <li>{price} €</li>
@@ -124,7 +139,7 @@ const Product = ({ product, cart, setCart }) => {
                         </Col>
                     </Row>
                 </Col>
-            </Row>
+            </Row >
             <div className="productInfos">
                 <Row justify="center">
                     <Section
@@ -149,8 +164,8 @@ const Product = ({ product, cart, setCart }) => {
                     </Row>
                 </Row>
             </div>
-            <Footer />
-        </div>
+            <Footer manager={manager} />
+        </div >
     );
 };
 

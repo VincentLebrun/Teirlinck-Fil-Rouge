@@ -9,7 +9,7 @@ import Seemore from '../../components/Seemore';
 const { SubMenu } = Menu;
 
 
-const Products = ({ data }) => {
+const Products = ({ data, manager }) => {
 
     const { Search } = Input;
     const [message, setMessage] = useState('')
@@ -70,6 +70,7 @@ const Products = ({ data }) => {
 
     return (
         <div className="ourproducts">
+            <div className="top-color"></div>
             <Hero
                 title="Nos produits"
                 image="ourproducts.webp"
@@ -133,7 +134,7 @@ const Products = ({ data }) => {
                     </Col>
                 </Row>
             </div>
-            <Footer />
+            <Footer manager={manager} />
         </div>
     )
 }

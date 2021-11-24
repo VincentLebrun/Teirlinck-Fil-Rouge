@@ -138,6 +138,13 @@ const index = ({ token }) => {
         }
     }
 
+    const convertToDateCommand = (timestamp) => {
+        const date = new Date(timestamp);
+        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        const result = date.toLocaleDateString('fr-FR', options);
+        return result;
+    }
+
     async function changeReadyStatus(id) {
         // const allOrders = [...orders];
         const index = orders.findIndex((item) => item._id === id);
@@ -220,11 +227,11 @@ const index = ({ token }) => {
             align: 'left'
         },
         {
-            title: 'id utilisateur',
+            title: 'A préparer pour le',
             key: 'id',
             render: (text, item) => (
                 <Space size="middle">
-                    <h1>{item.user_id}</h1>
+                    <h1>{convertToDateCommand(item.commandDate) + " | " + item.commandPeriod}</h1>
                 </Space>
             ),
             align: 'left'
