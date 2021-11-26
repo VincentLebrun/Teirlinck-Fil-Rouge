@@ -123,6 +123,29 @@ module.exports = (server) => {
   server.delete("/users", checkAuth, checkAuthAdmin, (req, res) => {
     UserController.delete(req, res);
   });
+  server.put("/resetpassword/", (req, res) => {
+    User.findOne(
+      {
+        resetToken: req.body.token,
+        expireToken: { $gt: Date.now() },
+      },
+      function (err, user) {
+        if (!user) {
+          return res.status(401);
+        }
+        // Save
+
+        user.password = req.body.password;
+        user.resetToken = undefined;
+        user.expireToken = undefined;
+        console.log(user);
+        user.save((err) => {
+          if (err) return res.status(500).json({ message: err.message });
+        });
+        return res.status(200);
+      }
+    );
+  });
 
   // COMMANDES
 
@@ -153,41 +176,36 @@ module.exports = (server) => {
   });
 
   server.post("/resetpassword", (req, res, err) => {
-    console.log(req.body);
-
-    crypto.randomBytes(32, (err, buffer) => {
+    crypto.randomBytes(16, (err, buffer) => {
       if (err) {
         console.log(err);
       }
       const token = buffer.toString("hex");
-
       const email = req.body.mail;
-
-      console.log(email);
-      // let filter =
-      //   /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-      // if (email.match(filter)) return;
+      console.log(token);
       User.findOne({ mail: email }).then((user) => {
-        console.log(user);
         if (!user) {
           return res.status(422).json({
             error:
               "Votre demande a été prise en compte, veuillez vérifier votre boite mail",
           });
         }
+        console.log(token);
         user.resetToken = token;
-
+        user.expireToken = Date.now() + 3600000;
         user.save().then((res) => {
           transporter.sendMail({
             to: email,
             from: `Boucherie Teirlinck <teirlinck.boucherie@gmail.com>`,
             subject: "Changement de mot de passe",
-            html: `<p>Vous avez sollicité un changement de mot de passe</p>
-                          <h5>Cliquez sur ce <a href="http://localhost:3000/resetpassword${token}" >lien</a> pour le changer </h5>`,
+            html:
+              "<p>Vous avez sollicité un changement de mot de passe</p><h5>Cliquez sur ce <a href='http://localhost:3000/resetpassword/" +
+              token +
+              "' >lien</a> pour le changer </h5>",
           });
           // res.json({ message: "Validez votre e-mail" });
         });
-
+        console.log(token);
         //
       });
     });

@@ -12,6 +12,7 @@ const UserSchema = new Schema({
   admin: Boolean,
   validated: Boolean,
   resetToken: String,
+  expireToken: String,
 });
 
 const User = mongoose.model("user", UserSchema);

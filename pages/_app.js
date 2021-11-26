@@ -178,7 +178,7 @@ function MyApp({ Component, pageProps }) {
       router.pathname != "/CreateAccount" &&
       router.pathname != "/connexion" &&
       !router.pathname.startsWith("/admin") &&
-      !router.pathname.startsWith("/passwordreset")
+      !router.pathname.startsWith("/resetpassword")
     ) {
       return (
         <Header

@@ -1,20 +1,26 @@
 import { Button, Row, Col, Form, Input } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
-const NewPassword = ({ token }) => {
+const NewPassword = () => {
+  const router = useRouter();
   const [form] = Form.useForm();
+  const resetPass1 = router.query.id;
 
+  console.log(encodeURIComponent(resetPass1));
   const onFinish = async (values) => {
     const pass = values.password;
     const testCrypt = await bcrypt.hash(pass, saltRounds);
     const resetPass = {
+      token: resetPass1,
       password: testCrypt,
     };
 
-    await fetch(process.env.NEXT_PUBLIC_API_USERS, {
-      method: "POST",
+    await fetch(process.env.NEXT_PUBLIC_API_RESET_PASSWORD, {
+      method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -34,7 +40,7 @@ const NewPassword = ({ token }) => {
               </Link>
             </Col>
             <div className="pastille-login">
-              <i class="fi-rr-spinner-alt"></i>
+              <i className="fi-rr-spinner-alt"></i>
             </div>
             <Col xl={16}>
               <hr />

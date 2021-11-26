@@ -128,19 +128,12 @@ const ConnexionForm = ({ setToken, token, posts }) => {
               </Link>
               <hr />
               <h2>Vous avez perdu votre mot de passe?</h2>
-              {posts.map((post) => (
-                <Link
-                  key={post.id}
-                  href={{
-                    pathname: "/oublidemotdepasse/[oublidemotdepasse]",
-                    query: { oublidemotdepasse: post.oublidemotdepasse },
-                  }}
-                >
-                  <Button className="button" htmlType="submit">
-                    Mot de passe oublié
-                  </Button>
-                </Link>
-              ))}
+
+              <Link href="/resetpassword">
+                <Button className="button" htmlType="submit">
+                  Mot de passe oublié?
+                </Button>
+              </Link>
             </Col>
           </Row>
         </Col>
