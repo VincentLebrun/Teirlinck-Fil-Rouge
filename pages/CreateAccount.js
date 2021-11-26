@@ -53,6 +53,7 @@ const RegistrationForm = ({ token }) => {
       },
       body: JSON.stringify(sendAccount),
     }).catch((error) => console.log(error));
+    console.log(res);
 
     if (res.status && res.status === 200) {
       notification["success"]({

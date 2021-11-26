@@ -1,15 +1,20 @@
 import { Button, Row, Col, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { isUser } from "../../middleware/isUser";
+import { useEffect } from "react";
 
 const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 
-const NewPassword = () => {
+const NewPassword = ({ mail, token }) => {
   const router = useRouter();
   const [form] = Form.useForm();
   const resetPass1 = router.query.id;
-
+  useEffect(() => {
+    isUser(token + mail);
+  }, []);
+  console.log(mail);
   console.log(encodeURIComponent(resetPass1));
   const onFinish = async (values) => {
     const pass = values.password;
