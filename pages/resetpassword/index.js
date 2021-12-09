@@ -28,7 +28,7 @@ const ResetPassword = () => {
         duration: 0,
         style: {
           width: 500,
-          // fontSize: "larger"
+         
         },
       });
     } else if (res.status && res.status === 409) {
@@ -50,7 +50,7 @@ const ResetPassword = () => {
         duration: 0,
         style: {
           width: 500,
-          // fontSize: "larger"
+          
         },
       });
     }
